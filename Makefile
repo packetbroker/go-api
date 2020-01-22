@@ -17,10 +17,10 @@ GO = go
 PROTOC = protoc
 
 PROTO_PATH ?= ../..
-VERSIONS ?= v1alpha2
+VERSION ?= v1alpha2
 GOPATH ?= $(shell $(GO) env GOPATH)
 
-targets = $(addsuffix /packetbroker.pb.go, $(VERSIONS))
+targets = $(addsuffix /packetbroker.pb.go, $(VERSION))
 
 .PHONY: all
 all: $(targets)
@@ -32,15 +32,15 @@ deps:
 
 .PHONY: clean
 clean:
-	$(foreach version, $(VERSIONS), rm $(version)/*.pb.go)
+	@rm $(VERSION)/*.pb.go
 
-$(VERSIONS):
+$(VERSION):
 	@mkdir -p $@ \
 		&& pushd $@ \
 		&& go mod init go.packetbroker.org/api/$@ \
 		&& popd
 
-$(targets): $(VERSIONS)/%.pb.go: $(VERSIONS)
+$(targets): $(VERSION)/%.pb.go: $(VERSION)
 	$(PROTOC) -I=$(GOPATH)/src -I=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --gogofaster_out=plugins=grpc,\
 Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,\

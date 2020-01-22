@@ -1,4 +1,4 @@
-module go.packetbroker.org/api/v1alpha2
+module go.packetbroker.org/api
 
 go 1.13
 

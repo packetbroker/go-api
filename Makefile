@@ -17,7 +17,7 @@ GO = go
 PROTOC = protoc
 
 PROTO_PATH ?= ../..
-VERSIONS ?= v1alpha1
+VERSIONS ?= v1alpha2
 GOPATH ?= $(shell $(GO) env GOPATH)
 
 targets = $(addsuffix /packetbroker.pb.go, $(VERSIONS))

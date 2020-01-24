@@ -42,6 +42,12 @@ If you clone the API repository somewhere else, pass the import path where the `
 $ PROTO_PATH=<path> make
 ```
 
+By default, the latest version gets generated. You can set the version by passing `VERSION=<desired>` to `make`:
+
+```bash
+$ make VERSION=v1beta2
+```
+
 ## License
 
 The Go API is distributed under [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). See `LICENSE` for more information.

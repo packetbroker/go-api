@@ -1,4 +1,4 @@
-# Copyright 2019 The Things Industries B.V.
+# Copyright © 2019 The Things Industries B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ GO = go
 PROTOC = protoc
 
 PROTO_PATH ?= ../..
-VERSION ?= v1beta1
+VERSION ?= v1beta2
 GOPATH ?= $(shell $(GO) env GOPATH)
 
 targets = $(addsuffix /packetbroker.pb.go, $(VERSION))
@@ -35,7 +35,10 @@ clean:
 	@rm $(VERSION)/*.pb.go
 
 $(VERSION):
-	@mkdir -p $@
+	@mkdir -p $@ \
+		&& pushd $@ \
+		&& go mod init go.packetbroker.org/api/$@ \
+		&& popd
 
 $(targets): $(VERSION)/%.pb.go: $(VERSION)
 	$(PROTOC) -I=$(GOPATH)/src -I=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --gogofaster_out=plugins=grpc,\
@@ -46,6 +49,9 @@ Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:../../ \
 		--proto_path=$(PROTO_PATH) \
-		$(PROTO_PATH)/packetbroker/api/$(@D)/*.proto
+		$(PROTO_PATH)/packetbroker/api/$(@D)/*.proto \
+		&& pushd $(@D) \
+		&& go get -u ./... \
+		&& popd
 
 # vim: ft=make

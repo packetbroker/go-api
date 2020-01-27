@@ -35,10 +35,7 @@ clean:
 	@rm $(VERSION)/*.pb.go
 
 $(VERSION):
-	@mkdir -p $@ \
-		&& pushd $@ \
-		&& go mod init go.packetbroker.org/api/$@ \
-		&& popd
+	@mkdir -p $@
 
 $(targets): $(VERSION)/%.pb.go: $(VERSION)
 	$(PROTOC) -I=$(GOPATH)/src -I=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --gogofaster_out=plugins=grpc,\
@@ -49,9 +46,6 @@ Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:../../ \
 		--proto_path=$(PROTO_PATH) \
-		$(PROTO_PATH)/packetbroker/api/$(@D)/*.proto \
-		&& pushd $(@D) \
-		&& go get -u ./... \
-		&& popd
+		$(PROTO_PATH)/packetbroker/api/$(@D)/*.proto
 
 # vim: ft=make

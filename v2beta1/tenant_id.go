@@ -3,8 +3,10 @@
 package packetbroker
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 var tenantIDRegexp = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$")
@@ -29,6 +31,19 @@ func (t TenantID) Validate() error {
 		return fmt.Errorf("invalid tenant ID format")
 	}
 	return nil
+}
+
+// ParseTenantID parses the TenantID formatted with String().
+func ParseTenantID(s string) (TenantID, error) {
+	p := strings.SplitN(s, "/", 2)
+	if len(p) != 2 {
+		return TenantID{}, errors.New("invalid tenant ID format")
+	}
+	res := TenantID{ID: p[1]}
+	if err := res.NetID.UnmarshalText([]byte(p[0])); err != nil {
+		return TenantID{}, err
+	}
+	return res, res.Validate()
 }
 
 // TenantRequest is a request with a Tenant ID.

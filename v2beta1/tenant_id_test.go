@@ -18,7 +18,7 @@ func TestTenantID(t *testing.T) {
 	} {
 		t.Run(id, func(t *testing.T) {
 			tenantID := TenantID{
-				NetID: 0x0,
+				NetID: 0x13,
 				ID:    id,
 			}
 			if (tenantID.Validate() == nil) != ok {
@@ -26,6 +26,23 @@ func TestTenantID(t *testing.T) {
 					id,
 					map[bool]string{true: "valid", false: "invalid"}[ok],
 				)
+			}
+
+			formatted := tenantID.String()
+			parsed, err := ParseTenantID(formatted)
+			if err != nil {
+				if !ok {
+					return
+				}
+				t.Fatalf("Failed to parse tenant ID: %s", err)
+			} else if !ok {
+				t.Fatalf("Expected parse invalid tenant ID to fail")
+			}
+			if tenantID.ID == "" {
+				tenantID.ID = "default"
+			}
+			if tenantID != parsed {
+				t.Fatal("Expected parsed tenant ID to equal")
 			}
 		})
 	}

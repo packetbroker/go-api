@@ -18,7 +18,6 @@ PROTOC = protoc
 
 PROTO_PATH ?= ../..
 VERSION ?= v3
-GOPATH ?= $(shell $(GO) env GOPATH)
 
 targets = $(addsuffix /packetbroker.pb.go, $(VERSION))
 
@@ -27,8 +26,8 @@ all: $(targets)
 
 .PHONY: deps
 deps:
-	$(GO) get github.com/gogo/protobuf/protoc-gen-gogofaster
-	$(GO) get google.golang.org/grpc
+	$(GO) get -u google.golang.org/protobuf/cmd/protoc-gen-go@v1.25.0
+	$(GO) get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc@1f47ba4663831f2a9c28a62a7de3ff8bc45078f0
 
 .PHONY: clean
 clean:
@@ -38,14 +37,12 @@ $(VERSION):
 	@mkdir -p $@
 
 $(targets): $(VERSION)/%.pb.go: $(VERSION)
-	$(PROTOC) -I=$(GOPATH)/src -I=$(GOPATH)/src/github.com/gogo/protobuf/protobuf --gogofaster_out=plugins=grpc,\
-Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,\
-Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,\
-Mgoogle/protobuf/empty.proto=github.com/gogo/protobuf/types,\
-Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,\
-Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
-Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:../../ \
+	mkdir -p build
+	$(PROTOC) \
+		--go_out="build" \
+		--go-grpc_out="build" \
 		--proto_path=$(PROTO_PATH) \
 		$(PROTO_PATH)/packetbroker/api/$(@D)/*.proto
+	mv build/go.packetbroker.org/api/$(VERSION)/*.pb.go $(VERSION)/
 
 # vim: ft=make

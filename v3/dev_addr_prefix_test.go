@@ -8,7 +8,7 @@ import (
 )
 
 func TestDevAddrPrefix(t *testing.T) {
-	p := DevAddrPrefix{Value: 0x26011000, Length: 20}
+	p := &DevAddrPrefix{Value: 0x26011000, Length: 20}
 
 	if v := p.String(); v != "26011000/20" {
 		t.Fatalf("String() result %q does not equal %q", v, "26011000/20")
@@ -32,8 +32,8 @@ func TestDevAddrPrefix(t *testing.T) {
 	if err := p.UnmarshalText([]byte("27000000/8")); err != nil {
 		t.Fatalf("UnmarshalText() %v failed: %v", []byte("27000000/8"), err)
 	}
-	expected := DevAddrPrefix{Value: 0x27000000, Length: 8}
-	if p != expected {
+	expected := &DevAddrPrefix{Value: 0x27000000, Length: 8}
+	if p.Value != expected.Value || p.Length != expected.Length {
 		t.Fatalf("UnmarshalText() result %v does not equal %v", p, expected)
 	}
 }

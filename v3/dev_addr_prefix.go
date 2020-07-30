@@ -39,7 +39,10 @@ func (m *DevAddrPrefix) UnmarshalText(text []byte) error {
 }
 
 // Match returns true if the DevAddrPrefixes matches the given DevAddr.
-func (m DevAddrPrefix) Match(devAddr uint32) bool {
+func (m *DevAddrPrefix) Match(devAddr uint32) bool {
+	if m == nil {
+		return false
+	}
 	shift := 32 - m.Length
 	if shift < 0 {
 		shift = 0

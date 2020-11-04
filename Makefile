@@ -18,8 +18,13 @@ PROTOC = protoc
 
 PROTO_PATH ?= ../..
 VERSION ?= v3
+ROUTING_VERSION ?= v1
+MAPPING_VERSION ?= v1
 
-targets = $(addsuffix /packetbroker.pb.go, $(VERSION))
+protos = $(wildcard $(PROTO_PATH)/packetbroker/api/$(VERSION)/*.proto) \
+	$(wildcard $(PROTO_PATH)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \
+	$(wildcard $(PROTO_PATH)/packetbroker/api/mapping/$(MAPPING_VERSION)/*.proto)
+targets = $(patsubst $(PROTO_PATH)/packetbroker/api/%.proto,%.pb.go,$(protos))
 
 .PHONY: all
 all: $(targets)
@@ -27,22 +32,19 @@ all: $(targets)
 .PHONY: deps
 deps:
 	$(GO) get -u google.golang.org/protobuf/cmd/protoc-gen-go@v1.25.0
-	$(GO) get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc@1f47ba4663831f2a9c28a62a7de3ff8bc45078f0
+	$(GO) get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.0.1
 
 .PHONY: clean
 clean:
-	@rm $(VERSION)/*.pb.go
+	@rm $(targets)
 
-$(VERSION):
-	@mkdir -p $@
-
-$(targets): $(VERSION)/%.pb.go: $(VERSION)
-	mkdir -p build
-	$(PROTOC) \
+$(targets): $(protos)
+	@mkdir -p build $(@D)
+	@$(PROTOC) \
 		--go_out="build" \
 		--go-grpc_out="build" \
 		--proto_path=$(PROTO_PATH) \
 		$(PROTO_PATH)/packetbroker/api/$(@D)/*.proto
-	mv build/go.packetbroker.org/api/$(VERSION)/*.pb.go $(VERSION)/
+	@mv build/go.packetbroker.org/api/$(@D)/*.pb.go $(@D)/
 
 # vim: ft=make

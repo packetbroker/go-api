@@ -25,6 +25,11 @@ func (t TenantID) String() string {
 	return fmt.Sprintf("%s/%s", t.NetID, id)
 }
 
+// IsEmpty indicates whether the TenantID is empty.
+func (t TenantID) IsEmpty() bool {
+	return t.NetID == 0 && t.ID == ""
+}
+
 // Validate returns an error if the tenant ID is invalid.
 func (t TenantID) Validate() error {
 	if !tenantIDRegexp.MatchString(t.ID) {

@@ -7,7 +7,10 @@
 Use `go get` to retrieve the Go API.
 
 ```bash
-$ go get go.packetbroker.org/api
+$ go get go.packetbroker.org/api/v3
+$ go get go.packetbroker.org/api/routing/v1
+$ go get go.packetbroker.org/api/mapping/v1
+$ go get go.packetbroker.org/api/admin/v1
 ```
 
 ## Regenerating
@@ -40,12 +43,6 @@ If you clone the API repository somewhere else, pass the import path where the `
 
 ```bash
 $ PROTO_PATH=<path> make
-```
-
-By default, the latest version gets generated. You can set the version by passing `VERSION=<desired>` to `make`:
-
-```bash
-$ make VERSION=v1beta2
 ```
 
 ## License

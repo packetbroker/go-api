@@ -20,11 +20,13 @@ PROTO_PATH ?= ../..
 VERSION ?= v3
 ROUTING_VERSION ?= v1
 MAPPING_VERSION ?= v1
+IAM_VERSION ?= v1
 
 protos = $(wildcard $(PROTO_PATH)/packetbroker/api/$(VERSION)/*.proto) \
 	$(wildcard $(PROTO_PATH)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \
-	$(wildcard $(PROTO_PATH)/packetbroker/api/mapping/$(MAPPING_VERSION)/*.proto)
-targets = $(patsubst $(PROTO_PATH)/packetbroker/api/%.proto,%.pb.go,$(protos))
+	$(wildcard $(PROTO_PATH)/packetbroker/api/mapping/$(MAPPING_VERSION)/*.proto) \
+	$(wildcard $(PROTO_PATH)/packetbroker/api/iam/$(IAM_VERSION)/*.proto)
+targets = $(subst v1/,,$(patsubst $(PROTO_PATH)/packetbroker/api/%.proto,%.pb.go,$(protos)))
 
 .PHONY: all
 all: $(targets)
@@ -43,8 +45,7 @@ $(targets): $(protos)
 	@$(PROTOC) \
 		--go_out="build" \
 		--go-grpc_out="build" \
-		--proto_path=$(PROTO_PATH) \
-		$(PROTO_PATH)/packetbroker/api/$(@D)/*.proto
+		--proto_path=$(PROTO_PATH) $^
 	@mv build/go.packetbroker.org/api/$(@D)/*.pb.go $(@D)/
 
 # vim: ft=make

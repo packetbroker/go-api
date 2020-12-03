@@ -4,10 +4,10 @@ package packetbroker
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,9 +23,9 @@ type TenantManagerClient interface {
 	// Get tenant.
 	GetTenant(ctx context.Context, in *GetTenantRequest, opts ...grpc.CallOption) (*GetTenantResponse, error)
 	// Set tenant.
-	SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete tenant.
-	DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type tenantManagerClient struct {
@@ -54,8 +54,8 @@ func (c *tenantManagerClient) GetTenant(ctx context.Context, in *GetTenantReques
 	return out, nil
 }
 
-func (c *tenantManagerClient) SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *tenantManagerClient) SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.TenantManager/SetTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,8 +63,8 @@ func (c *tenantManagerClient) SetTenant(ctx context.Context, in *SetTenantReques
 	return out, nil
 }
 
-func (c *tenantManagerClient) DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *tenantManagerClient) DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.TenantManager/DeleteTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -81,9 +81,9 @@ type TenantManagerServer interface {
 	// Get tenant.
 	GetTenant(context.Context, *GetTenantRequest) (*GetTenantResponse, error)
 	// Set tenant.
-	SetTenant(context.Context, *SetTenantRequest) (*empty.Empty, error)
+	SetTenant(context.Context, *SetTenantRequest) (*emptypb.Empty, error)
 	// Delete tenant.
-	DeleteTenant(context.Context, *DeleteTenantRequest) (*empty.Empty, error)
+	DeleteTenant(context.Context, *DeleteTenantRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedTenantManagerServer()
 }
 
@@ -97,10 +97,10 @@ func (UnimplementedTenantManagerServer) ListTenants(context.Context, *ListTenant
 func (UnimplementedTenantManagerServer) GetTenant(context.Context, *GetTenantRequest) (*GetTenantResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTenant not implemented")
 }
-func (UnimplementedTenantManagerServer) SetTenant(context.Context, *SetTenantRequest) (*empty.Empty, error) {
+func (UnimplementedTenantManagerServer) SetTenant(context.Context, *SetTenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetTenant not implemented")
 }
-func (UnimplementedTenantManagerServer) DeleteTenant(context.Context, *DeleteTenantRequest) (*empty.Empty, error) {
+func (UnimplementedTenantManagerServer) DeleteTenant(context.Context, *DeleteTenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTenant not implemented")
 }
 func (UnimplementedTenantManagerServer) mustEmbedUnimplementedTenantManagerServer() {}
@@ -220,13 +220,13 @@ type RoutingPolicyManagerClient interface {
 	// Get the Default Routing Policy.
 	GetDefaultPolicy(ctx context.Context, in *GetDefaultRoutingPolicyRequest, opts ...grpc.CallOption) (*GetRoutingPolicyResponse, error)
 	// Set the Default Routing Policy.
-	SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// List the Routing Policies with Home Networks.
 	ListHomeNetworkPolicies(ctx context.Context, in *ListHomeNetworkRoutingPoliciesRequest, opts ...grpc.CallOption) (*ListHomeNetworkRoutingPoliciesResponse, error)
 	// Get the Routing Policy with the Home Network.
 	GetHomeNetworkPolicy(ctx context.Context, in *GetHomeNetworkRoutingPolicyRequest, opts ...grpc.CallOption) (*GetRoutingPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
-	SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type routingPolicyManagerClient struct {
@@ -246,8 +246,8 @@ func (c *routingPolicyManagerClient) GetDefaultPolicy(ctx context.Context, in *G
 	return out, nil
 }
 
-func (c *routingPolicyManagerClient) SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *routingPolicyManagerClient) SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.RoutingPolicyManager/SetDefaultPolicy", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -273,8 +273,8 @@ func (c *routingPolicyManagerClient) GetHomeNetworkPolicy(ctx context.Context, i
 	return out, nil
 }
 
-func (c *routingPolicyManagerClient) SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *routingPolicyManagerClient) SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.RoutingPolicyManager/SetHomeNetworkPolicy", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -289,13 +289,13 @@ type RoutingPolicyManagerServer interface {
 	// Get the Default Routing Policy.
 	GetDefaultPolicy(context.Context, *GetDefaultRoutingPolicyRequest) (*GetRoutingPolicyResponse, error)
 	// Set the Default Routing Policy.
-	SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error)
+	SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error)
 	// List the Routing Policies with Home Networks.
 	ListHomeNetworkPolicies(context.Context, *ListHomeNetworkRoutingPoliciesRequest) (*ListHomeNetworkRoutingPoliciesResponse, error)
 	// Get the Routing Policy with the Home Network.
 	GetHomeNetworkPolicy(context.Context, *GetHomeNetworkRoutingPolicyRequest) (*GetRoutingPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
-	SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error)
+	SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedRoutingPolicyManagerServer()
 }
 
@@ -306,7 +306,7 @@ type UnimplementedRoutingPolicyManagerServer struct {
 func (UnimplementedRoutingPolicyManagerServer) GetDefaultPolicy(context.Context, *GetDefaultRoutingPolicyRequest) (*GetRoutingPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultPolicy not implemented")
 }
-func (UnimplementedRoutingPolicyManagerServer) SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error) {
+func (UnimplementedRoutingPolicyManagerServer) SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultPolicy not implemented")
 }
 func (UnimplementedRoutingPolicyManagerServer) ListHomeNetworkPolicies(context.Context, *ListHomeNetworkRoutingPoliciesRequest) (*ListHomeNetworkRoutingPoliciesResponse, error) {
@@ -315,7 +315,7 @@ func (UnimplementedRoutingPolicyManagerServer) ListHomeNetworkPolicies(context.C
 func (UnimplementedRoutingPolicyManagerServer) GetHomeNetworkPolicy(context.Context, *GetHomeNetworkRoutingPolicyRequest) (*GetRoutingPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHomeNetworkPolicy not implemented")
 }
-func (UnimplementedRoutingPolicyManagerServer) SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error) {
+func (UnimplementedRoutingPolicyManagerServer) SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetHomeNetworkPolicy not implemented")
 }
 func (UnimplementedRoutingPolicyManagerServer) mustEmbedUnimplementedRoutingPolicyManagerServer() {}

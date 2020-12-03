@@ -4,11 +4,11 @@ package routingpb
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	v3 "go.packetbroker.org/api/v3"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -24,13 +24,13 @@ type PolicyManagerClient interface {
 	// Get the Default Routing Policy.
 	GetDefaultPolicy(ctx context.Context, in *GetDefaultPolicyRequest, opts ...grpc.CallOption) (*GetPolicyResponse, error)
 	// Set the Default Routing Policy.
-	SetDefaultPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetDefaultPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// List the Routing Policies with Home Networks.
 	ListHomeNetworkPolicies(ctx context.Context, in *ListHomeNetworkPoliciesRequest, opts ...grpc.CallOption) (*ListHomeNetworkPoliciesResponse, error)
 	// Get the Routing Policy with the Home Network.
 	GetHomeNetworkPolicy(ctx context.Context, in *GetHomeNetworkPolicyRequest, opts ...grpc.CallOption) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
-	SetHomeNetworkPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetHomeNetworkPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type policyManagerClient struct {
@@ -59,8 +59,8 @@ func (c *policyManagerClient) GetDefaultPolicy(ctx context.Context, in *GetDefau
 	return out, nil
 }
 
-func (c *policyManagerClient) SetDefaultPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *policyManagerClient) SetDefaultPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.routing.v1.PolicyManager/SetDefaultPolicy", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -86,8 +86,8 @@ func (c *policyManagerClient) GetHomeNetworkPolicy(ctx context.Context, in *GetH
 	return out, nil
 }
 
-func (c *policyManagerClient) SetHomeNetworkPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *policyManagerClient) SetHomeNetworkPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.routing.v1.PolicyManager/SetHomeNetworkPolicy", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,13 +104,13 @@ type PolicyManagerServer interface {
 	// Get the Default Routing Policy.
 	GetDefaultPolicy(context.Context, *GetDefaultPolicyRequest) (*GetPolicyResponse, error)
 	// Set the Default Routing Policy.
-	SetDefaultPolicy(context.Context, *SetPolicyRequest) (*empty.Empty, error)
+	SetDefaultPolicy(context.Context, *SetPolicyRequest) (*emptypb.Empty, error)
 	// List the Routing Policies with Home Networks.
 	ListHomeNetworkPolicies(context.Context, *ListHomeNetworkPoliciesRequest) (*ListHomeNetworkPoliciesResponse, error)
 	// Get the Routing Policy with the Home Network.
 	GetHomeNetworkPolicy(context.Context, *GetHomeNetworkPolicyRequest) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
-	SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*empty.Empty, error)
+	SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPolicyManagerServer()
 }
 
@@ -124,7 +124,7 @@ func (UnimplementedPolicyManagerServer) ListDefaultPolicies(context.Context, *Li
 func (UnimplementedPolicyManagerServer) GetDefaultPolicy(context.Context, *GetDefaultPolicyRequest) (*GetPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultPolicy not implemented")
 }
-func (UnimplementedPolicyManagerServer) SetDefaultPolicy(context.Context, *SetPolicyRequest) (*empty.Empty, error) {
+func (UnimplementedPolicyManagerServer) SetDefaultPolicy(context.Context, *SetPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultPolicy not implemented")
 }
 func (UnimplementedPolicyManagerServer) ListHomeNetworkPolicies(context.Context, *ListHomeNetworkPoliciesRequest) (*ListHomeNetworkPoliciesResponse, error) {
@@ -133,7 +133,7 @@ func (UnimplementedPolicyManagerServer) ListHomeNetworkPolicies(context.Context,
 func (UnimplementedPolicyManagerServer) GetHomeNetworkPolicy(context.Context, *GetHomeNetworkPolicyRequest) (*GetPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHomeNetworkPolicy not implemented")
 }
-func (UnimplementedPolicyManagerServer) SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*empty.Empty, error) {
+func (UnimplementedPolicyManagerServer) SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetHomeNetworkPolicy not implemented")
 }
 func (UnimplementedPolicyManagerServer) mustEmbedUnimplementedPolicyManagerServer() {}

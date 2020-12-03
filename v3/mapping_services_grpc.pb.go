@@ -4,10 +4,10 @@ package packetbroker
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -21,11 +21,11 @@ type GatewayVisibilityManagerClient interface {
 	// Get the Default Gateway Visibility.
 	GetDefaultVisibility(ctx context.Context, in *GetDefaultGatewayVisibilityRequest, opts ...grpc.CallOption) (*GetGatewayVisibilityResponse, error)
 	// Set the Default Gateway Visibility.
-	SetDefaultVisibility(ctx context.Context, in *SetDefaultGatewayVisibilityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetDefaultVisibility(ctx context.Context, in *SetDefaultGatewayVisibilityRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Get the Gateway Visibility with the Home Network.
 	GetHomeNetworkVisibility(ctx context.Context, in *GetHomeNetworkGatewayVisibilityRequest, opts ...grpc.CallOption) (*GetGatewayVisibilityResponse, error)
 	// Set the Gateway Visibility with the Home Network.
-	SetHomeNetworkVisibility(ctx context.Context, in *SetHomeNetworkGatewayVisibilityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetHomeNetworkVisibility(ctx context.Context, in *SetHomeNetworkGatewayVisibilityRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gatewayVisibilityManagerClient struct {
@@ -45,8 +45,8 @@ func (c *gatewayVisibilityManagerClient) GetDefaultVisibility(ctx context.Contex
 	return out, nil
 }
 
-func (c *gatewayVisibilityManagerClient) SetDefaultVisibility(ctx context.Context, in *SetDefaultGatewayVisibilityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *gatewayVisibilityManagerClient) SetDefaultVisibility(ctx context.Context, in *SetDefaultGatewayVisibilityRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.GatewayVisibilityManager/SetDefaultVisibility", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,8 +63,8 @@ func (c *gatewayVisibilityManagerClient) GetHomeNetworkVisibility(ctx context.Co
 	return out, nil
 }
 
-func (c *gatewayVisibilityManagerClient) SetHomeNetworkVisibility(ctx context.Context, in *SetHomeNetworkGatewayVisibilityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *gatewayVisibilityManagerClient) SetHomeNetworkVisibility(ctx context.Context, in *SetHomeNetworkGatewayVisibilityRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.GatewayVisibilityManager/SetHomeNetworkVisibility", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -79,11 +79,11 @@ type GatewayVisibilityManagerServer interface {
 	// Get the Default Gateway Visibility.
 	GetDefaultVisibility(context.Context, *GetDefaultGatewayVisibilityRequest) (*GetGatewayVisibilityResponse, error)
 	// Set the Default Gateway Visibility.
-	SetDefaultVisibility(context.Context, *SetDefaultGatewayVisibilityRequest) (*empty.Empty, error)
+	SetDefaultVisibility(context.Context, *SetDefaultGatewayVisibilityRequest) (*emptypb.Empty, error)
 	// Get the Gateway Visibility with the Home Network.
 	GetHomeNetworkVisibility(context.Context, *GetHomeNetworkGatewayVisibilityRequest) (*GetGatewayVisibilityResponse, error)
 	// Set the Gateway Visibility with the Home Network.
-	SetHomeNetworkVisibility(context.Context, *SetHomeNetworkGatewayVisibilityRequest) (*empty.Empty, error)
+	SetHomeNetworkVisibility(context.Context, *SetHomeNetworkGatewayVisibilityRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGatewayVisibilityManagerServer()
 }
 
@@ -94,13 +94,13 @@ type UnimplementedGatewayVisibilityManagerServer struct {
 func (UnimplementedGatewayVisibilityManagerServer) GetDefaultVisibility(context.Context, *GetDefaultGatewayVisibilityRequest) (*GetGatewayVisibilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultVisibility not implemented")
 }
-func (UnimplementedGatewayVisibilityManagerServer) SetDefaultVisibility(context.Context, *SetDefaultGatewayVisibilityRequest) (*empty.Empty, error) {
+func (UnimplementedGatewayVisibilityManagerServer) SetDefaultVisibility(context.Context, *SetDefaultGatewayVisibilityRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultVisibility not implemented")
 }
 func (UnimplementedGatewayVisibilityManagerServer) GetHomeNetworkVisibility(context.Context, *GetHomeNetworkGatewayVisibilityRequest) (*GetGatewayVisibilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHomeNetworkVisibility not implemented")
 }
-func (UnimplementedGatewayVisibilityManagerServer) SetHomeNetworkVisibility(context.Context, *SetHomeNetworkGatewayVisibilityRequest) (*empty.Empty, error) {
+func (UnimplementedGatewayVisibilityManagerServer) SetHomeNetworkVisibility(context.Context, *SetHomeNetworkGatewayVisibilityRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetHomeNetworkVisibility not implemented")
 }
 func (UnimplementedGatewayVisibilityManagerServer) mustEmbedUnimplementedGatewayVisibilityManagerServer() {
@@ -219,7 +219,7 @@ var _GatewayVisibilityManager_serviceDesc = grpc.ServiceDesc{
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ForwarderMapperClient interface {
 	// Update a gateway.
-	UpdateGateway(ctx context.Context, in *UpdateForwarderGatewayRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	UpdateGateway(ctx context.Context, in *UpdateForwarderGatewayRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type forwarderMapperClient struct {
@@ -230,8 +230,8 @@ func NewForwarderMapperClient(cc grpc.ClientConnInterface) ForwarderMapperClient
 	return &forwarderMapperClient{cc}
 }
 
-func (c *forwarderMapperClient) UpdateGateway(ctx context.Context, in *UpdateForwarderGatewayRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *forwarderMapperClient) UpdateGateway(ctx context.Context, in *UpdateForwarderGatewayRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.ForwarderMapper/UpdateGateway", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -244,7 +244,7 @@ func (c *forwarderMapperClient) UpdateGateway(ctx context.Context, in *UpdateFor
 // for forward compatibility
 type ForwarderMapperServer interface {
 	// Update a gateway.
-	UpdateGateway(context.Context, *UpdateForwarderGatewayRequest) (*empty.Empty, error)
+	UpdateGateway(context.Context, *UpdateForwarderGatewayRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedForwarderMapperServer()
 }
 
@@ -252,7 +252,7 @@ type ForwarderMapperServer interface {
 type UnimplementedForwarderMapperServer struct {
 }
 
-func (UnimplementedForwarderMapperServer) UpdateGateway(context.Context, *UpdateForwarderGatewayRequest) (*empty.Empty, error) {
+func (UnimplementedForwarderMapperServer) UpdateGateway(context.Context, *UpdateForwarderGatewayRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGateway not implemented")
 }
 func (UnimplementedForwarderMapperServer) mustEmbedUnimplementedForwarderMapperServer() {}

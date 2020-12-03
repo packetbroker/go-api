@@ -4,11 +4,11 @@ package iampb
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	v3 "go.packetbroker.org/api/v3"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -26,9 +26,9 @@ type NetworkRegistryClient interface {
 	// Get a network.
 	GetNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*v3.Network, error)
 	// Update a network.
-	UpdateNetwork(ctx context.Context, in *UpdateNetworkRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	UpdateNetwork(ctx context.Context, in *UpdateNetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete a network.
-	DeleteNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type networkRegistryClient struct {
@@ -66,8 +66,8 @@ func (c *networkRegistryClient) GetNetwork(ctx context.Context, in *NetworkReque
 	return out, nil
 }
 
-func (c *networkRegistryClient) UpdateNetwork(ctx context.Context, in *UpdateNetworkRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *networkRegistryClient) UpdateNetwork(ctx context.Context, in *UpdateNetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.NetworkRegistry/UpdateNetwork", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -75,8 +75,8 @@ func (c *networkRegistryClient) UpdateNetwork(ctx context.Context, in *UpdateNet
 	return out, nil
 }
 
-func (c *networkRegistryClient) DeleteNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *networkRegistryClient) DeleteNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.NetworkRegistry/DeleteNetwork", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -95,9 +95,9 @@ type NetworkRegistryServer interface {
 	// Get a network.
 	GetNetwork(context.Context, *NetworkRequest) (*v3.Network, error)
 	// Update a network.
-	UpdateNetwork(context.Context, *UpdateNetworkRequest) (*empty.Empty, error)
+	UpdateNetwork(context.Context, *UpdateNetworkRequest) (*emptypb.Empty, error)
 	// Delete a network.
-	DeleteNetwork(context.Context, *NetworkRequest) (*empty.Empty, error)
+	DeleteNetwork(context.Context, *NetworkRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedNetworkRegistryServer()
 }
 
@@ -114,10 +114,10 @@ func (UnimplementedNetworkRegistryServer) CreateNetwork(context.Context, *Create
 func (UnimplementedNetworkRegistryServer) GetNetwork(context.Context, *NetworkRequest) (*v3.Network, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNetwork not implemented")
 }
-func (UnimplementedNetworkRegistryServer) UpdateNetwork(context.Context, *UpdateNetworkRequest) (*empty.Empty, error) {
+func (UnimplementedNetworkRegistryServer) UpdateNetwork(context.Context, *UpdateNetworkRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNetwork not implemented")
 }
-func (UnimplementedNetworkRegistryServer) DeleteNetwork(context.Context, *NetworkRequest) (*empty.Empty, error) {
+func (UnimplementedNetworkRegistryServer) DeleteNetwork(context.Context, *NetworkRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNetwork not implemented")
 }
 func (UnimplementedNetworkRegistryServer) mustEmbedUnimplementedNetworkRegistryServer() {}
@@ -263,9 +263,9 @@ type TenantRegistryClient interface {
 	// Get a tenant.
 	GetTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*v3.Tenant, error)
 	// Update a tenant.
-	UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete a tenant.
-	DeleteTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type tenantRegistryClient struct {
@@ -303,8 +303,8 @@ func (c *tenantRegistryClient) GetTenant(ctx context.Context, in *TenantRequest,
 	return out, nil
 }
 
-func (c *tenantRegistryClient) UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *tenantRegistryClient) UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.TenantRegistry/UpdateTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -312,8 +312,8 @@ func (c *tenantRegistryClient) UpdateTenant(ctx context.Context, in *UpdateTenan
 	return out, nil
 }
 
-func (c *tenantRegistryClient) DeleteTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *tenantRegistryClient) DeleteTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.TenantRegistry/DeleteTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -332,9 +332,9 @@ type TenantRegistryServer interface {
 	// Get a tenant.
 	GetTenant(context.Context, *TenantRequest) (*v3.Tenant, error)
 	// Update a tenant.
-	UpdateTenant(context.Context, *UpdateTenantRequest) (*empty.Empty, error)
+	UpdateTenant(context.Context, *UpdateTenantRequest) (*emptypb.Empty, error)
 	// Delete a tenant.
-	DeleteTenant(context.Context, *TenantRequest) (*empty.Empty, error)
+	DeleteTenant(context.Context, *TenantRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedTenantRegistryServer()
 }
 
@@ -351,10 +351,10 @@ func (UnimplementedTenantRegistryServer) CreateTenant(context.Context, *CreateTe
 func (UnimplementedTenantRegistryServer) GetTenant(context.Context, *TenantRequest) (*v3.Tenant, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTenant not implemented")
 }
-func (UnimplementedTenantRegistryServer) UpdateTenant(context.Context, *UpdateTenantRequest) (*empty.Empty, error) {
+func (UnimplementedTenantRegistryServer) UpdateTenant(context.Context, *UpdateTenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTenant not implemented")
 }
-func (UnimplementedTenantRegistryServer) DeleteTenant(context.Context, *TenantRequest) (*empty.Empty, error) {
+func (UnimplementedTenantRegistryServer) DeleteTenant(context.Context, *TenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTenant not implemented")
 }
 func (UnimplementedTenantRegistryServer) mustEmbedUnimplementedTenantRegistryServer() {}
@@ -498,7 +498,7 @@ type APIKeyVaultClient interface {
 	// Create an API key.
 	CreateAPIKey(ctx context.Context, in *CreateAPIKeyRequest, opts ...grpc.CallOption) (*v3.APIKey, error)
 	// Delete an API key.
-	DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type aPIKeyVaultClient struct {
@@ -527,8 +527,8 @@ func (c *aPIKeyVaultClient) CreateAPIKey(ctx context.Context, in *CreateAPIKeyRe
 	return out, nil
 }
 
-func (c *aPIKeyVaultClient) DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *aPIKeyVaultClient) DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.APIKeyVault/DeleteAPIKey", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -545,7 +545,7 @@ type APIKeyVaultServer interface {
 	// Create an API key.
 	CreateAPIKey(context.Context, *CreateAPIKeyRequest) (*v3.APIKey, error)
 	// Delete an API key.
-	DeleteAPIKey(context.Context, *APIKeyRequest) (*empty.Empty, error)
+	DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAPIKeyVaultServer()
 }
 
@@ -559,7 +559,7 @@ func (UnimplementedAPIKeyVaultServer) ListAPIKeys(context.Context, *ListAPIKeysR
 func (UnimplementedAPIKeyVaultServer) CreateAPIKey(context.Context, *CreateAPIKeyRequest) (*v3.APIKey, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAPIKey not implemented")
 }
-func (UnimplementedAPIKeyVaultServer) DeleteAPIKey(context.Context, *APIKeyRequest) (*empty.Empty, error) {
+func (UnimplementedAPIKeyVaultServer) DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAPIKey not implemented")
 }
 func (UnimplementedAPIKeyVaultServer) mustEmbedUnimplementedAPIKeyVaultServer() {}

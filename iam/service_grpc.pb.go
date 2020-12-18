@@ -4,7 +4,6 @@ package iampb
 
 import (
 	context "context"
-	v3 "go.packetbroker.org/api/v3"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -22,9 +21,9 @@ type NetworkRegistryClient interface {
 	// List networks.
 	ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
 	// Create a network.
-	CreateNetwork(ctx context.Context, in *CreateNetworkRequest, opts ...grpc.CallOption) (*v3.Network, error)
+	CreateNetwork(ctx context.Context, in *CreateNetworkRequest, opts ...grpc.CallOption) (*CreateNetworkResponse, error)
 	// Get a network.
-	GetNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*v3.Network, error)
+	GetNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*GetNetworkResponse, error)
 	// Update a network.
 	UpdateNetwork(ctx context.Context, in *UpdateNetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete a network.
@@ -48,8 +47,8 @@ func (c *networkRegistryClient) ListNetworks(ctx context.Context, in *ListNetwor
 	return out, nil
 }
 
-func (c *networkRegistryClient) CreateNetwork(ctx context.Context, in *CreateNetworkRequest, opts ...grpc.CallOption) (*v3.Network, error) {
-	out := new(v3.Network)
+func (c *networkRegistryClient) CreateNetwork(ctx context.Context, in *CreateNetworkRequest, opts ...grpc.CallOption) (*CreateNetworkResponse, error) {
+	out := new(CreateNetworkResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.NetworkRegistry/CreateNetwork", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -57,8 +56,8 @@ func (c *networkRegistryClient) CreateNetwork(ctx context.Context, in *CreateNet
 	return out, nil
 }
 
-func (c *networkRegistryClient) GetNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*v3.Network, error) {
-	out := new(v3.Network)
+func (c *networkRegistryClient) GetNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*GetNetworkResponse, error) {
+	out := new(GetNetworkResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.NetworkRegistry/GetNetwork", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -91,9 +90,9 @@ type NetworkRegistryServer interface {
 	// List networks.
 	ListNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
 	// Create a network.
-	CreateNetwork(context.Context, *CreateNetworkRequest) (*v3.Network, error)
+	CreateNetwork(context.Context, *CreateNetworkRequest) (*CreateNetworkResponse, error)
 	// Get a network.
-	GetNetwork(context.Context, *NetworkRequest) (*v3.Network, error)
+	GetNetwork(context.Context, *NetworkRequest) (*GetNetworkResponse, error)
 	// Update a network.
 	UpdateNetwork(context.Context, *UpdateNetworkRequest) (*emptypb.Empty, error)
 	// Delete a network.
@@ -108,10 +107,10 @@ type UnimplementedNetworkRegistryServer struct {
 func (UnimplementedNetworkRegistryServer) ListNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNetworks not implemented")
 }
-func (UnimplementedNetworkRegistryServer) CreateNetwork(context.Context, *CreateNetworkRequest) (*v3.Network, error) {
+func (UnimplementedNetworkRegistryServer) CreateNetwork(context.Context, *CreateNetworkRequest) (*CreateNetworkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNetwork not implemented")
 }
-func (UnimplementedNetworkRegistryServer) GetNetwork(context.Context, *NetworkRequest) (*v3.Network, error) {
+func (UnimplementedNetworkRegistryServer) GetNetwork(context.Context, *NetworkRequest) (*GetNetworkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNetwork not implemented")
 }
 func (UnimplementedNetworkRegistryServer) UpdateNetwork(context.Context, *UpdateNetworkRequest) (*emptypb.Empty, error) {
@@ -259,9 +258,9 @@ type TenantRegistryClient interface {
 	// List a network's tenants.
 	ListTenants(ctx context.Context, in *ListTenantsRequest, opts ...grpc.CallOption) (*ListTenantsResponse, error)
 	// Create a tenant.
-	CreateTenant(ctx context.Context, in *CreateTenantRequest, opts ...grpc.CallOption) (*v3.Tenant, error)
+	CreateTenant(ctx context.Context, in *CreateTenantRequest, opts ...grpc.CallOption) (*CreateTenantResponse, error)
 	// Get a tenant.
-	GetTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*v3.Tenant, error)
+	GetTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*GetTenantResponse, error)
 	// Update a tenant.
 	UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete a tenant.
@@ -285,8 +284,8 @@ func (c *tenantRegistryClient) ListTenants(ctx context.Context, in *ListTenantsR
 	return out, nil
 }
 
-func (c *tenantRegistryClient) CreateTenant(ctx context.Context, in *CreateTenantRequest, opts ...grpc.CallOption) (*v3.Tenant, error) {
-	out := new(v3.Tenant)
+func (c *tenantRegistryClient) CreateTenant(ctx context.Context, in *CreateTenantRequest, opts ...grpc.CallOption) (*CreateTenantResponse, error) {
+	out := new(CreateTenantResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.TenantRegistry/CreateTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -294,8 +293,8 @@ func (c *tenantRegistryClient) CreateTenant(ctx context.Context, in *CreateTenan
 	return out, nil
 }
 
-func (c *tenantRegistryClient) GetTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*v3.Tenant, error) {
-	out := new(v3.Tenant)
+func (c *tenantRegistryClient) GetTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*GetTenantResponse, error) {
+	out := new(GetTenantResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.TenantRegistry/GetTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -328,9 +327,9 @@ type TenantRegistryServer interface {
 	// List a network's tenants.
 	ListTenants(context.Context, *ListTenantsRequest) (*ListTenantsResponse, error)
 	// Create a tenant.
-	CreateTenant(context.Context, *CreateTenantRequest) (*v3.Tenant, error)
+	CreateTenant(context.Context, *CreateTenantRequest) (*CreateTenantResponse, error)
 	// Get a tenant.
-	GetTenant(context.Context, *TenantRequest) (*v3.Tenant, error)
+	GetTenant(context.Context, *TenantRequest) (*GetTenantResponse, error)
 	// Update a tenant.
 	UpdateTenant(context.Context, *UpdateTenantRequest) (*emptypb.Empty, error)
 	// Delete a tenant.
@@ -345,10 +344,10 @@ type UnimplementedTenantRegistryServer struct {
 func (UnimplementedTenantRegistryServer) ListTenants(context.Context, *ListTenantsRequest) (*ListTenantsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTenants not implemented")
 }
-func (UnimplementedTenantRegistryServer) CreateTenant(context.Context, *CreateTenantRequest) (*v3.Tenant, error) {
+func (UnimplementedTenantRegistryServer) CreateTenant(context.Context, *CreateTenantRequest) (*CreateTenantResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTenant not implemented")
 }
-func (UnimplementedTenantRegistryServer) GetTenant(context.Context, *TenantRequest) (*v3.Tenant, error) {
+func (UnimplementedTenantRegistryServer) GetTenant(context.Context, *TenantRequest) (*GetTenantResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTenant not implemented")
 }
 func (UnimplementedTenantRegistryServer) UpdateTenant(context.Context, *UpdateTenantRequest) (*emptypb.Empty, error) {
@@ -496,7 +495,7 @@ type APIKeyVaultClient interface {
 	// List API keys.
 	ListAPIKeys(ctx context.Context, in *ListAPIKeysRequest, opts ...grpc.CallOption) (*ListAPIKeysResponse, error)
 	// Create an API key.
-	CreateAPIKey(ctx context.Context, in *CreateAPIKeyRequest, opts ...grpc.CallOption) (*v3.APIKey, error)
+	CreateAPIKey(ctx context.Context, in *CreateAPIKeyRequest, opts ...grpc.CallOption) (*CreateAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -518,8 +517,8 @@ func (c *aPIKeyVaultClient) ListAPIKeys(ctx context.Context, in *ListAPIKeysRequ
 	return out, nil
 }
 
-func (c *aPIKeyVaultClient) CreateAPIKey(ctx context.Context, in *CreateAPIKeyRequest, opts ...grpc.CallOption) (*v3.APIKey, error) {
-	out := new(v3.APIKey)
+func (c *aPIKeyVaultClient) CreateAPIKey(ctx context.Context, in *CreateAPIKeyRequest, opts ...grpc.CallOption) (*CreateAPIKeyResponse, error) {
+	out := new(CreateAPIKeyResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v1.APIKeyVault/CreateAPIKey", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -543,7 +542,7 @@ type APIKeyVaultServer interface {
 	// List API keys.
 	ListAPIKeys(context.Context, *ListAPIKeysRequest) (*ListAPIKeysResponse, error)
 	// Create an API key.
-	CreateAPIKey(context.Context, *CreateAPIKeyRequest) (*v3.APIKey, error)
+	CreateAPIKey(context.Context, *CreateAPIKeyRequest) (*CreateAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAPIKeyVaultServer()
@@ -556,7 +555,7 @@ type UnimplementedAPIKeyVaultServer struct {
 func (UnimplementedAPIKeyVaultServer) ListAPIKeys(context.Context, *ListAPIKeysRequest) (*ListAPIKeysResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAPIKeys not implemented")
 }
-func (UnimplementedAPIKeyVaultServer) CreateAPIKey(context.Context, *CreateAPIKeyRequest) (*v3.APIKey, error) {
+func (UnimplementedAPIKeyVaultServer) CreateAPIKey(context.Context, *CreateAPIKeyRequest) (*CreateAPIKeyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAPIKey not implemented")
 }
 func (UnimplementedAPIKeyVaultServer) DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error) {

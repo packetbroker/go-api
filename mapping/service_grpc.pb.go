@@ -305,10 +305,9 @@ var _ForwarderMapper_serviceDesc = grpc.ServiceDesc{
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type HomeNetworkMapperClient interface {
 	// List gateways.
-	// This rpc sets the total number of gateways in the x-total-count header.
 	ListGateways(ctx context.Context, in *ListHomeNetworkGatewaysRequest, opts ...grpc.CallOption) (*ListGatewaysResponse, error)
 	// Get a gateway.
-	GetGateway(ctx context.Context, in *GetHomeNetworkGatewayRequest, opts ...grpc.CallOption) (*v3.Gateway, error)
+	GetGateway(ctx context.Context, in *GetHomeNetworkGatewayRequest, opts ...grpc.CallOption) (*GetHomeNetworkGatewayResponse, error)
 	// Subscribe to gateway updates.
 	SubscribeGateway(ctx context.Context, in *SubscribeHomeNetworkGatewaysRequest, opts ...grpc.CallOption) (HomeNetworkMapper_SubscribeGatewayClient, error)
 }
@@ -330,8 +329,8 @@ func (c *homeNetworkMapperClient) ListGateways(ctx context.Context, in *ListHome
 	return out, nil
 }
 
-func (c *homeNetworkMapperClient) GetGateway(ctx context.Context, in *GetHomeNetworkGatewayRequest, opts ...grpc.CallOption) (*v3.Gateway, error) {
-	out := new(v3.Gateway)
+func (c *homeNetworkMapperClient) GetGateway(ctx context.Context, in *GetHomeNetworkGatewayRequest, opts ...grpc.CallOption) (*GetHomeNetworkGatewayResponse, error) {
+	out := new(GetHomeNetworkGatewayResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.mapping.v1.HomeNetworkMapper/GetGateway", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -376,10 +375,9 @@ func (x *homeNetworkMapperSubscribeGatewayClient) Recv() (*v3.Gateway, error) {
 // for forward compatibility
 type HomeNetworkMapperServer interface {
 	// List gateways.
-	// This rpc sets the total number of gateways in the x-total-count header.
 	ListGateways(context.Context, *ListHomeNetworkGatewaysRequest) (*ListGatewaysResponse, error)
 	// Get a gateway.
-	GetGateway(context.Context, *GetHomeNetworkGatewayRequest) (*v3.Gateway, error)
+	GetGateway(context.Context, *GetHomeNetworkGatewayRequest) (*GetHomeNetworkGatewayResponse, error)
 	// Subscribe to gateway updates.
 	SubscribeGateway(*SubscribeHomeNetworkGatewaysRequest, HomeNetworkMapper_SubscribeGatewayServer) error
 	mustEmbedUnimplementedHomeNetworkMapperServer()
@@ -392,7 +390,7 @@ type UnimplementedHomeNetworkMapperServer struct {
 func (UnimplementedHomeNetworkMapperServer) ListGateways(context.Context, *ListHomeNetworkGatewaysRequest) (*ListGatewaysResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListGateways not implemented")
 }
-func (UnimplementedHomeNetworkMapperServer) GetGateway(context.Context, *GetHomeNetworkGatewayRequest) (*v3.Gateway, error) {
+func (UnimplementedHomeNetworkMapperServer) GetGateway(context.Context, *GetHomeNetworkGatewayRequest) (*GetHomeNetworkGatewayResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGateway not implemented")
 }
 func (UnimplementedHomeNetworkMapperServer) SubscribeGateway(*SubscribeHomeNetworkGatewaysRequest, HomeNetworkMapper_SubscribeGatewayServer) error {

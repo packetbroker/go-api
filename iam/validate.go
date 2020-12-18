@@ -10,7 +10,7 @@ import (
 
 // Validate returns whether the request is valid.
 func (r *CreateNetworkRequest) Validate() error {
-	if r.Network == nil {
+	if r.GetNetwork() == nil {
 		return errors.New("network is required")
 	}
 	return nil
@@ -18,7 +18,7 @@ func (r *CreateNetworkRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *CreateTenantRequest) Validate() error {
-	if r.Tenant == nil {
+	if r.GetTenant() == nil {
 		return errors.New("tenant is required")
 	}
 	if err := packetbroker.RequestTenantID(r.Tenant).Validate(); err != nil {
@@ -42,7 +42,7 @@ func (r *UpdateTenantRequest) Validate() error {
 	if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
 		return err
 	}
-	for _, b := range r.DevAddrBlocks.GetValue() {
+	for _, b := range r.GetDevAddrBlocks().GetValue() {
 		if err := b.Validate(); err != nil {
 			return err
 		}
@@ -52,7 +52,7 @@ func (r *UpdateTenantRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *ListAPIKeysRequest) Validate() error {
-	if !packetbroker.ClusterIDRegex.MatchString(r.ClusterId) {
+	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
 		return errors.New("invalid Cluster ID format")
 	}
 	return packetbroker.RequestTenantID(r).Validate()
@@ -60,7 +60,7 @@ func (r *ListAPIKeysRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *CreateAPIKeyRequest) Validate() error {
-	if !packetbroker.ClusterIDRegex.MatchString(r.ClusterId) {
+	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
 		return errors.New("invalid Cluster ID format")
 	}
 	return packetbroker.RequestTenantID(r).Validate()
@@ -68,7 +68,7 @@ func (r *CreateAPIKeyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *APIKeyRequest) Validate() error {
-	if !packetbroker.APIKeyIDRegex.MatchString(r.KeyId) {
+	if !packetbroker.APIKeyIDRegex.MatchString(r.GetKeyId()) {
 		return errors.New("invalid API Key ID format")
 	}
 	return nil

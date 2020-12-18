@@ -23,7 +23,7 @@ func (r *GetTenantRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *SetTenantRequest) Validate() error {
-	if r.Tenant == nil {
+	if r.GetTenant() == nil {
 		return errors.New("tenant is required")
 	}
 	return RequestTenantID(r.Tenant).Validate()
@@ -54,7 +54,7 @@ func (r *GetHomeNetworkRoutingPolicyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *SetRoutingPolicyRequest) Validate() error {
-	if r.Policy == nil {
+	if r.GetPolicy() == nil {
 		return errors.New("policy is required")
 	}
 	if err := ForwarderTenantID(r.Policy).Validate(); err != nil {
@@ -65,7 +65,7 @@ func (r *SetRoutingPolicyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *PublishUplinkMessageRequest) Validate() error {
-	if !ClusterIDRegex.MatchString(r.ForwarderClusterId) {
+	if !ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
 	return ForwarderTenantID(r).Validate()
@@ -73,7 +73,7 @@ func (r *PublishUplinkMessageRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *PublishDownlinkMessageRequest) Validate() error {
-	if !ClusterIDRegex.MatchString(r.ForwarderClusterId) {
+	if !ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
 	if err := ForwarderTenantID(r).Validate(); err != nil {
@@ -84,10 +84,10 @@ func (r *PublishDownlinkMessageRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *SubscribeForwarderRequest) Validate() error {
-	if !ClusterIDRegex.MatchString(r.ForwarderClusterId) {
+	if !ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
-	if !SubscriptionGroupRegexp.MatchString(r.Group) {
+	if !SubscriptionGroupRegexp.MatchString(r.GetGroup()) {
 		return errors.New("invalid subscription group format")
 	}
 	return ForwarderTenantID(r).Validate()
@@ -95,7 +95,7 @@ func (r *SubscribeForwarderRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *SubscribeHomeNetworkRequest) Validate() error {
-	if !SubscriptionGroupRegexp.MatchString(r.Group) {
+	if !SubscriptionGroupRegexp.MatchString(r.GetGroup()) {
 		return errors.New("invalid subscription group format")
 	}
 	return HomeNetworkTenantID(r).Validate()
@@ -103,7 +103,7 @@ func (r *SubscribeHomeNetworkRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *RouteUplinkMessageRequest) Validate() error {
-	if r.Message == nil {
+	if r.GetMessage() == nil {
 		return errors.New("message is required")
 	}
 	if err := ForwarderTenantID(r.Message).Validate(); err != nil {
@@ -114,7 +114,7 @@ func (r *RouteUplinkMessageRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *RouteDownlinkMessageRequest) Validate() error {
-	if r.Message == nil {
+	if r.GetMessage() == nil {
 		return errors.New("message is required")
 	}
 	if err := ForwarderTenantID(r.Message).Validate(); err != nil {
@@ -125,7 +125,7 @@ func (r *RouteDownlinkMessageRequest) Validate() error {
 
 // Validate returns whether the DevAddrPrefix is valid.
 func (pf *DevAddrPrefix) Validate() error {
-	if pf.Length > 32 {
+	if pf.GetLength() > 32 {
 		return errors.New("length too long")
 	}
 	return nil
@@ -133,7 +133,10 @@ func (pf *DevAddrPrefix) Validate() error {
 
 // Validate returns whether the DevAddrPrefix is valid.
 func (b *DevAddrBlock) Validate() error {
-	if !ClusterIDRegex.MatchString(b.HomeNetworkClusterId) {
+	if b.GetPrefix() == nil {
+		return errors.New("prefix is required")
+	}
+	if !ClusterIDRegex.MatchString(b.GetHomeNetworkClusterId()) {
 		return errors.New("invalid cluster ID format")
 	}
 	return b.Prefix.Validate()

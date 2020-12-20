@@ -23,6 +23,30 @@ func (n *NetID) UnmarshalText(buf []byte) error {
 	return err
 }
 
+// DevAddrPrefix returns the DevAddr prefix.
+func (n NetID) DevAddrPrefix() DevAddrPrefix {
+	switch n >> 21 {
+	case 0b000:
+		return DevAddrPrefix{Value: 0b0_000000_0000000000000000000000000 + uint32(n)&0b111111<<25, Length: 32 - 25}
+	case 0b001:
+		return DevAddrPrefix{Value: 0b10_000000_000000000000000000000000 + uint32(n)&0b111111<<24, Length: 32 - 24}
+	case 0b010:
+		return DevAddrPrefix{Value: 0b110_000000000_00000000000000000000 + uint32(n)&0b111111111<<20, Length: 32 - 20}
+	case 0b011:
+		return DevAddrPrefix{Value: 0b1110_00000000000_00000000000000000 + uint32(n)&0b11111111111<<17, Length: 32 - 17}
+	case 0b100:
+		return DevAddrPrefix{Value: 0b11110_000000000000_000000000000000 + uint32(n)&0b111111111111<<15, Length: 32 - 15}
+	case 0b101:
+		return DevAddrPrefix{Value: 0b111110_0000000000000_0000000000000 + uint32(n)&0b1111111111111<<13, Length: 32 - 13}
+	case 0b110:
+		return DevAddrPrefix{Value: 0b1111110_000000000000000_0000000000 + uint32(n)&0b111111111111111<<10, Length: 32 - 10}
+	case 0b111:
+		return DevAddrPrefix{Value: 0b11111110_00000000000000000_0000000 + uint32(n)&0b11111111111111111<<7, Length: 32 - 7}
+	default:
+		panic("unreachable")
+	}
+}
+
 // NetIDFromDevAddr returns the NetID from the given DevAddr.
 // See https://lora-alliance.org/sites/default/files/2019-08/tc22-00003.000.cr-be-type3-type4-netid-correction.pdf.
 func NetIDFromDevAddr(devAddr uint32) (NetID, bool) {

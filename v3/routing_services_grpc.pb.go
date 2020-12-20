@@ -4,15 +4,15 @@ package packetbroker
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion6
+const _ = grpc.SupportPackageIsVersion7
 
 // TenantManagerClient is the client API for TenantManager service.
 //
@@ -23,9 +23,9 @@ type TenantManagerClient interface {
 	// Get tenant.
 	GetTenant(ctx context.Context, in *GetTenantRequest, opts ...grpc.CallOption) (*GetTenantResponse, error)
 	// Set tenant.
-	SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete tenant.
-	DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type tenantManagerClient struct {
@@ -54,8 +54,8 @@ func (c *tenantManagerClient) GetTenant(ctx context.Context, in *GetTenantReques
 	return out, nil
 }
 
-func (c *tenantManagerClient) SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *tenantManagerClient) SetTenant(ctx context.Context, in *SetTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.TenantManager/SetTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,8 +63,8 @@ func (c *tenantManagerClient) SetTenant(ctx context.Context, in *SetTenantReques
 	return out, nil
 }
 
-func (c *tenantManagerClient) DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *tenantManagerClient) DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.TenantManager/DeleteTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -81,9 +81,9 @@ type TenantManagerServer interface {
 	// Get tenant.
 	GetTenant(context.Context, *GetTenantRequest) (*GetTenantResponse, error)
 	// Set tenant.
-	SetTenant(context.Context, *SetTenantRequest) (*empty.Empty, error)
+	SetTenant(context.Context, *SetTenantRequest) (*emptypb.Empty, error)
 	// Delete tenant.
-	DeleteTenant(context.Context, *DeleteTenantRequest) (*empty.Empty, error)
+	DeleteTenant(context.Context, *DeleteTenantRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedTenantManagerServer()
 }
 
@@ -91,21 +91,28 @@ type TenantManagerServer interface {
 type UnimplementedTenantManagerServer struct {
 }
 
-func (*UnimplementedTenantManagerServer) ListTenants(context.Context, *ListTenantsRequest) (*ListTenantsResponse, error) {
+func (UnimplementedTenantManagerServer) ListTenants(context.Context, *ListTenantsRequest) (*ListTenantsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTenants not implemented")
 }
-func (*UnimplementedTenantManagerServer) GetTenant(context.Context, *GetTenantRequest) (*GetTenantResponse, error) {
+func (UnimplementedTenantManagerServer) GetTenant(context.Context, *GetTenantRequest) (*GetTenantResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTenant not implemented")
 }
-func (*UnimplementedTenantManagerServer) SetTenant(context.Context, *SetTenantRequest) (*empty.Empty, error) {
+func (UnimplementedTenantManagerServer) SetTenant(context.Context, *SetTenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetTenant not implemented")
 }
-func (*UnimplementedTenantManagerServer) DeleteTenant(context.Context, *DeleteTenantRequest) (*empty.Empty, error) {
+func (UnimplementedTenantManagerServer) DeleteTenant(context.Context, *DeleteTenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTenant not implemented")
 }
-func (*UnimplementedTenantManagerServer) mustEmbedUnimplementedTenantManagerServer() {}
+func (UnimplementedTenantManagerServer) mustEmbedUnimplementedTenantManagerServer() {}
 
-func RegisterTenantManagerServer(s *grpc.Server, srv TenantManagerServer) {
+// UnsafeTenantManagerServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TenantManagerServer will
+// result in compilation errors.
+type UnsafeTenantManagerServer interface {
+	mustEmbedUnimplementedTenantManagerServer()
+}
+
+func RegisterTenantManagerServer(s grpc.ServiceRegistrar, srv TenantManagerServer) {
 	s.RegisterService(&_TenantManager_serviceDesc, srv)
 }
 
@@ -213,13 +220,13 @@ type RoutingPolicyManagerClient interface {
 	// Get the Default Routing Policy.
 	GetDefaultPolicy(ctx context.Context, in *GetDefaultRoutingPolicyRequest, opts ...grpc.CallOption) (*GetRoutingPolicyResponse, error)
 	// Set the Default Routing Policy.
-	SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// List the Routing Policies with Home Networks.
 	ListHomeNetworkPolicies(ctx context.Context, in *ListHomeNetworkRoutingPoliciesRequest, opts ...grpc.CallOption) (*ListHomeNetworkRoutingPoliciesResponse, error)
 	// Get the Routing Policy with the Home Network.
 	GetHomeNetworkPolicy(ctx context.Context, in *GetHomeNetworkRoutingPolicyRequest, opts ...grpc.CallOption) (*GetRoutingPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
-	SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type routingPolicyManagerClient struct {
@@ -239,8 +246,8 @@ func (c *routingPolicyManagerClient) GetDefaultPolicy(ctx context.Context, in *G
 	return out, nil
 }
 
-func (c *routingPolicyManagerClient) SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *routingPolicyManagerClient) SetDefaultPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.RoutingPolicyManager/SetDefaultPolicy", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -266,8 +273,8 @@ func (c *routingPolicyManagerClient) GetHomeNetworkPolicy(ctx context.Context, i
 	return out, nil
 }
 
-func (c *routingPolicyManagerClient) SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *routingPolicyManagerClient) SetHomeNetworkPolicy(ctx context.Context, in *SetRoutingPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.v3.RoutingPolicyManager/SetHomeNetworkPolicy", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -282,13 +289,13 @@ type RoutingPolicyManagerServer interface {
 	// Get the Default Routing Policy.
 	GetDefaultPolicy(context.Context, *GetDefaultRoutingPolicyRequest) (*GetRoutingPolicyResponse, error)
 	// Set the Default Routing Policy.
-	SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error)
+	SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error)
 	// List the Routing Policies with Home Networks.
 	ListHomeNetworkPolicies(context.Context, *ListHomeNetworkRoutingPoliciesRequest) (*ListHomeNetworkRoutingPoliciesResponse, error)
 	// Get the Routing Policy with the Home Network.
 	GetHomeNetworkPolicy(context.Context, *GetHomeNetworkRoutingPolicyRequest) (*GetRoutingPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
-	SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error)
+	SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedRoutingPolicyManagerServer()
 }
 
@@ -296,24 +303,31 @@ type RoutingPolicyManagerServer interface {
 type UnimplementedRoutingPolicyManagerServer struct {
 }
 
-func (*UnimplementedRoutingPolicyManagerServer) GetDefaultPolicy(context.Context, *GetDefaultRoutingPolicyRequest) (*GetRoutingPolicyResponse, error) {
+func (UnimplementedRoutingPolicyManagerServer) GetDefaultPolicy(context.Context, *GetDefaultRoutingPolicyRequest) (*GetRoutingPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultPolicy not implemented")
 }
-func (*UnimplementedRoutingPolicyManagerServer) SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error) {
+func (UnimplementedRoutingPolicyManagerServer) SetDefaultPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultPolicy not implemented")
 }
-func (*UnimplementedRoutingPolicyManagerServer) ListHomeNetworkPolicies(context.Context, *ListHomeNetworkRoutingPoliciesRequest) (*ListHomeNetworkRoutingPoliciesResponse, error) {
+func (UnimplementedRoutingPolicyManagerServer) ListHomeNetworkPolicies(context.Context, *ListHomeNetworkRoutingPoliciesRequest) (*ListHomeNetworkRoutingPoliciesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHomeNetworkPolicies not implemented")
 }
-func (*UnimplementedRoutingPolicyManagerServer) GetHomeNetworkPolicy(context.Context, *GetHomeNetworkRoutingPolicyRequest) (*GetRoutingPolicyResponse, error) {
+func (UnimplementedRoutingPolicyManagerServer) GetHomeNetworkPolicy(context.Context, *GetHomeNetworkRoutingPolicyRequest) (*GetRoutingPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHomeNetworkPolicy not implemented")
 }
-func (*UnimplementedRoutingPolicyManagerServer) SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*empty.Empty, error) {
+func (UnimplementedRoutingPolicyManagerServer) SetHomeNetworkPolicy(context.Context, *SetRoutingPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetHomeNetworkPolicy not implemented")
 }
-func (*UnimplementedRoutingPolicyManagerServer) mustEmbedUnimplementedRoutingPolicyManagerServer() {}
+func (UnimplementedRoutingPolicyManagerServer) mustEmbedUnimplementedRoutingPolicyManagerServer() {}
 
-func RegisterRoutingPolicyManagerServer(s *grpc.Server, srv RoutingPolicyManagerServer) {
+// UnsafeRoutingPolicyManagerServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RoutingPolicyManagerServer will
+// result in compilation errors.
+type UnsafeRoutingPolicyManagerServer interface {
+	mustEmbedUnimplementedRoutingPolicyManagerServer()
+}
+
+func RegisterRoutingPolicyManagerServer(s grpc.ServiceRegistrar, srv RoutingPolicyManagerServer) {
 	s.RegisterService(&_RoutingPolicyManager_serviceDesc, srv)
 }
 
@@ -510,15 +524,22 @@ type RouterForwarderDataServer interface {
 type UnimplementedRouterForwarderDataServer struct {
 }
 
-func (*UnimplementedRouterForwarderDataServer) Publish(context.Context, *PublishUplinkMessageRequest) (*PublishUplinkMessageResponse, error) {
+func (UnimplementedRouterForwarderDataServer) Publish(context.Context, *PublishUplinkMessageRequest) (*PublishUplinkMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
-func (*UnimplementedRouterForwarderDataServer) Subscribe(*SubscribeForwarderRequest, RouterForwarderData_SubscribeServer) error {
+func (UnimplementedRouterForwarderDataServer) Subscribe(*SubscribeForwarderRequest, RouterForwarderData_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
-func (*UnimplementedRouterForwarderDataServer) mustEmbedUnimplementedRouterForwarderDataServer() {}
+func (UnimplementedRouterForwarderDataServer) mustEmbedUnimplementedRouterForwarderDataServer() {}
 
-func RegisterRouterForwarderDataServer(s *grpc.Server, srv RouterForwarderDataServer) {
+// UnsafeRouterForwarderDataServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RouterForwarderDataServer will
+// result in compilation errors.
+type UnsafeRouterForwarderDataServer interface {
+	mustEmbedUnimplementedRouterForwarderDataServer()
+}
+
+func RegisterRouterForwarderDataServer(s grpc.ServiceRegistrar, srv RouterForwarderDataServer) {
 	s.RegisterService(&_RouterForwarderData_serviceDesc, srv)
 }
 
@@ -654,16 +675,22 @@ type RouterHomeNetworkDataServer interface {
 type UnimplementedRouterHomeNetworkDataServer struct {
 }
 
-func (*UnimplementedRouterHomeNetworkDataServer) Publish(context.Context, *PublishDownlinkMessageRequest) (*PublishDownlinkMessageResponse, error) {
+func (UnimplementedRouterHomeNetworkDataServer) Publish(context.Context, *PublishDownlinkMessageRequest) (*PublishDownlinkMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
-func (*UnimplementedRouterHomeNetworkDataServer) Subscribe(*SubscribeHomeNetworkRequest, RouterHomeNetworkData_SubscribeServer) error {
+func (UnimplementedRouterHomeNetworkDataServer) Subscribe(*SubscribeHomeNetworkRequest, RouterHomeNetworkData_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
-func (*UnimplementedRouterHomeNetworkDataServer) mustEmbedUnimplementedRouterHomeNetworkDataServer() {
+func (UnimplementedRouterHomeNetworkDataServer) mustEmbedUnimplementedRouterHomeNetworkDataServer() {}
+
+// UnsafeRouterHomeNetworkDataServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RouterHomeNetworkDataServer will
+// result in compilation errors.
+type UnsafeRouterHomeNetworkDataServer interface {
+	mustEmbedUnimplementedRouterHomeNetworkDataServer()
 }
 
-func RegisterRouterHomeNetworkDataServer(s *grpc.Server, srv RouterHomeNetworkDataServer) {
+func RegisterRouterHomeNetworkDataServer(s grpc.ServiceRegistrar, srv RouterHomeNetworkDataServer) {
 	s.RegisterService(&_RouterHomeNetworkData_serviceDesc, srv)
 }
 
@@ -776,15 +803,22 @@ type RouterRouterDataServer interface {
 type UnimplementedRouterRouterDataServer struct {
 }
 
-func (*UnimplementedRouterRouterDataServer) RouteUplink(context.Context, *RouteUplinkMessageRequest) (*RouteMessageResponse, error) {
+func (UnimplementedRouterRouterDataServer) RouteUplink(context.Context, *RouteUplinkMessageRequest) (*RouteMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RouteUplink not implemented")
 }
-func (*UnimplementedRouterRouterDataServer) RouteDownlink(context.Context, *RouteDownlinkMessageRequest) (*RouteMessageResponse, error) {
+func (UnimplementedRouterRouterDataServer) RouteDownlink(context.Context, *RouteDownlinkMessageRequest) (*RouteMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RouteDownlink not implemented")
 }
-func (*UnimplementedRouterRouterDataServer) mustEmbedUnimplementedRouterRouterDataServer() {}
+func (UnimplementedRouterRouterDataServer) mustEmbedUnimplementedRouterRouterDataServer() {}
 
-func RegisterRouterRouterDataServer(s *grpc.Server, srv RouterRouterDataServer) {
+// UnsafeRouterRouterDataServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RouterRouterDataServer will
+// result in compilation errors.
+type UnsafeRouterRouterDataServer interface {
+	mustEmbedUnimplementedRouterRouterDataServer()
+}
+
+func RegisterRouterRouterDataServer(s grpc.ServiceRegistrar, srv RouterRouterDataServer) {
 	s.RegisterService(&_RouterRouterData_serviceDesc, srv)
 }
 

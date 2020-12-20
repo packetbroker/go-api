@@ -10,8 +10,10 @@ import (
 func TestDevAddrPrefix(t *testing.T) {
 	p := &DevAddrPrefix{Value: 0x26011000, Length: 20}
 
-	if v := p.String(); v != "26011000/20" {
-		t.Fatalf("String() result %q does not equal %q", v, "26011000/20")
+	if v, err := p.MarshalText(); err != nil {
+		t.Fatalf("MarshalText() failed: %v", err)
+	} else if string(v) != "26011000/20" {
+		t.Fatalf("MarshalText() result %q does not equal %q", v, "26011000/20")
 	}
 
 	if !p.Match(0x26011abc) {

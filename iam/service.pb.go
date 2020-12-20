@@ -3449,9 +3449,9 @@ func NewPopulatedListTenantsRequest(r randyService, easy bool) *ListTenantsReque
 func NewPopulatedListTenantsResponse(r randyService, easy bool) *ListTenantsResponse {
 	this := &ListTenantsResponse{}
 	if r.Intn(5) != 0 {
-		v3 := r.Intn(5)
-		this.Tenants = make([]*v3.Tenant, v3)
-		for i := 0; i < v3; i++ {
+		v := r.Intn(5)
+		this.Tenants = make([]*v3.Tenant, v)
+		for i := 0; i < v; i++ {
 			this.Tenants[i] = v3.NewPopulatedTenant(r, easy)
 		}
 	}

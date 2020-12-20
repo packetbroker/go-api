@@ -3569,9 +3569,9 @@ func NewPopulatedSubscribeHomeNetworkRequest(r randyService, easy bool) *Subscri
 	this.HomeNetworkClusterId = string(randStringService(r))
 	this.HomeNetworkTenantId = string(randStringService(r))
 	if r.Intn(5) != 0 {
-		v3 := r.Intn(5)
-		this.Filters = make([]*v3.RoutingFilter, v3)
-		for i := 0; i < v3; i++ {
+		v := r.Intn(5)
+		this.Filters = make([]*v3.RoutingFilter, v)
+		for i := 0; i < v; i++ {
 			this.Filters[i] = v3.NewPopulatedRoutingFilter(r, easy)
 		}
 	}

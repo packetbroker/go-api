@@ -5,6 +5,7 @@ package routingpb
 import (
 	"errors"
 
+	pbtypes "github.com/gogo/protobuf/types"
 	packetbroker "go.packetbroker.org/api/v3"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -12,7 +13,7 @@ import (
 
 // Validate returns whether the request is valid.
 func (r *ListDefaultPoliciesRequest) Validate() error {
-	if err := r.GetUpdatedSince().CheckValid(); err != nil && r.GetUpdatedSince() != nil {
+	if _, err := pbtypes.TimestampFromProto(r.GetUpdatedSince()); err != nil && r.GetUpdatedSince() != nil {
 		return status.Error(codes.InvalidArgument, "invalid updated_since")
 	}
 	return nil
@@ -25,7 +26,7 @@ func (r *GetDefaultPolicyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *ListHomeNetworkPoliciesRequest) Validate() error {
-	if err := r.GetUpdatedSince().CheckValid(); err != nil && r.GetUpdatedSince() != nil {
+	if _, err := pbtypes.TimestampFromProto(r.GetUpdatedSince()); err != nil && r.GetUpdatedSince() != nil {
 		return status.Error(codes.InvalidArgument, "invalid updated_since")
 	}
 	return packetbroker.ForwarderTenantID(r).Validate()

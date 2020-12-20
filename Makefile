@@ -14,13 +14,21 @@
 
 SHELL = bash
 GO = go
-PROTOC = protoc
+DOCKER = docker
 
 PROTO_PATH ?= ../..
 VERSION ?= v3
 ROUTING_VERSION ?= v1
 MAPPING_VERSION ?= v1
 IAM_VERSION ?= v1
+PROTOC_IMAGE = thethingsindustries/protoc:3.1.28-tts
+
+PROTOC = $(DOCKER) run --rm \
+	--mount type=bind,src=$(abspath $(PROTO_PATH))/packetbroker,dst=/src/packetbroker \
+	--mount type=bind,src=$(PWD),dst=/out/go.packetbroker.org/api \
+	$(PROTOC_IMAGE) \
+	-I/src \
+	--gogottn_out=plugins=grpc,Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/empty.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:/out
 
 protos = $(wildcard $(PROTO_PATH)/packetbroker/api/$(VERSION)/*.proto) \
 	$(wildcard $(PROTO_PATH)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \
@@ -33,19 +41,16 @@ all: $(targets)
 
 .PHONY: deps
 deps:
-	$(GO) get -u google.golang.org/protobuf/cmd/protoc-gen-go@v1.25.0
-	$(GO) get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.0.1
+	$(DOCKER) pull $(PROTOC_IMAGE)
 
 .PHONY: clean
 clean:
 	@rm $(targets)
 
 $(targets): $(protos)
-	@mkdir -p build $(@D)
-	@$(PROTOC) \
-		--go_out="build" \
-		--go-grpc_out="build" \
-		--proto_path=$(PROTO_PATH) $^
-	@mv build/go.packetbroker.org/api/$(@D)/*.pb.go $(@D)/
+	$(PROTOC) /src/packetbroker/api/$(VERSION)/*.proto
+	$(PROTOC) /src/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto
+	$(PROTOC) /src/packetbroker/api/mapping/$(MAPPING_VERSION)/*.proto
+	$(PROTOC) /src/packetbroker/api/iam/$(IAM_VERSION)/*.proto
 
 # vim: ft=make

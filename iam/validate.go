@@ -55,7 +55,10 @@ func (r *ListAPIKeysRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
 		return errors.New("invalid Cluster ID format")
 	}
-	return packetbroker.RequestTenantID(r).Validate()
+	if r.GetTenantId() != "" {
+		return packetbroker.RequestTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -63,7 +66,10 @@ func (r *CreateAPIKeyRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
 		return errors.New("invalid Cluster ID format")
 	}
-	return packetbroker.RequestTenantID(r).Validate()
+	if r.GetTenantId() != "" {
+		return packetbroker.RequestTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.

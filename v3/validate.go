@@ -36,20 +36,31 @@ func (r *DeleteTenantRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *GetDefaultRoutingPolicyRequest) Validate() error {
-	return ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *ListHomeNetworkRoutingPoliciesRequest) Validate() error {
-	return ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *GetHomeNetworkRoutingPolicyRequest) Validate() error {
-	if err := ForwarderTenantID(r).Validate(); err != nil {
-		return err
+	if r.GetForwarderTenantId() != "" {
+		if err := ForwarderTenantID(r).Validate(); err != nil {
+			return err
+		}
 	}
-	return HomeNetworkTenantID(r).Validate()
+	if r.GetHomeNetworkTenantId() != "" {
+		return HomeNetworkTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -57,10 +68,15 @@ func (r *SetRoutingPolicyRequest) Validate() error {
 	if r.GetPolicy() == nil {
 		return errors.New("policy is required")
 	}
-	if err := ForwarderTenantID(r.Policy).Validate(); err != nil {
-		return err
+	if r.GetPolicy().GetForwarderTenantId() != "" {
+		if err := ForwarderTenantID(r.Policy).Validate(); err != nil {
+			return err
+		}
 	}
-	return HomeNetworkTenantID(r.Policy).Validate()
+	if r.GetPolicy().GetHomeNetworkTenantId() != "" {
+		return HomeNetworkTenantID(r.Policy).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -68,7 +84,10 @@ func (r *PublishUplinkMessageRequest) Validate() error {
 	if !ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
-	return ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -76,10 +95,15 @@ func (r *PublishDownlinkMessageRequest) Validate() error {
 	if !ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
-	if err := ForwarderTenantID(r).Validate(); err != nil {
-		return err
+	if r.GetForwarderTenantId() != "" {
+		if err := ForwarderTenantID(r).Validate(); err != nil {
+			return err
+		}
 	}
-	return HomeNetworkTenantID(r).Validate()
+	if r.GetHomeNetworkTenantId() != "" {
+		return HomeNetworkTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -90,7 +114,10 @@ func (r *SubscribeForwarderRequest) Validate() error {
 	if !SubscriptionGroupRegexp.MatchString(r.GetGroup()) {
 		return errors.New("invalid subscription group format")
 	}
-	return ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -98,7 +125,10 @@ func (r *SubscribeHomeNetworkRequest) Validate() error {
 	if !SubscriptionGroupRegexp.MatchString(r.GetGroup()) {
 		return errors.New("invalid subscription group format")
 	}
-	return HomeNetworkTenantID(r).Validate()
+	if r.GetHomeNetworkTenantId() != "" {
+		return HomeNetworkTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -106,10 +136,15 @@ func (r *RouteUplinkMessageRequest) Validate() error {
 	if r.GetMessage() == nil {
 		return errors.New("message is required")
 	}
-	if err := ForwarderTenantID(r.Message).Validate(); err != nil {
-		return err
+	if r.GetMessage().GetForwarderTenantId() != "" {
+		if err := ForwarderTenantID(r.Message).Validate(); err != nil {
+			return err
+		}
 	}
-	return HomeNetworkTenantID(r.Message).Validate()
+	if r.GetMessage().GetHomeNetworkTenantId() != "" {
+		return HomeNetworkTenantID(r.Message).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -117,10 +152,15 @@ func (r *RouteDownlinkMessageRequest) Validate() error {
 	if r.GetMessage() == nil {
 		return errors.New("message is required")
 	}
-	if err := ForwarderTenantID(r.Message).Validate(); err != nil {
-		return err
+	if r.GetMessage().GetForwarderTenantId() != "" {
+		if err := ForwarderTenantID(r.Message).Validate(); err != nil {
+			return err
+		}
 	}
-	return HomeNetworkTenantID(r.Message).Validate()
+	if r.GetMessage().GetHomeNetworkTenantId() != "" {
+		return HomeNetworkTenantID(r.Message).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the DevAddrPrefix is valid.

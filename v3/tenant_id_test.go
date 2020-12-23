@@ -6,7 +6,7 @@ import "testing"
 
 func TestTenantID(t *testing.T) {
 	for id, ok := range map[string]bool{
-		"":             true,
+		"":             false,
 		"valid":        true,
 		"0invalid":     true,
 		"12345":        true,
@@ -35,14 +35,11 @@ func TestTenantID(t *testing.T) {
 					return
 				}
 				t.Fatalf("Failed to parse tenant ID: %s", err)
-			} else if !ok {
-				t.Fatalf("Expected parse invalid tenant ID to fail")
+			} else if !ok && id != "" {
+				t.Fatalf("Expected parse invalid tenant ID to fail but have %q", parsed)
 			}
-			if tenantID.ID == "" {
-				tenantID.ID = "default"
-			}
-			if tenantID != parsed {
-				t.Fatal("Expected parsed tenant ID to equal")
+			if tenantID.String() != parsed.String() {
+				t.Fatalf("Expected parsed tenant ID %q to equal %q", parsed, tenantID)
 			}
 		})
 	}

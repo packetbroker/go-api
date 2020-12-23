@@ -20,7 +20,10 @@ func (r *ListDefaultPoliciesRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *GetDefaultPolicyRequest) Validate() error {
-	return packetbroker.ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return packetbroker.ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -28,23 +31,36 @@ func (r *ListHomeNetworkPoliciesRequest) Validate() error {
 	if err := r.GetUpdatedSince().CheckValid(); err != nil && r.GetUpdatedSince() != nil {
 		return status.Error(codes.InvalidArgument, "invalid updated_since")
 	}
-	return packetbroker.ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return packetbroker.ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *GetHomeNetworkPolicyRequest) Validate() error {
-	if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
-		return err
+	if r.GetForwarderTenantId() != "" {
+		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
+			return err
+		}
 	}
-	return packetbroker.HomeNetworkTenantID(r).Validate()
+	if r.GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *SetPolicyRequest) Validate() error {
-	if err := packetbroker.ForwarderTenantID(r.GetPolicy()).Validate(); err != nil {
-		return err
+	if r.GetPolicy().GetForwarderTenantId() != "" {
+		if err := packetbroker.ForwarderTenantID(r.GetPolicy()).Validate(); err != nil {
+			return err
+		}
 	}
-	return packetbroker.HomeNetworkTenantID(r.GetPolicy()).Validate()
+	if r.GetPolicy().GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r.GetPolicy()).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -52,7 +68,10 @@ func (r *PublishUplinkMessageRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
-	return packetbroker.ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return packetbroker.ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -60,13 +79,18 @@ func (r *PublishDownlinkMessageRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
-	if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
-		return err
+	if r.GetForwarderTenantId() != "" {
+		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
+			return err
+		}
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetHomeNetworkClusterId()) {
 		return errors.New("invalid Home Network Cluster ID format")
 	}
-	return packetbroker.HomeNetworkTenantID(r).Validate()
+	if r.GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -77,7 +101,10 @@ func (r *SubscribeForwarderRequest) Validate() error {
 	if !packetbroker.SubscriptionGroupRegexp.MatchString(r.GetGroup()) {
 		return errors.New("invalid subscription group format")
 	}
-	return packetbroker.ForwarderTenantID(r).Validate()
+	if r.GetForwarderTenantId() != "" {
+		return packetbroker.ForwarderTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -88,7 +115,10 @@ func (r *SubscribeHomeNetworkRequest) Validate() error {
 	if !packetbroker.SubscriptionGroupRegexp.MatchString(r.GetGroup()) {
 		return errors.New("invalid subscription group format")
 	}
-	return packetbroker.HomeNetworkTenantID(r).Validate()
+	if r.GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -99,13 +129,18 @@ func (r *RouteUplinkMessageRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.Message.ForwarderClusterId) {
 		return errors.New("invalid Home Network Cluster ID format")
 	}
-	if err := packetbroker.ForwarderTenantID(r.Message).Validate(); err != nil {
-		return err
+	if r.GetMessage().GetForwarderTenantId() != "" {
+		if err := packetbroker.ForwarderTenantID(r.Message).Validate(); err != nil {
+			return err
+		}
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.Message.HomeNetworkClusterId) {
 		return errors.New("invalid Home Network Cluster ID format")
 	}
-	return packetbroker.HomeNetworkTenantID(r.Message).Validate()
+	if r.GetMessage().GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r.Message).Validate()
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
@@ -116,11 +151,16 @@ func (r *RouteDownlinkMessageRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.Message.ForwarderClusterId) {
 		return errors.New("invalid Home Network Cluster ID format")
 	}
-	if err := packetbroker.ForwarderTenantID(r.Message).Validate(); err != nil {
-		return err
+	if r.GetMessage().GetForwarderTenantId() != "" {
+		if err := packetbroker.ForwarderTenantID(r.Message).Validate(); err != nil {
+			return err
+		}
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.Message.HomeNetworkClusterId) {
 		return errors.New("invalid Home Network Cluster ID format")
 	}
-	return packetbroker.HomeNetworkTenantID(r.Message).Validate()
+	if r.GetMessage().GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r.Message).Validate()
+	}
+	return nil
 }

@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-var tenantIDRegexp = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$")
+var tenantIDRegexp = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$")
 
 // TenantID identifies a tenant of a Member.
 type TenantID struct {

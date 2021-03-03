@@ -13,6 +13,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // GatewayVisibilityManagerClient is the client API for GatewayVisibilityManager service.
@@ -115,7 +116,7 @@ type UnsafeGatewayVisibilityManagerServer interface {
 }
 
 func RegisterGatewayVisibilityManagerServer(s grpc.ServiceRegistrar, srv GatewayVisibilityManagerServer) {
-	s.RegisterService(&_GatewayVisibilityManager_serviceDesc, srv)
+	s.RegisterService(&GatewayVisibilityManager_ServiceDesc, srv)
 }
 
 func _GatewayVisibilityManager_GetDefaultVisibility_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -190,7 +191,10 @@ func _GatewayVisibilityManager_SetHomeNetworkVisibility_Handler(srv interface{},
 	return interceptor(ctx, in, info, handler)
 }
 
-var _GatewayVisibilityManager_serviceDesc = grpc.ServiceDesc{
+// GatewayVisibilityManager_ServiceDesc is the grpc.ServiceDesc for GatewayVisibilityManager service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var GatewayVisibilityManager_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.mapping.v1.GatewayVisibilityManager",
 	HandlerType: (*GatewayVisibilityManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -266,7 +270,7 @@ type UnsafeForwarderMapperServer interface {
 }
 
 func RegisterForwarderMapperServer(s grpc.ServiceRegistrar, srv ForwarderMapperServer) {
-	s.RegisterService(&_ForwarderMapper_serviceDesc, srv)
+	s.RegisterService(&ForwarderMapper_ServiceDesc, srv)
 }
 
 func _ForwarderMapper_UpdateGateway_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -287,7 +291,10 @@ func _ForwarderMapper_UpdateGateway_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-var _ForwarderMapper_serviceDesc = grpc.ServiceDesc{
+// ForwarderMapper_ServiceDesc is the grpc.ServiceDesc for ForwarderMapper service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ForwarderMapper_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.mapping.v1.ForwarderMapper",
 	HandlerType: (*ForwarderMapperServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -339,7 +346,7 @@ func (c *homeNetworkMapperClient) GetGateway(ctx context.Context, in *GetHomeNet
 }
 
 func (c *homeNetworkMapperClient) SubscribeGateway(ctx context.Context, in *SubscribeHomeNetworkGatewaysRequest, opts ...grpc.CallOption) (HomeNetworkMapper_SubscribeGatewayClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_HomeNetworkMapper_serviceDesc.Streams[0], "/org.packetbroker.mapping.v1.HomeNetworkMapper/SubscribeGateway", opts...)
+	stream, err := c.cc.NewStream(ctx, &HomeNetworkMapper_ServiceDesc.Streams[0], "/org.packetbroker.mapping.v1.HomeNetworkMapper/SubscribeGateway", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -406,7 +413,7 @@ type UnsafeHomeNetworkMapperServer interface {
 }
 
 func RegisterHomeNetworkMapperServer(s grpc.ServiceRegistrar, srv HomeNetworkMapperServer) {
-	s.RegisterService(&_HomeNetworkMapper_serviceDesc, srv)
+	s.RegisterService(&HomeNetworkMapper_ServiceDesc, srv)
 }
 
 func _HomeNetworkMapper_ListGateways_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -466,7 +473,10 @@ func (x *homeNetworkMapperSubscribeGatewayServer) Send(m *v3.Gateway) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _HomeNetworkMapper_serviceDesc = grpc.ServiceDesc{
+// HomeNetworkMapper_ServiceDesc is the grpc.ServiceDesc for HomeNetworkMapper service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var HomeNetworkMapper_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.mapping.v1.HomeNetworkMapper",
 	HandlerType: (*HomeNetworkMapperServer)(nil),
 	Methods: []grpc.MethodDesc{

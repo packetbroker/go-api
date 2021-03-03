@@ -13,6 +13,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // PolicyManagerClient is the client API for PolicyManager service.
@@ -146,7 +147,7 @@ type UnsafePolicyManagerServer interface {
 }
 
 func RegisterPolicyManagerServer(s grpc.ServiceRegistrar, srv PolicyManagerServer) {
-	s.RegisterService(&_PolicyManager_serviceDesc, srv)
+	s.RegisterService(&PolicyManager_ServiceDesc, srv)
 }
 
 func _PolicyManager_ListDefaultPolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -257,7 +258,10 @@ func _PolicyManager_SetHomeNetworkPolicy_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-var _PolicyManager_serviceDesc = grpc.ServiceDesc{
+// PolicyManager_ServiceDesc is the grpc.ServiceDesc for PolicyManager service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var PolicyManager_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.routing.v1.PolicyManager",
 	HandlerType: (*PolicyManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -318,7 +322,7 @@ func (c *forwarderDataClient) Publish(ctx context.Context, in *PublishUplinkMess
 }
 
 func (c *forwarderDataClient) Subscribe(ctx context.Context, in *SubscribeForwarderRequest, opts ...grpc.CallOption) (ForwarderData_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ForwarderData_serviceDesc.Streams[0], "/org.packetbroker.routing.v1.ForwarderData/Subscribe", opts...)
+	stream, err := c.cc.NewStream(ctx, &ForwarderData_ServiceDesc.Streams[0], "/org.packetbroker.routing.v1.ForwarderData/Subscribe", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -380,7 +384,7 @@ type UnsafeForwarderDataServer interface {
 }
 
 func RegisterForwarderDataServer(s grpc.ServiceRegistrar, srv ForwarderDataServer) {
-	s.RegisterService(&_ForwarderData_serviceDesc, srv)
+	s.RegisterService(&ForwarderData_ServiceDesc, srv)
 }
 
 func _ForwarderData_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -422,7 +426,10 @@ func (x *forwarderDataSubscribeServer) Send(m *v3.RoutedDownlinkMessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _ForwarderData_serviceDesc = grpc.ServiceDesc{
+// ForwarderData_ServiceDesc is the grpc.ServiceDesc for ForwarderData service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ForwarderData_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.routing.v1.ForwarderData",
 	HandlerType: (*ForwarderDataServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -469,7 +476,7 @@ func (c *homeNetworkDataClient) Publish(ctx context.Context, in *PublishDownlink
 }
 
 func (c *homeNetworkDataClient) Subscribe(ctx context.Context, in *SubscribeHomeNetworkRequest, opts ...grpc.CallOption) (HomeNetworkData_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_HomeNetworkData_serviceDesc.Streams[0], "/org.packetbroker.routing.v1.HomeNetworkData/Subscribe", opts...)
+	stream, err := c.cc.NewStream(ctx, &HomeNetworkData_ServiceDesc.Streams[0], "/org.packetbroker.routing.v1.HomeNetworkData/Subscribe", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -531,7 +538,7 @@ type UnsafeHomeNetworkDataServer interface {
 }
 
 func RegisterHomeNetworkDataServer(s grpc.ServiceRegistrar, srv HomeNetworkDataServer) {
-	s.RegisterService(&_HomeNetworkData_serviceDesc, srv)
+	s.RegisterService(&HomeNetworkData_ServiceDesc, srv)
 }
 
 func _HomeNetworkData_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -573,7 +580,10 @@ func (x *homeNetworkDataSubscribeServer) Send(m *v3.RoutedUplinkMessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _HomeNetworkData_serviceDesc = grpc.ServiceDesc{
+// HomeNetworkData_ServiceDesc is the grpc.ServiceDesc for HomeNetworkData service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var HomeNetworkData_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.routing.v1.HomeNetworkData",
 	HandlerType: (*HomeNetworkDataServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -659,7 +669,7 @@ type UnsafeRouterDataServer interface {
 }
 
 func RegisterRouterDataServer(s grpc.ServiceRegistrar, srv RouterDataServer) {
-	s.RegisterService(&_RouterData_serviceDesc, srv)
+	s.RegisterService(&RouterData_ServiceDesc, srv)
 }
 
 func _RouterData_RouteUplink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -698,7 +708,10 @@ func _RouterData_RouteDownlink_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-var _RouterData_serviceDesc = grpc.ServiceDesc{
+// RouterData_ServiceDesc is the grpc.ServiceDesc for RouterData service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var RouterData_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.routing.v1.RouterData",
 	HandlerType: (*RouterDataServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -766,7 +779,7 @@ type UnsafeRoutesServer interface {
 }
 
 func RegisterRoutesServer(s grpc.ServiceRegistrar, srv RoutesServer) {
-	s.RegisterService(&_Routes_serviceDesc, srv)
+	s.RegisterService(&Routes_ServiceDesc, srv)
 }
 
 func _Routes_ListRoutes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -787,7 +800,10 @@ func _Routes_ListRoutes_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Routes_serviceDesc = grpc.ServiceDesc{
+// Routes_ServiceDesc is the grpc.ServiceDesc for Routes service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Routes_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.routing.v1.Routes",
 	HandlerType: (*RoutesServer)(nil),
 	Methods: []grpc.MethodDesc{

@@ -20,7 +20,7 @@ PROTO_PATH ?= ../..
 VERSION ?= v3
 ROUTING_VERSION ?= v1
 MAPPING_VERSION ?= v1
-IAM_VERSION ?= v1
+IAM_VERSION ?= v2
 
 protos = $(wildcard $(PROTO_PATH)/packetbroker/api/$(VERSION)/*.proto) \
 	$(wildcard $(PROTO_PATH)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \

@@ -12,6 +12,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // NetworkRegistryClient is the client API for NetworkRegistry service.
@@ -129,7 +130,7 @@ type UnsafeNetworkRegistryServer interface {
 }
 
 func RegisterNetworkRegistryServer(s grpc.ServiceRegistrar, srv NetworkRegistryServer) {
-	s.RegisterService(&_NetworkRegistry_serviceDesc, srv)
+	s.RegisterService(&NetworkRegistry_ServiceDesc, srv)
 }
 
 func _NetworkRegistry_ListNetworks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -222,7 +223,10 @@ func _NetworkRegistry_DeleteNetwork_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-var _NetworkRegistry_serviceDesc = grpc.ServiceDesc{
+// NetworkRegistry_ServiceDesc is the grpc.ServiceDesc for NetworkRegistry service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var NetworkRegistry_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.iam.v1.NetworkRegistry",
 	HandlerType: (*NetworkRegistryServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -366,7 +370,7 @@ type UnsafeTenantRegistryServer interface {
 }
 
 func RegisterTenantRegistryServer(s grpc.ServiceRegistrar, srv TenantRegistryServer) {
-	s.RegisterService(&_TenantRegistry_serviceDesc, srv)
+	s.RegisterService(&TenantRegistry_ServiceDesc, srv)
 }
 
 func _TenantRegistry_ListTenants_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -459,7 +463,10 @@ func _TenantRegistry_DeleteTenant_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-var _TenantRegistry_serviceDesc = grpc.ServiceDesc{
+// TenantRegistry_ServiceDesc is the grpc.ServiceDesc for TenantRegistry service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var TenantRegistry_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.iam.v1.TenantRegistry",
 	HandlerType: (*TenantRegistryServer)(nil),
 	Methods: []grpc.MethodDesc{
@@ -571,7 +578,7 @@ type UnsafeAPIKeyVaultServer interface {
 }
 
 func RegisterAPIKeyVaultServer(s grpc.ServiceRegistrar, srv APIKeyVaultServer) {
-	s.RegisterService(&_APIKeyVault_serviceDesc, srv)
+	s.RegisterService(&APIKeyVault_ServiceDesc, srv)
 }
 
 func _APIKeyVault_ListAPIKeys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -628,7 +635,10 @@ func _APIKeyVault_DeleteAPIKey_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-var _APIKeyVault_serviceDesc = grpc.ServiceDesc{
+// APIKeyVault_ServiceDesc is the grpc.ServiceDesc for APIKeyVault service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var APIKeyVault_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.iam.v1.APIKeyVault",
 	HandlerType: (*APIKeyVaultServer)(nil),
 	Methods: []grpc.MethodDesc{

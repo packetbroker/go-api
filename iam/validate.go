@@ -13,6 +13,9 @@ func (r *CreateNetworkRequest) Validate() error {
 	if r.GetNetwork() == nil {
 		return errors.New("network is required")
 	}
+	if r.Network.NetId == 0 {
+		return errors.New("NetID is required")
+	}
 	return nil
 }
 

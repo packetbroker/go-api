@@ -6,7 +6,6 @@ import "testing"
 
 func TestTenantID(t *testing.T) {
 	for id, ok := range map[string]bool{
-		"":             true,
 		"valid":        true,
 		"0invalid":     true,
 		"12345":        true,

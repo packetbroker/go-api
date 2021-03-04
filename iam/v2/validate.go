@@ -60,6 +60,9 @@ func (r *ListClusterAPIKeysRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *CreateClusterAPIKeyRequest) Validate() error {
+	if r.GetClusterId() == "" {
+		return errors.New("cluster ID is required")
+	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
 		return errors.New("invalid Cluster ID format")
 	}

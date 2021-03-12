@@ -32,6 +32,8 @@ type PolicyManagerClient interface {
 	GetHomeNetworkPolicy(ctx context.Context, in *GetHomeNetworkPolicyRequest, opts ...grpc.CallOption) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
 	SetHomeNetworkPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// List the effective Routing Policies, optionally for a specific Home Network.
+	ListEffectivePolicies(ctx context.Context, in *ListEffectivePoliciesRequest, opts ...grpc.CallOption) (*ListEffectivePoliciesResponse, error)
 }
 
 type policyManagerClient struct {
@@ -96,6 +98,15 @@ func (c *policyManagerClient) SetHomeNetworkPolicy(ctx context.Context, in *SetP
 	return out, nil
 }
 
+func (c *policyManagerClient) ListEffectivePolicies(ctx context.Context, in *ListEffectivePoliciesRequest, opts ...grpc.CallOption) (*ListEffectivePoliciesResponse, error) {
+	out := new(ListEffectivePoliciesResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.routing.v1.PolicyManager/ListEffectivePolicies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PolicyManagerServer is the server API for PolicyManager service.
 // All implementations must embed UnimplementedPolicyManagerServer
 // for forward compatibility
@@ -112,6 +123,8 @@ type PolicyManagerServer interface {
 	GetHomeNetworkPolicy(context.Context, *GetHomeNetworkPolicyRequest) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
 	SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*emptypb.Empty, error)
+	// List the effective Routing Policies, optionally for a specific Home Network.
+	ListEffectivePolicies(context.Context, *ListEffectivePoliciesRequest) (*ListEffectivePoliciesResponse, error)
 	mustEmbedUnimplementedPolicyManagerServer()
 }
 
@@ -136,6 +149,9 @@ func (UnimplementedPolicyManagerServer) GetHomeNetworkPolicy(context.Context, *G
 }
 func (UnimplementedPolicyManagerServer) SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetHomeNetworkPolicy not implemented")
+}
+func (UnimplementedPolicyManagerServer) ListEffectivePolicies(context.Context, *ListEffectivePoliciesRequest) (*ListEffectivePoliciesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEffectivePolicies not implemented")
 }
 func (UnimplementedPolicyManagerServer) mustEmbedUnimplementedPolicyManagerServer() {}
 
@@ -258,6 +274,24 @@ func _PolicyManager_SetHomeNetworkPolicy_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PolicyManager_ListEffectivePolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEffectivePoliciesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PolicyManagerServer).ListEffectivePolicies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.routing.v1.PolicyManager/ListEffectivePolicies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PolicyManagerServer).ListEffectivePolicies(ctx, req.(*ListEffectivePoliciesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PolicyManager_ServiceDesc is the grpc.ServiceDesc for PolicyManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -288,6 +322,10 @@ var PolicyManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetHomeNetworkPolicy",
 			Handler:    _PolicyManager_SetHomeNetworkPolicy_Handler,
+		},
+		{
+			MethodName: "ListEffectivePolicies",
+			Handler:    _PolicyManager_ListEffectivePolicies_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

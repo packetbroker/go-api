@@ -13,3 +13,6 @@
 
 # Protobuf build output
 /build
+
+# Development environment
+.envrc

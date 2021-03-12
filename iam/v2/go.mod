@@ -1,4 +1,4 @@
-module go.packetbroker.org/api/mapping
+module go.packetbroker.org/api/iam/v2
 
 go 1.15
 

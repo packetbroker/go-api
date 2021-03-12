@@ -342,3 +342,91 @@ var ClusterAPIKeyVault_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "packetbroker/api/iam/v2/service.proto",
 }
+
+// CatalogClient is the client API for Catalog service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type CatalogClient interface {
+	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
+	ListHomeNetworks(ctx context.Context, in *ListHomeNetworksRequest, opts ...grpc.CallOption) (*ListHomeNetworksResponse, error)
+}
+
+type catalogClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewCatalogClient(cc grpc.ClientConnInterface) CatalogClient {
+	return &catalogClient{cc}
+}
+
+func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListHomeNetworksRequest, opts ...grpc.CallOption) (*ListHomeNetworksResponse, error) {
+	out := new(ListHomeNetworksResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.Catalog/ListHomeNetworks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CatalogServer is the server API for Catalog service.
+// All implementations must embed UnimplementedCatalogServer
+// for forward compatibility
+type CatalogServer interface {
+	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
+	ListHomeNetworks(context.Context, *ListHomeNetworksRequest) (*ListHomeNetworksResponse, error)
+	mustEmbedUnimplementedCatalogServer()
+}
+
+// UnimplementedCatalogServer must be embedded to have forward compatible implementations.
+type UnimplementedCatalogServer struct {
+}
+
+func (UnimplementedCatalogServer) ListHomeNetworks(context.Context, *ListHomeNetworksRequest) (*ListHomeNetworksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHomeNetworks not implemented")
+}
+func (UnimplementedCatalogServer) mustEmbedUnimplementedCatalogServer() {}
+
+// UnsafeCatalogServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CatalogServer will
+// result in compilation errors.
+type UnsafeCatalogServer interface {
+	mustEmbedUnimplementedCatalogServer()
+}
+
+func RegisterCatalogServer(s grpc.ServiceRegistrar, srv CatalogServer) {
+	s.RegisterService(&Catalog_ServiceDesc, srv)
+}
+
+func _Catalog_ListHomeNetworks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHomeNetworksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogServer).ListHomeNetworks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.Catalog/ListHomeNetworks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogServer).ListHomeNetworks(ctx, req.(*ListHomeNetworksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Catalog_ServiceDesc is the grpc.ServiceDesc for Catalog service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Catalog_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "org.packetbroker.iam.v2.Catalog",
+	HandlerType: (*CatalogServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListHomeNetworks",
+			Handler:    _Catalog_ListHomeNetworks_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "packetbroker/api/iam/v2/service.proto",
+}

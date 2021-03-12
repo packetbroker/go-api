@@ -64,6 +64,14 @@ func (r *SetPolicyRequest) Validate() error {
 }
 
 // Validate returns whether the request is valid.
+func (r *ListEffectivePoliciesRequest) Validate() error {
+	if r.GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r).Validate()
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
 func (r *PublishUplinkMessageRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")

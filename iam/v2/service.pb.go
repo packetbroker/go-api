@@ -1926,9 +1926,9 @@ func NewPopulatedListClusterAPIKeysRequest(r randyService, easy bool) *ListClust
 func NewPopulatedListClusterAPIKeysResponse(r randyService, easy bool) *ListClusterAPIKeysResponse {
 	this := &ListClusterAPIKeysResponse{}
 	if r.Intn(5) != 0 {
-		v3 := r.Intn(5)
-		this.Keys = make([]*v3.ClusterAPIKey, v3)
-		for i := 0; i < v3; i++ {
+		i3 := r.Intn(5)
+		this.Keys = make([]*v3.ClusterAPIKey, i3)
+		for i := 0; i < i3; i++ {
 			this.Keys[i] = v3.NewPopulatedClusterAPIKey(r, easy)
 		}
 	}

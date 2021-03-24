@@ -3848,9 +3848,9 @@ func NewPopulatedListEffectivePoliciesRequest(r randyService, easy bool) *ListEf
 func NewPopulatedListEffectivePoliciesResponse(r randyService, easy bool) *ListEffectivePoliciesResponse {
 	this := &ListEffectivePoliciesResponse{}
 	if r.Intn(5) != 0 {
-		v3 := r.Intn(5)
-		this.Policies = make([]*v3.RoutingPolicy, v3)
-		for i := 0; i < v3; i++ {
+		i3 := r.Intn(5)
+		this.Policies = make([]*v3.RoutingPolicy, i3)
+		for i := 0; i < i3; i++ {
 			this.Policies[i] = v3.NewPopulatedRoutingPolicy(r, easy)
 		}
 	}

@@ -1484,7 +1484,7 @@ func NewPopulatedGatewayVisibility(r randyMapping, easy bool) *GatewayVisibility
 
 func NewPopulatedGatewayFrequencyPlan(r randyMapping, easy bool) *GatewayFrequencyPlan {
 	this := &GatewayFrequencyPlan{}
-	this.Region = Region([]int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}[r.Intn(11)])
+	this.Region = Region([]int32{0, 1, 2, 3, 4, 5, 6, 7, 11, 12, 13, 8, 9, 10, 14}[r.Intn(15)])
 	if r.Intn(5) != 0 {
 		v1 := r.Intn(5)
 		this.UplinkChannels = make([]*GatewayFrequencyPlan_Channel, v1)

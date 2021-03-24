@@ -2083,7 +2083,7 @@ type PolicyManagerClient interface {
 	GetHomeNetworkPolicy(ctx context.Context, in *GetHomeNetworkPolicyRequest, opts ...grpc.CallOption) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
 	SetHomeNetworkPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*types.Empty, error)
-	// List the effective Routing Policies, optionally for a specific Home Network.
+	// List the Routing Policies that Forwarders configured for the Home Network.
 	ListEffectivePolicies(ctx context.Context, in *ListEffectivePoliciesRequest, opts ...grpc.CallOption) (*ListEffectivePoliciesResponse, error)
 }
 
@@ -2172,7 +2172,7 @@ type PolicyManagerServer interface {
 	GetHomeNetworkPolicy(context.Context, *GetHomeNetworkPolicyRequest) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
 	SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*types.Empty, error)
-	// List the effective Routing Policies, optionally for a specific Home Network.
+	// List the Routing Policies that Forwarders configured for the Home Network.
 	ListEffectivePolicies(context.Context, *ListEffectivePoliciesRequest) (*ListEffectivePoliciesResponse, error)
 }
 
@@ -3848,9 +3848,9 @@ func NewPopulatedListEffectivePoliciesRequest(r randyService, easy bool) *ListEf
 func NewPopulatedListEffectivePoliciesResponse(r randyService, easy bool) *ListEffectivePoliciesResponse {
 	this := &ListEffectivePoliciesResponse{}
 	if r.Intn(5) != 0 {
-		i3 := r.Intn(5)
-		this.Policies = make([]*v3.RoutingPolicy, i3)
-		for i := 0; i < i3; i++ {
+		v3 := r.Intn(5)
+		this.Policies = make([]*v3.RoutingPolicy, v3)
+		for i := 0; i < v3; i++ {
 			this.Policies[i] = v3.NewPopulatedRoutingPolicy(r, easy)
 		}
 	}

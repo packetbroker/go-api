@@ -32,7 +32,7 @@ type PolicyManagerClient interface {
 	GetHomeNetworkPolicy(ctx context.Context, in *GetHomeNetworkPolicyRequest, opts ...grpc.CallOption) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
 	SetHomeNetworkPolicy(ctx context.Context, in *SetPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// List the effective Routing Policies, optionally for a specific Home Network.
+	// List the Routing Policies that Forwarders configured for the Home Network.
 	ListEffectivePolicies(ctx context.Context, in *ListEffectivePoliciesRequest, opts ...grpc.CallOption) (*ListEffectivePoliciesResponse, error)
 }
 
@@ -123,7 +123,7 @@ type PolicyManagerServer interface {
 	GetHomeNetworkPolicy(context.Context, *GetHomeNetworkPolicyRequest) (*GetPolicyResponse, error)
 	// Set the Routing Policy with the Home Network.
 	SetHomeNetworkPolicy(context.Context, *SetPolicyRequest) (*emptypb.Empty, error)
-	// List the effective Routing Policies, optionally for a specific Home Network.
+	// List the Routing Policies that Forwarders configured for the Home Network.
 	ListEffectivePolicies(context.Context, *ListEffectivePoliciesRequest) (*ListEffectivePoliciesResponse, error)
 	mustEmbedUnimplementedPolicyManagerServer()
 }

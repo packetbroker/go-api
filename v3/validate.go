@@ -4,6 +4,7 @@ package packetbroker
 
 import (
 	"errors"
+	"net/url"
 	"regexp"
 )
 
@@ -33,4 +34,19 @@ func (b *DevAddrBlock) Validate() error {
 		return errors.New("invalid cluster ID format")
 	}
 	return b.Prefix.Validate()
+}
+
+// VAlidate returns whether the Target is valid.
+func (t *Target) Validate() error {
+	switch t.Protocol {
+	// LoRaWAN Backend Interfaces require a valid URL, or empty value for lookup.
+	case TargetProtocol_TS002_V1_0, TargetProtocol_TS002_V1_1_0:
+		if t.Value == "" {
+			return nil
+		}
+		_, err := url.Parse(t.Value)
+		return err
+	default:
+		return errors.New("invalid target protocol")
+	}
 }

@@ -20,6 +20,16 @@ func (r *CreateNetworkRequest) Validate() error {
 }
 
 // Validate returns whether the request is valid.
+func (r *UpdateNetworkRequest) Validate() error {
+	if target := r.GetTarget().GetValue(); target != nil {
+		if err := target.Validate(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
 func (r *CreateTenantRequest) Validate() error {
 	if r.GetTenant() == nil {
 		return errors.New("tenant is required")
@@ -47,6 +57,11 @@ func (r *UpdateTenantRequest) Validate() error {
 	}
 	for _, b := range r.GetDevAddrBlocks().GetValue() {
 		if err := b.Validate(); err != nil {
+			return err
+		}
+	}
+	if target := r.GetTarget().GetValue(); target != nil {
+		if err := target.Validate(); err != nil {
 			return err
 		}
 	}

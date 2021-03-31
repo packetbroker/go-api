@@ -41,10 +41,10 @@ func (t *Target) Validate() error {
 	switch t.Protocol {
 	// LoRaWAN Backend Interfaces require a valid URL, or empty value for lookup.
 	case TargetProtocol_TS002_V1_0, TargetProtocol_TS002_V1_1_0:
-		if t.Value == "" {
+		if t.Address == "" {
 			return nil
 		}
-		_, err := url.Parse(t.Value)
+		_, err := url.Parse(t.Address)
 		return err
 	default:
 		return errors.New("invalid target protocol")

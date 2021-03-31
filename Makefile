@@ -47,5 +47,6 @@ $(targets): $(protos)
 		--go-grpc_out="build" \
 		--proto_path=$(PROTO_PATH) $^
 	@mv build/go.packetbroker.org/api/$(@D)/*.pb.go $(@D)/
+	@rm -rf build
 
 # vim: ft=make

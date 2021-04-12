@@ -36,7 +36,7 @@ func (b *DevAddrBlock) Validate() error {
 	return b.Prefix.Validate()
 }
 
-// VAlidate returns whether the Target is valid.
+// Validate returns whether the Target is valid.
 func (t *Target) Validate() error {
 	switch t.Protocol {
 	// LoRaWAN Backend Interfaces require a valid URL, or empty value for lookup.
@@ -49,4 +49,57 @@ func (t *Target) Validate() error {
 	default:
 		return errors.New("invalid target protocol")
 	}
+}
+
+// Validate returns whether the UplinkMessageDeliveryStateChange is valid.
+func (c *UplinkMessageDeliveryStateChange) Validate() error {
+	if !ClusterIDRegex.MatchString(c.GetForwarderClusterId()) {
+		return errors.New("invalid Forwarder Cluster ID format")
+	}
+	if c.GetForwarderTenantId() != "" {
+		if err := ForwarderTenantID(c).Validate(); err != nil {
+			return err
+		}
+	}
+	if !ClusterIDRegex.MatchString(c.GetHomeNetworkClusterId()) {
+		return errors.New("invalid Forwarder Cluster ID format")
+	}
+	if c.GetHomeNetworkTenantId() != "" {
+		if err := HomeNetworkTenantID(c).Validate(); err != nil {
+			return err
+		}
+	}
+	if c.State != MessageDeliveryState_PROCESSED && c.Error != nil {
+		return errors.New("error information set while delivery state is not PROCESSED")
+	}
+	return nil
+}
+
+// Validate returns whether the DownlinkMessageDeliveryStateChange is valid.
+func (c *DownlinkMessageDeliveryStateChange) Validate() error {
+	if !ClusterIDRegex.MatchString(c.GetHomeNetworkClusterId()) {
+		return errors.New("invalid Forwarder Cluster ID format")
+	}
+	if c.GetHomeNetworkTenantId() != "" {
+		if err := HomeNetworkTenantID(c).Validate(); err != nil {
+			return err
+		}
+	}
+	if !ClusterIDRegex.MatchString(c.GetForwarderClusterId()) {
+		return errors.New("invalid Forwarder Cluster ID format")
+	}
+	if c.GetForwarderTenantId() != "" {
+		if err := ForwarderTenantID(c).Validate(); err != nil {
+			return err
+		}
+	}
+	if c.State != MessageDeliveryState_PROCESSED {
+		switch c.Result.(type) {
+		case *DownlinkMessageDeliveryStateChange_Success:
+			return errors.New("success informtion set while delivery state is not PROCESSED")
+		case *DownlinkMessageDeliveryStateChange_Error:
+			return errors.New("error information set while delivery state is not PROCESSED")
+		}
+	}
+	return nil
 }

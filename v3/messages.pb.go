@@ -42,73 +42,6 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type TransmissionResult_Code int32
-
-const (
-	TransmissionResult_SUCCESS          TransmissionResult_Code = 0
-	TransmissionResult_UNKNOWN_ERROR    TransmissionResult_Code = 1
-	TransmissionResult_TOO_LATE         TransmissionResult_Code = 2
-	TransmissionResult_TOO_EARLY        TransmissionResult_Code = 3
-	TransmissionResult_COLLISION_PACKET TransmissionResult_Code = 4
-	TransmissionResult_COLLISION_BEACON TransmissionResult_Code = 5
-	TransmissionResult_TX_FREQUENCY     TransmissionResult_Code = 6
-	TransmissionResult_TX_POWER         TransmissionResult_Code = 7
-	TransmissionResult_GPS_UNLOCKED     TransmissionResult_Code = 8
-)
-
-// Enum value maps for TransmissionResult_Code.
-var (
-	TransmissionResult_Code_name = map[int32]string{
-		0: "SUCCESS",
-		1: "UNKNOWN_ERROR",
-		2: "TOO_LATE",
-		3: "TOO_EARLY",
-		4: "COLLISION_PACKET",
-		5: "COLLISION_BEACON",
-		6: "TX_FREQUENCY",
-		7: "TX_POWER",
-		8: "GPS_UNLOCKED",
-	}
-	TransmissionResult_Code_value = map[string]int32{
-		"SUCCESS":          0,
-		"UNKNOWN_ERROR":    1,
-		"TOO_LATE":         2,
-		"TOO_EARLY":        3,
-		"COLLISION_PACKET": 4,
-		"COLLISION_BEACON": 5,
-		"TX_FREQUENCY":     6,
-		"TX_POWER":         7,
-		"GPS_UNLOCKED":     8,
-	}
-)
-
-func (x TransmissionResult_Code) Enum() *TransmissionResult_Code {
-	p := new(TransmissionResult_Code)
-	*p = x
-	return p
-}
-
-func (x TransmissionResult_Code) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TransmissionResult_Code) Descriptor() protoreflect.EnumDescriptor {
-	return file_packetbroker_api_v3_messages_proto_enumTypes[0].Descriptor()
-}
-
-func (TransmissionResult_Code) Type() protoreflect.EnumType {
-	return &file_packetbroker_api_v3_messages_proto_enumTypes[0]
-}
-
-func (x TransmissionResult_Code) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TransmissionResult_Code.Descriptor instead.
-func (TransmissionResult_Code) EnumDescriptor() ([]byte, []int) {
-	return file_packetbroker_api_v3_messages_proto_rawDescGZIP(), []int{8, 0}
-}
-
 // Teaser of PHYPayload.
 type PHYPayloadTeaser struct {
 	state         protoimpl.MessageState
@@ -651,10 +584,8 @@ type UplinkMessage struct {
 	// and if the message passes the Routing Filter.
 	GatewayMetadata *UplinkMessage_GatewayMetadata `protobuf:"bytes,8,opt,name=gateway_metadata,json=gatewayMetadata,proto3" json:"gateway_metadata,omitempty"`
 	// Forwarder uplink token (optional).
-	// Subscribing Home Networks receive this value if the Routing Policy allows any downlink.
 	ForwarderUplinkToken []byte `protobuf:"bytes,9,opt,name=forwarder_uplink_token,json=forwarderUplinkToken,proto3" json:"forwarder_uplink_token,omitempty"`
 	// Gateway uplink token (optional).
-	// Subscribing Home Networks receive this value if the Routing Policy allows any downlink.
 	GatewayUplinkToken []byte `protobuf:"bytes,10,opt,name=gateway_uplink_token,json=gatewayUplinkToken,proto3" json:"gateway_uplink_token,omitempty"`
 }
 
@@ -895,82 +826,6 @@ func (x *DownlinkMessage) GetPriority() DownlinkMessagePriority {
 	return DownlinkMessagePriority_LOWEST
 }
 
-// Transmission result.
-type TransmissionResult struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// Result code.
-	Code TransmissionResult_Code `protobuf:"varint,1,opt,name=code,proto3,enum=org.packetbroker.v3.TransmissionResult_Code" json:"code,omitempty"`
-	// RX1 frequency.
-	Rx1Frequency *wrapperspb.UInt64Value `protobuf:"bytes,2,opt,name=rx1_frequency,json=rx1Frequency,proto3" json:"rx1_frequency,omitempty"`
-	// RX2 frequency.
-	Rx2Frequency *wrapperspb.UInt64Value `protobuf:"bytes,3,opt,name=rx2_frequency,json=rx2Frequency,proto3" json:"rx2_frequency,omitempty"`
-	// Downlink token copied from the DownlinkMessage.
-	DownlinkToken []byte `protobuf:"bytes,4,opt,name=downlink_token,json=downlinkToken,proto3" json:"downlink_token,omitempty"`
-}
-
-func (x *TransmissionResult) Reset() {
-	*x = TransmissionResult{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[8]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *TransmissionResult) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TransmissionResult) ProtoMessage() {}
-
-func (x *TransmissionResult) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[8]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TransmissionResult.ProtoReflect.Descriptor instead.
-func (*TransmissionResult) Descriptor() ([]byte, []int) {
-	return file_packetbroker_api_v3_messages_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *TransmissionResult) GetCode() TransmissionResult_Code {
-	if x != nil {
-		return x.Code
-	}
-	return TransmissionResult_SUCCESS
-}
-
-func (x *TransmissionResult) GetRx1Frequency() *wrapperspb.UInt64Value {
-	if x != nil {
-		return x.Rx1Frequency
-	}
-	return nil
-}
-
-func (x *TransmissionResult) GetRx2Frequency() *wrapperspb.UInt64Value {
-	if x != nil {
-		return x.Rx2Frequency
-	}
-	return nil
-}
-
-func (x *TransmissionResult) GetDownlinkToken() []byte {
-	if x != nil {
-		return x.DownlinkToken
-	}
-	return nil
-}
-
 type PHYPayloadTeaser_JoinRequestTeaser struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -987,7 +842,7 @@ type PHYPayloadTeaser_JoinRequestTeaser struct {
 func (x *PHYPayloadTeaser_JoinRequestTeaser) Reset() {
 	*x = PHYPayloadTeaser_JoinRequestTeaser{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[9]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1000,7 +855,7 @@ func (x *PHYPayloadTeaser_JoinRequestTeaser) String() string {
 func (*PHYPayloadTeaser_JoinRequestTeaser) ProtoMessage() {}
 
 func (x *PHYPayloadTeaser_JoinRequestTeaser) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[9]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1059,7 +914,7 @@ type PHYPayloadTeaser_MACPayloadTeaser struct {
 func (x *PHYPayloadTeaser_MACPayloadTeaser) Reset() {
 	*x = PHYPayloadTeaser_MACPayloadTeaser{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[10]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1072,7 +927,7 @@ func (x *PHYPayloadTeaser_MACPayloadTeaser) String() string {
 func (*PHYPayloadTeaser_MACPayloadTeaser) ProtoMessage() {}
 
 func (x *PHYPayloadTeaser_MACPayloadTeaser) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[10]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1142,7 +997,7 @@ type GatewayMetadataTeaser_Terrestrial struct {
 func (x *GatewayMetadataTeaser_Terrestrial) Reset() {
 	*x = GatewayMetadataTeaser_Terrestrial{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[11]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1155,7 +1010,7 @@ func (x *GatewayMetadataTeaser_Terrestrial) String() string {
 func (*GatewayMetadataTeaser_Terrestrial) ProtoMessage() {}
 
 func (x *GatewayMetadataTeaser_Terrestrial) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[11]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1187,7 +1042,7 @@ type GatewayMetadataTeaser_Satellite struct {
 func (x *GatewayMetadataTeaser_Satellite) Reset() {
 	*x = GatewayMetadataTeaser_Satellite{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[12]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1200,7 +1055,7 @@ func (x *GatewayMetadataTeaser_Satellite) String() string {
 func (*GatewayMetadataTeaser_Satellite) ProtoMessage() {}
 
 func (x *GatewayMetadataTeaser_Satellite) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[12]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1227,7 +1082,7 @@ type GatewayMetadataSignalQuality_Terrestrial struct {
 func (x *GatewayMetadataSignalQuality_Terrestrial) Reset() {
 	*x = GatewayMetadataSignalQuality_Terrestrial{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[13]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1240,7 +1095,7 @@ func (x *GatewayMetadataSignalQuality_Terrestrial) String() string {
 func (*GatewayMetadataSignalQuality_Terrestrial) ProtoMessage() {}
 
 func (x *GatewayMetadataSignalQuality_Terrestrial) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[13]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1272,7 +1127,7 @@ type GatewayMetadataSignalQuality_Satellite struct {
 func (x *GatewayMetadataSignalQuality_Satellite) Reset() {
 	*x = GatewayMetadataSignalQuality_Satellite{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[14]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1285,7 +1140,7 @@ func (x *GatewayMetadataSignalQuality_Satellite) String() string {
 func (*GatewayMetadataSignalQuality_Satellite) ProtoMessage() {}
 
 func (x *GatewayMetadataSignalQuality_Satellite) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[14]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1313,7 +1168,7 @@ type GatewayMetadataSignalQuality_Terrestrial_Antenna struct {
 func (x *GatewayMetadataSignalQuality_Terrestrial_Antenna) Reset() {
 	*x = GatewayMetadataSignalQuality_Terrestrial_Antenna{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[15]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1326,7 +1181,7 @@ func (x *GatewayMetadataSignalQuality_Terrestrial_Antenna) String() string {
 func (*GatewayMetadataSignalQuality_Terrestrial_Antenna) ProtoMessage() {}
 
 func (x *GatewayMetadataSignalQuality_Terrestrial_Antenna) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[15]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1367,7 +1222,7 @@ type GatewayMetadataLocalization_Terrestrial struct {
 func (x *GatewayMetadataLocalization_Terrestrial) Reset() {
 	*x = GatewayMetadataLocalization_Terrestrial{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[16]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1380,7 +1235,7 @@ func (x *GatewayMetadataLocalization_Terrestrial) String() string {
 func (*GatewayMetadataLocalization_Terrestrial) ProtoMessage() {}
 
 func (x *GatewayMetadataLocalization_Terrestrial) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[16]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1415,7 +1270,7 @@ type GatewayMetadataLocalization_Satellite struct {
 func (x *GatewayMetadataLocalization_Satellite) Reset() {
 	*x = GatewayMetadataLocalization_Satellite{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[17]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1428,7 +1283,7 @@ func (x *GatewayMetadataLocalization_Satellite) String() string {
 func (*GatewayMetadataLocalization_Satellite) ProtoMessage() {}
 
 func (x *GatewayMetadataLocalization_Satellite) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[17]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1468,7 +1323,7 @@ type GatewayMetadataLocalization_Terrestrial_Antenna struct {
 func (x *GatewayMetadataLocalization_Terrestrial_Antenna) Reset() {
 	*x = GatewayMetadataLocalization_Terrestrial_Antenna{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[18]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1481,7 +1336,7 @@ func (x *GatewayMetadataLocalization_Terrestrial_Antenna) String() string {
 func (*GatewayMetadataLocalization_Terrestrial_Antenna) ProtoMessage() {}
 
 func (x *GatewayMetadataLocalization_Terrestrial_Antenna) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[18]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1541,7 +1396,7 @@ type UplinkMessage_PHYPayload struct {
 func (x *UplinkMessage_PHYPayload) Reset() {
 	*x = UplinkMessage_PHYPayload{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[20]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1554,7 +1409,7 @@ func (x *UplinkMessage_PHYPayload) String() string {
 func (*UplinkMessage_PHYPayload) ProtoMessage() {}
 
 func (x *UplinkMessage_PHYPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[20]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1641,7 +1496,7 @@ type UplinkMessage_GatewayMetadata struct {
 func (x *UplinkMessage_GatewayMetadata) Reset() {
 	*x = UplinkMessage_GatewayMetadata{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[21]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1654,7 +1509,7 @@ func (x *UplinkMessage_GatewayMetadata) String() string {
 func (*UplinkMessage_GatewayMetadata) ProtoMessage() {}
 
 func (x *UplinkMessage_GatewayMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[21]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1771,7 +1626,7 @@ type DownlinkMessage_RXSettings struct {
 func (x *DownlinkMessage_RXSettings) Reset() {
 	*x = DownlinkMessage_RXSettings{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[22]
+		mi := &file_packetbroker_api_v3_messages_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1784,7 +1639,7 @@ func (x *DownlinkMessage_RXSettings) String() string {
 func (*DownlinkMessage_RXSettings) ProtoMessage() {}
 
 func (x *DownlinkMessage_RXSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[22]
+	mi := &file_packetbroker_api_v3_messages_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2115,36 +1970,10 @@ var file_packetbroker_api_v3_messages_proto_rawDesc = []byte{
 	0x09, 0x66, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x79, 0x12, 0x26, 0x0a, 0x0f, 0x64, 0x61,
 	0x74, 0x61, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x5f, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x02, 0x20,
 	0x01, 0x28, 0x0d, 0x52, 0x0d, 0x64, 0x61, 0x74, 0x61, 0x52, 0x61, 0x74, 0x65, 0x49, 0x6e, 0x64,
-	0x65, 0x78, 0x22, 0xa7, 0x03, 0x0a, 0x12, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6d, 0x69, 0x73, 0x73,
-	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x40, 0x0a, 0x04, 0x63, 0x6f, 0x64,
-	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x2c, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61,
-	0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x54, 0x72,
-	0x61, 0x6e, 0x73, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
-	0x2e, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x41, 0x0a, 0x0d, 0x72,
-	0x78, 0x31, 0x5f, 0x66, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x79, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x55, 0x49, 0x6e, 0x74, 0x36, 0x34, 0x56, 0x61, 0x6c, 0x75, 0x65,
-	0x52, 0x0c, 0x72, 0x78, 0x31, 0x46, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x79, 0x12, 0x41,
-	0x0a, 0x0d, 0x72, 0x78, 0x32, 0x5f, 0x66, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x79, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x55, 0x49, 0x6e, 0x74, 0x36, 0x34, 0x56, 0x61,
-	0x6c, 0x75, 0x65, 0x52, 0x0c, 0x72, 0x78, 0x32, 0x46, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63,
-	0x79, 0x12, 0x25, 0x0a, 0x0e, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x69, 0x6e, 0x6b, 0x5f, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0d, 0x64, 0x6f, 0x77, 0x6e, 0x6c,
-	0x69, 0x6e, 0x6b, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0xa1, 0x01, 0x0a, 0x04, 0x43, 0x6f, 0x64,
-	0x65, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x55, 0x43, 0x43, 0x45, 0x53, 0x53, 0x10, 0x00, 0x12, 0x11,
-	0x0a, 0x0d, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x5f, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x10,
-	0x01, 0x12, 0x0c, 0x0a, 0x08, 0x54, 0x4f, 0x4f, 0x5f, 0x4c, 0x41, 0x54, 0x45, 0x10, 0x02, 0x12,
-	0x0d, 0x0a, 0x09, 0x54, 0x4f, 0x4f, 0x5f, 0x45, 0x41, 0x52, 0x4c, 0x59, 0x10, 0x03, 0x12, 0x14,
-	0x0a, 0x10, 0x43, 0x4f, 0x4c, 0x4c, 0x49, 0x53, 0x49, 0x4f, 0x4e, 0x5f, 0x50, 0x41, 0x43, 0x4b,
-	0x45, 0x54, 0x10, 0x04, 0x12, 0x14, 0x0a, 0x10, 0x43, 0x4f, 0x4c, 0x4c, 0x49, 0x53, 0x49, 0x4f,
-	0x4e, 0x5f, 0x42, 0x45, 0x41, 0x43, 0x4f, 0x4e, 0x10, 0x05, 0x12, 0x10, 0x0a, 0x0c, 0x54, 0x58,
-	0x5f, 0x46, 0x52, 0x45, 0x51, 0x55, 0x45, 0x4e, 0x43, 0x59, 0x10, 0x06, 0x12, 0x0c, 0x0a, 0x08,
-	0x54, 0x58, 0x5f, 0x50, 0x4f, 0x57, 0x45, 0x52, 0x10, 0x07, 0x12, 0x10, 0x0a, 0x0c, 0x47, 0x50,
-	0x53, 0x5f, 0x55, 0x4e, 0x4c, 0x4f, 0x43, 0x4b, 0x45, 0x44, 0x10, 0x08, 0x42, 0x29, 0x5a, 0x27,
-	0x67, 0x6f, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e,
-	0x6f, 0x72, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x33, 0x3b, 0x70, 0x61, 0x63, 0x6b, 0x65,
-	0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x78, 0x42, 0x29, 0x5a, 0x27, 0x67, 0x6f, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62,
+	0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x6f, 0x72, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x33,
+	0x3b, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2159,91 +1988,85 @@ func file_packetbroker_api_v3_messages_proto_rawDescGZIP() []byte {
 	return file_packetbroker_api_v3_messages_proto_rawDescData
 }
 
-var file_packetbroker_api_v3_messages_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_packetbroker_api_v3_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_packetbroker_api_v3_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_packetbroker_api_v3_messages_proto_goTypes = []interface{}{
-	(TransmissionResult_Code)(0),                             // 0: org.packetbroker.v3.TransmissionResult.Code
-	(*PHYPayloadTeaser)(nil),                                 // 1: org.packetbroker.v3.PHYPayloadTeaser
-	(*GatewayMetadataTeaser)(nil),                            // 2: org.packetbroker.v3.GatewayMetadataTeaser
-	(*TerrestrialGatewayAntennaSignalQuality)(nil),           // 3: org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality
-	(*GatewayMetadataSignalQuality)(nil),                     // 4: org.packetbroker.v3.GatewayMetadataSignalQuality
-	(*GatewayMetadataLocalization)(nil),                      // 5: org.packetbroker.v3.GatewayMetadataLocalization
-	(*GatewayIdentifier)(nil),                                // 6: org.packetbroker.v3.GatewayIdentifier
-	(*UplinkMessage)(nil),                                    // 7: org.packetbroker.v3.UplinkMessage
-	(*DownlinkMessage)(nil),                                  // 8: org.packetbroker.v3.DownlinkMessage
-	(*TransmissionResult)(nil),                               // 9: org.packetbroker.v3.TransmissionResult
-	(*PHYPayloadTeaser_JoinRequestTeaser)(nil),               // 10: org.packetbroker.v3.PHYPayloadTeaser.JoinRequestTeaser
-	(*PHYPayloadTeaser_MACPayloadTeaser)(nil),                // 11: org.packetbroker.v3.PHYPayloadTeaser.MACPayloadTeaser
-	(*GatewayMetadataTeaser_Terrestrial)(nil),                // 12: org.packetbroker.v3.GatewayMetadataTeaser.Terrestrial
-	(*GatewayMetadataTeaser_Satellite)(nil),                  // 13: org.packetbroker.v3.GatewayMetadataTeaser.Satellite
-	(*GatewayMetadataSignalQuality_Terrestrial)(nil),         // 14: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial
-	(*GatewayMetadataSignalQuality_Satellite)(nil),           // 15: org.packetbroker.v3.GatewayMetadataSignalQuality.Satellite
-	(*GatewayMetadataSignalQuality_Terrestrial_Antenna)(nil), // 16: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.Antenna
-	(*GatewayMetadataLocalization_Terrestrial)(nil),          // 17: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial
-	(*GatewayMetadataLocalization_Satellite)(nil),            // 18: org.packetbroker.v3.GatewayMetadataLocalization.Satellite
-	(*GatewayMetadataLocalization_Terrestrial_Antenna)(nil),  // 19: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna
-	nil,                                   // 20: org.packetbroker.v3.UplinkMessage.KeksEntry
-	(*UplinkMessage_PHYPayload)(nil),      // 21: org.packetbroker.v3.UplinkMessage.PHYPayload
-	(*UplinkMessage_GatewayMetadata)(nil), // 22: org.packetbroker.v3.UplinkMessage.GatewayMetadata
-	(*DownlinkMessage_RXSettings)(nil),    // 23: org.packetbroker.v3.DownlinkMessage.RXSettings
-	(*wrapperspb.FloatValue)(nil),         // 24: google.protobuf.FloatValue
-	(*wrapperspb.UInt64Value)(nil),        // 25: google.protobuf.UInt64Value
-	(*timestamppb.Timestamp)(nil),         // 26: google.protobuf.Timestamp
-	(Region)(0),                           // 27: org.packetbroker.v3.Region
-	(*durationpb.Duration)(nil),           // 28: google.protobuf.Duration
-	(DownlinkMessageClass)(0),             // 29: org.packetbroker.v3.DownlinkMessageClass
-	(DownlinkMessagePriority)(0),          // 30: org.packetbroker.v3.DownlinkMessagePriority
-	(*Location)(nil),                      // 31: org.packetbroker.v3.Location
-	(*KeyPointer)(nil),                    // 32: org.packetbroker.v3.KeyPointer
-	(*EncryptedData)(nil),                 // 33: org.packetbroker.v3.EncryptedData
+	(*PHYPayloadTeaser)(nil),                                 // 0: org.packetbroker.v3.PHYPayloadTeaser
+	(*GatewayMetadataTeaser)(nil),                            // 1: org.packetbroker.v3.GatewayMetadataTeaser
+	(*TerrestrialGatewayAntennaSignalQuality)(nil),           // 2: org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality
+	(*GatewayMetadataSignalQuality)(nil),                     // 3: org.packetbroker.v3.GatewayMetadataSignalQuality
+	(*GatewayMetadataLocalization)(nil),                      // 4: org.packetbroker.v3.GatewayMetadataLocalization
+	(*GatewayIdentifier)(nil),                                // 5: org.packetbroker.v3.GatewayIdentifier
+	(*UplinkMessage)(nil),                                    // 6: org.packetbroker.v3.UplinkMessage
+	(*DownlinkMessage)(nil),                                  // 7: org.packetbroker.v3.DownlinkMessage
+	(*PHYPayloadTeaser_JoinRequestTeaser)(nil),               // 8: org.packetbroker.v3.PHYPayloadTeaser.JoinRequestTeaser
+	(*PHYPayloadTeaser_MACPayloadTeaser)(nil),                // 9: org.packetbroker.v3.PHYPayloadTeaser.MACPayloadTeaser
+	(*GatewayMetadataTeaser_Terrestrial)(nil),                // 10: org.packetbroker.v3.GatewayMetadataTeaser.Terrestrial
+	(*GatewayMetadataTeaser_Satellite)(nil),                  // 11: org.packetbroker.v3.GatewayMetadataTeaser.Satellite
+	(*GatewayMetadataSignalQuality_Terrestrial)(nil),         // 12: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial
+	(*GatewayMetadataSignalQuality_Satellite)(nil),           // 13: org.packetbroker.v3.GatewayMetadataSignalQuality.Satellite
+	(*GatewayMetadataSignalQuality_Terrestrial_Antenna)(nil), // 14: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.Antenna
+	(*GatewayMetadataLocalization_Terrestrial)(nil),          // 15: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial
+	(*GatewayMetadataLocalization_Satellite)(nil),            // 16: org.packetbroker.v3.GatewayMetadataLocalization.Satellite
+	(*GatewayMetadataLocalization_Terrestrial_Antenna)(nil),  // 17: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna
+	nil,                                   // 18: org.packetbroker.v3.UplinkMessage.KeksEntry
+	(*UplinkMessage_PHYPayload)(nil),      // 19: org.packetbroker.v3.UplinkMessage.PHYPayload
+	(*UplinkMessage_GatewayMetadata)(nil), // 20: org.packetbroker.v3.UplinkMessage.GatewayMetadata
+	(*DownlinkMessage_RXSettings)(nil),    // 21: org.packetbroker.v3.DownlinkMessage.RXSettings
+	(*wrapperspb.FloatValue)(nil),         // 22: google.protobuf.FloatValue
+	(*wrapperspb.UInt64Value)(nil),        // 23: google.protobuf.UInt64Value
+	(*timestamppb.Timestamp)(nil),         // 24: google.protobuf.Timestamp
+	(Region)(0),                           // 25: org.packetbroker.v3.Region
+	(*durationpb.Duration)(nil),           // 26: google.protobuf.Duration
+	(DownlinkMessageClass)(0),             // 27: org.packetbroker.v3.DownlinkMessageClass
+	(DownlinkMessagePriority)(0),          // 28: org.packetbroker.v3.DownlinkMessagePriority
+	(*Location)(nil),                      // 29: org.packetbroker.v3.Location
+	(*KeyPointer)(nil),                    // 30: org.packetbroker.v3.KeyPointer
+	(*EncryptedData)(nil),                 // 31: org.packetbroker.v3.EncryptedData
 }
 var file_packetbroker_api_v3_messages_proto_depIdxs = []int32{
-	10, // 0: org.packetbroker.v3.PHYPayloadTeaser.join_request:type_name -> org.packetbroker.v3.PHYPayloadTeaser.JoinRequestTeaser
-	11, // 1: org.packetbroker.v3.PHYPayloadTeaser.mac:type_name -> org.packetbroker.v3.PHYPayloadTeaser.MACPayloadTeaser
-	12, // 2: org.packetbroker.v3.GatewayMetadataTeaser.terrestrial:type_name -> org.packetbroker.v3.GatewayMetadataTeaser.Terrestrial
-	13, // 3: org.packetbroker.v3.GatewayMetadataTeaser.satellite:type_name -> org.packetbroker.v3.GatewayMetadataTeaser.Satellite
-	24, // 4: org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality.signal_rssi:type_name -> google.protobuf.FloatValue
-	24, // 5: org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality.rssi_standard_deviation:type_name -> google.protobuf.FloatValue
-	14, // 6: org.packetbroker.v3.GatewayMetadataSignalQuality.terrestrial:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial
-	15, // 7: org.packetbroker.v3.GatewayMetadataSignalQuality.satellite:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality.Satellite
-	17, // 8: org.packetbroker.v3.GatewayMetadataLocalization.terrestrial:type_name -> org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial
-	18, // 9: org.packetbroker.v3.GatewayMetadataLocalization.satellite:type_name -> org.packetbroker.v3.GatewayMetadataLocalization.Satellite
-	25, // 10: org.packetbroker.v3.GatewayIdentifier.eui:type_name -> google.protobuf.UInt64Value
-	20, // 11: org.packetbroker.v3.UplinkMessage.keks:type_name -> org.packetbroker.v3.UplinkMessage.KeksEntry
-	6,  // 12: org.packetbroker.v3.UplinkMessage.gateway_id:type_name -> org.packetbroker.v3.GatewayIdentifier
-	21, // 13: org.packetbroker.v3.UplinkMessage.phy_payload:type_name -> org.packetbroker.v3.UplinkMessage.PHYPayload
-	26, // 14: org.packetbroker.v3.UplinkMessage.forwarder_receive_time:type_name -> google.protobuf.Timestamp
-	26, // 15: org.packetbroker.v3.UplinkMessage.gateway_receive_time:type_name -> google.protobuf.Timestamp
-	27, // 16: org.packetbroker.v3.UplinkMessage.gateway_region:type_name -> org.packetbroker.v3.Region
-	22, // 17: org.packetbroker.v3.UplinkMessage.gateway_metadata:type_name -> org.packetbroker.v3.UplinkMessage.GatewayMetadata
-	23, // 18: org.packetbroker.v3.DownlinkMessage.rx1:type_name -> org.packetbroker.v3.DownlinkMessage.RXSettings
-	23, // 19: org.packetbroker.v3.DownlinkMessage.rx2:type_name -> org.packetbroker.v3.DownlinkMessage.RXSettings
-	28, // 20: org.packetbroker.v3.DownlinkMessage.rx1_delay:type_name -> google.protobuf.Duration
-	29, // 21: org.packetbroker.v3.DownlinkMessage.class:type_name -> org.packetbroker.v3.DownlinkMessageClass
-	30, // 22: org.packetbroker.v3.DownlinkMessage.priority:type_name -> org.packetbroker.v3.DownlinkMessagePriority
-	0,  // 23: org.packetbroker.v3.TransmissionResult.code:type_name -> org.packetbroker.v3.TransmissionResult.Code
-	25, // 24: org.packetbroker.v3.TransmissionResult.rx1_frequency:type_name -> google.protobuf.UInt64Value
-	25, // 25: org.packetbroker.v3.TransmissionResult.rx2_frequency:type_name -> google.protobuf.UInt64Value
-	16, // 26: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.antennas:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.Antenna
-	3,  // 27: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.Antenna.value:type_name -> org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality
-	19, // 28: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.antennas:type_name -> org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna
-	31, // 29: org.packetbroker.v3.GatewayMetadataLocalization.Satellite.location:type_name -> org.packetbroker.v3.Location
-	31, // 30: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna.location:type_name -> org.packetbroker.v3.Location
-	25, // 31: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna.fine_timestamp:type_name -> google.protobuf.UInt64Value
-	3,  // 32: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna.signal_quality:type_name -> org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality
-	32, // 33: org.packetbroker.v3.UplinkMessage.KeksEntry.value:type_name -> org.packetbroker.v3.KeyPointer
-	1,  // 34: org.packetbroker.v3.UplinkMessage.PHYPayload.teaser:type_name -> org.packetbroker.v3.PHYPayloadTeaser
-	33, // 35: org.packetbroker.v3.UplinkMessage.PHYPayload.encrypted:type_name -> org.packetbroker.v3.EncryptedData
-	2,  // 36: org.packetbroker.v3.UplinkMessage.GatewayMetadata.teaser:type_name -> org.packetbroker.v3.GatewayMetadataTeaser
-	33, // 37: org.packetbroker.v3.UplinkMessage.GatewayMetadata.encrypted_signal_quality:type_name -> org.packetbroker.v3.EncryptedData
-	4,  // 38: org.packetbroker.v3.UplinkMessage.GatewayMetadata.plain_signal_quality:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality
-	33, // 39: org.packetbroker.v3.UplinkMessage.GatewayMetadata.encrypted_localization:type_name -> org.packetbroker.v3.EncryptedData
-	5,  // 40: org.packetbroker.v3.UplinkMessage.GatewayMetadata.plain_localization:type_name -> org.packetbroker.v3.GatewayMetadataLocalization
-	41, // [41:41] is the sub-list for method output_type
-	41, // [41:41] is the sub-list for method input_type
-	41, // [41:41] is the sub-list for extension type_name
-	41, // [41:41] is the sub-list for extension extendee
-	0,  // [0:41] is the sub-list for field type_name
+	8,  // 0: org.packetbroker.v3.PHYPayloadTeaser.join_request:type_name -> org.packetbroker.v3.PHYPayloadTeaser.JoinRequestTeaser
+	9,  // 1: org.packetbroker.v3.PHYPayloadTeaser.mac:type_name -> org.packetbroker.v3.PHYPayloadTeaser.MACPayloadTeaser
+	10, // 2: org.packetbroker.v3.GatewayMetadataTeaser.terrestrial:type_name -> org.packetbroker.v3.GatewayMetadataTeaser.Terrestrial
+	11, // 3: org.packetbroker.v3.GatewayMetadataTeaser.satellite:type_name -> org.packetbroker.v3.GatewayMetadataTeaser.Satellite
+	22, // 4: org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality.signal_rssi:type_name -> google.protobuf.FloatValue
+	22, // 5: org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality.rssi_standard_deviation:type_name -> google.protobuf.FloatValue
+	12, // 6: org.packetbroker.v3.GatewayMetadataSignalQuality.terrestrial:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial
+	13, // 7: org.packetbroker.v3.GatewayMetadataSignalQuality.satellite:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality.Satellite
+	15, // 8: org.packetbroker.v3.GatewayMetadataLocalization.terrestrial:type_name -> org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial
+	16, // 9: org.packetbroker.v3.GatewayMetadataLocalization.satellite:type_name -> org.packetbroker.v3.GatewayMetadataLocalization.Satellite
+	23, // 10: org.packetbroker.v3.GatewayIdentifier.eui:type_name -> google.protobuf.UInt64Value
+	18, // 11: org.packetbroker.v3.UplinkMessage.keks:type_name -> org.packetbroker.v3.UplinkMessage.KeksEntry
+	5,  // 12: org.packetbroker.v3.UplinkMessage.gateway_id:type_name -> org.packetbroker.v3.GatewayIdentifier
+	19, // 13: org.packetbroker.v3.UplinkMessage.phy_payload:type_name -> org.packetbroker.v3.UplinkMessage.PHYPayload
+	24, // 14: org.packetbroker.v3.UplinkMessage.forwarder_receive_time:type_name -> google.protobuf.Timestamp
+	24, // 15: org.packetbroker.v3.UplinkMessage.gateway_receive_time:type_name -> google.protobuf.Timestamp
+	25, // 16: org.packetbroker.v3.UplinkMessage.gateway_region:type_name -> org.packetbroker.v3.Region
+	20, // 17: org.packetbroker.v3.UplinkMessage.gateway_metadata:type_name -> org.packetbroker.v3.UplinkMessage.GatewayMetadata
+	21, // 18: org.packetbroker.v3.DownlinkMessage.rx1:type_name -> org.packetbroker.v3.DownlinkMessage.RXSettings
+	21, // 19: org.packetbroker.v3.DownlinkMessage.rx2:type_name -> org.packetbroker.v3.DownlinkMessage.RXSettings
+	26, // 20: org.packetbroker.v3.DownlinkMessage.rx1_delay:type_name -> google.protobuf.Duration
+	27, // 21: org.packetbroker.v3.DownlinkMessage.class:type_name -> org.packetbroker.v3.DownlinkMessageClass
+	28, // 22: org.packetbroker.v3.DownlinkMessage.priority:type_name -> org.packetbroker.v3.DownlinkMessagePriority
+	14, // 23: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.antennas:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.Antenna
+	2,  // 24: org.packetbroker.v3.GatewayMetadataSignalQuality.Terrestrial.Antenna.value:type_name -> org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality
+	17, // 25: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.antennas:type_name -> org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna
+	29, // 26: org.packetbroker.v3.GatewayMetadataLocalization.Satellite.location:type_name -> org.packetbroker.v3.Location
+	29, // 27: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna.location:type_name -> org.packetbroker.v3.Location
+	23, // 28: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna.fine_timestamp:type_name -> google.protobuf.UInt64Value
+	2,  // 29: org.packetbroker.v3.GatewayMetadataLocalization.Terrestrial.Antenna.signal_quality:type_name -> org.packetbroker.v3.TerrestrialGatewayAntennaSignalQuality
+	30, // 30: org.packetbroker.v3.UplinkMessage.KeksEntry.value:type_name -> org.packetbroker.v3.KeyPointer
+	0,  // 31: org.packetbroker.v3.UplinkMessage.PHYPayload.teaser:type_name -> org.packetbroker.v3.PHYPayloadTeaser
+	31, // 32: org.packetbroker.v3.UplinkMessage.PHYPayload.encrypted:type_name -> org.packetbroker.v3.EncryptedData
+	1,  // 33: org.packetbroker.v3.UplinkMessage.GatewayMetadata.teaser:type_name -> org.packetbroker.v3.GatewayMetadataTeaser
+	31, // 34: org.packetbroker.v3.UplinkMessage.GatewayMetadata.encrypted_signal_quality:type_name -> org.packetbroker.v3.EncryptedData
+	3,  // 35: org.packetbroker.v3.UplinkMessage.GatewayMetadata.plain_signal_quality:type_name -> org.packetbroker.v3.GatewayMetadataSignalQuality
+	31, // 36: org.packetbroker.v3.UplinkMessage.GatewayMetadata.encrypted_localization:type_name -> org.packetbroker.v3.EncryptedData
+	4,  // 37: org.packetbroker.v3.UplinkMessage.GatewayMetadata.plain_localization:type_name -> org.packetbroker.v3.GatewayMetadataLocalization
+	38, // [38:38] is the sub-list for method output_type
+	38, // [38:38] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	38, // [38:38] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_packetbroker_api_v3_messages_proto_init() }
@@ -2352,18 +2175,6 @@ func file_packetbroker_api_v3_messages_proto_init() {
 			}
 		}
 		file_packetbroker_api_v3_messages_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TransmissionResult); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*PHYPayloadTeaser_JoinRequestTeaser); i {
 			case 0:
 				return &v.state
@@ -2375,7 +2186,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*PHYPayloadTeaser_MACPayloadTeaser); i {
 			case 0:
 				return &v.state
@@ -2387,7 +2198,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataTeaser_Terrestrial); i {
 			case 0:
 				return &v.state
@@ -2399,7 +2210,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataTeaser_Satellite); i {
 			case 0:
 				return &v.state
@@ -2411,7 +2222,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataSignalQuality_Terrestrial); i {
 			case 0:
 				return &v.state
@@ -2423,7 +2234,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataSignalQuality_Satellite); i {
 			case 0:
 				return &v.state
@@ -2435,7 +2246,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataSignalQuality_Terrestrial_Antenna); i {
 			case 0:
 				return &v.state
@@ -2447,7 +2258,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataLocalization_Terrestrial); i {
 			case 0:
 				return &v.state
@@ -2459,7 +2270,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataLocalization_Satellite); i {
 			case 0:
 				return &v.state
@@ -2471,7 +2282,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GatewayMetadataLocalization_Terrestrial_Antenna); i {
 			case 0:
 				return &v.state
@@ -2483,7 +2294,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UplinkMessage_PHYPayload); i {
 			case 0:
 				return &v.state
@@ -2495,7 +2306,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UplinkMessage_GatewayMetadata); i {
 			case 0:
 				return &v.state
@@ -2507,7 +2318,7 @@ func file_packetbroker_api_v3_messages_proto_init() {
 				return nil
 			}
 		}
-		file_packetbroker_api_v3_messages_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+		file_packetbroker_api_v3_messages_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DownlinkMessage_RXSettings); i {
 			case 0:
 				return &v.state
@@ -2540,11 +2351,11 @@ func file_packetbroker_api_v3_messages_proto_init() {
 		(*GatewayIdentifier_Plain)(nil),
 		(*GatewayIdentifier_Hash)(nil),
 	}
-	file_packetbroker_api_v3_messages_proto_msgTypes[20].OneofWrappers = []interface{}{
+	file_packetbroker_api_v3_messages_proto_msgTypes[19].OneofWrappers = []interface{}{
 		(*UplinkMessage_PHYPayload_Encrypted)(nil),
 		(*UplinkMessage_PHYPayload_Plain)(nil),
 	}
-	file_packetbroker_api_v3_messages_proto_msgTypes[21].OneofWrappers = []interface{}{
+	file_packetbroker_api_v3_messages_proto_msgTypes[20].OneofWrappers = []interface{}{
 		(*UplinkMessage_GatewayMetadata_EncryptedSignalQuality)(nil),
 		(*UplinkMessage_GatewayMetadata_PlainSignalQuality)(nil),
 		(*UplinkMessage_GatewayMetadata_EncryptedLocalization)(nil),
@@ -2555,14 +2366,13 @@ func file_packetbroker_api_v3_messages_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_packetbroker_api_v3_messages_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   23,
+			NumEnums:      0,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_packetbroker_api_v3_messages_proto_goTypes,
 		DependencyIndexes: file_packetbroker_api_v3_messages_proto_depIdxs,
-		EnumInfos:         file_packetbroker_api_v3_messages_proto_enumTypes,
 		MessageInfos:      file_packetbroker_api_v3_messages_proto_msgTypes,
 	}.Build()
 	File_packetbroker_api_v3_messages_proto = out.File

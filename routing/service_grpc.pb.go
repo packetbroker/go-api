@@ -340,6 +340,8 @@ type ForwarderDataClient interface {
 	Publish(ctx context.Context, in *PublishUplinkMessageRequest, opts ...grpc.CallOption) (*PublishUplinkMessageResponse, error)
 	// Subscribe to routed downlink messages.
 	Subscribe(ctx context.Context, in *SubscribeForwarderRequest, opts ...grpc.CallOption) (ForwarderData_SubscribeClient, error)
+	// Report the message state change of a downlink message.
+	ReportDownlinkMessageDeliveryState(ctx context.Context, in *DownlinkMessageDeliveryStateChangeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type forwarderDataClient struct {
@@ -391,6 +393,15 @@ func (x *forwarderDataSubscribeClient) Recv() (*v3.RoutedDownlinkMessage, error)
 	return m, nil
 }
 
+func (c *forwarderDataClient) ReportDownlinkMessageDeliveryState(ctx context.Context, in *DownlinkMessageDeliveryStateChangeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.routing.v1.ForwarderData/ReportDownlinkMessageDeliveryState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ForwarderDataServer is the server API for ForwarderData service.
 // All implementations must embed UnimplementedForwarderDataServer
 // for forward compatibility
@@ -399,6 +410,8 @@ type ForwarderDataServer interface {
 	Publish(context.Context, *PublishUplinkMessageRequest) (*PublishUplinkMessageResponse, error)
 	// Subscribe to routed downlink messages.
 	Subscribe(*SubscribeForwarderRequest, ForwarderData_SubscribeServer) error
+	// Report the message state change of a downlink message.
+	ReportDownlinkMessageDeliveryState(context.Context, *DownlinkMessageDeliveryStateChangeRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedForwarderDataServer()
 }
 
@@ -411,6 +424,9 @@ func (UnimplementedForwarderDataServer) Publish(context.Context, *PublishUplinkM
 }
 func (UnimplementedForwarderDataServer) Subscribe(*SubscribeForwarderRequest, ForwarderData_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
+}
+func (UnimplementedForwarderDataServer) ReportDownlinkMessageDeliveryState(context.Context, *DownlinkMessageDeliveryStateChangeRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReportDownlinkMessageDeliveryState not implemented")
 }
 func (UnimplementedForwarderDataServer) mustEmbedUnimplementedForwarderDataServer() {}
 
@@ -464,6 +480,24 @@ func (x *forwarderDataSubscribeServer) Send(m *v3.RoutedDownlinkMessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _ForwarderData_ReportDownlinkMessageDeliveryState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownlinkMessageDeliveryStateChangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ForwarderDataServer).ReportDownlinkMessageDeliveryState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.routing.v1.ForwarderData/ReportDownlinkMessageDeliveryState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ForwarderDataServer).ReportDownlinkMessageDeliveryState(ctx, req.(*DownlinkMessageDeliveryStateChangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ForwarderData_ServiceDesc is the grpc.ServiceDesc for ForwarderData service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -474,6 +508,10 @@ var ForwarderData_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Publish",
 			Handler:    _ForwarderData_Publish_Handler,
+		},
+		{
+			MethodName: "ReportDownlinkMessageDeliveryState",
+			Handler:    _ForwarderData_ReportDownlinkMessageDeliveryState_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -494,6 +532,8 @@ type HomeNetworkDataClient interface {
 	Publish(ctx context.Context, in *PublishDownlinkMessageRequest, opts ...grpc.CallOption) (*PublishDownlinkMessageResponse, error)
 	// Subscribe to routed uplink messages.
 	Subscribe(ctx context.Context, in *SubscribeHomeNetworkRequest, opts ...grpc.CallOption) (HomeNetworkData_SubscribeClient, error)
+	// Report the message state change of an uplink message.
+	ReportUplinkMessageDeliveryState(ctx context.Context, in *UplinkMessageDeliveryStateChangeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type homeNetworkDataClient struct {
@@ -545,6 +585,15 @@ func (x *homeNetworkDataSubscribeClient) Recv() (*v3.RoutedUplinkMessage, error)
 	return m, nil
 }
 
+func (c *homeNetworkDataClient) ReportUplinkMessageDeliveryState(ctx context.Context, in *UplinkMessageDeliveryStateChangeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.routing.v1.HomeNetworkData/ReportUplinkMessageDeliveryState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HomeNetworkDataServer is the server API for HomeNetworkData service.
 // All implementations must embed UnimplementedHomeNetworkDataServer
 // for forward compatibility
@@ -553,6 +602,8 @@ type HomeNetworkDataServer interface {
 	Publish(context.Context, *PublishDownlinkMessageRequest) (*PublishDownlinkMessageResponse, error)
 	// Subscribe to routed uplink messages.
 	Subscribe(*SubscribeHomeNetworkRequest, HomeNetworkData_SubscribeServer) error
+	// Report the message state change of an uplink message.
+	ReportUplinkMessageDeliveryState(context.Context, *UplinkMessageDeliveryStateChangeRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedHomeNetworkDataServer()
 }
 
@@ -565,6 +616,9 @@ func (UnimplementedHomeNetworkDataServer) Publish(context.Context, *PublishDownl
 }
 func (UnimplementedHomeNetworkDataServer) Subscribe(*SubscribeHomeNetworkRequest, HomeNetworkData_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
+}
+func (UnimplementedHomeNetworkDataServer) ReportUplinkMessageDeliveryState(context.Context, *UplinkMessageDeliveryStateChangeRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReportUplinkMessageDeliveryState not implemented")
 }
 func (UnimplementedHomeNetworkDataServer) mustEmbedUnimplementedHomeNetworkDataServer() {}
 
@@ -618,6 +672,24 @@ func (x *homeNetworkDataSubscribeServer) Send(m *v3.RoutedUplinkMessage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _HomeNetworkData_ReportUplinkMessageDeliveryState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UplinkMessageDeliveryStateChangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HomeNetworkDataServer).ReportUplinkMessageDeliveryState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.routing.v1.HomeNetworkData/ReportUplinkMessageDeliveryState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HomeNetworkDataServer).ReportUplinkMessageDeliveryState(ctx, req.(*UplinkMessageDeliveryStateChangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HomeNetworkData_ServiceDesc is the grpc.ServiceDesc for HomeNetworkData service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -628,6 +700,10 @@ var HomeNetworkData_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Publish",
 			Handler:    _HomeNetworkData_Publish_Handler,
+		},
+		{
+			MethodName: "ReportUplinkMessageDeliveryState",
+			Handler:    _HomeNetworkData_ReportUplinkMessageDeliveryState_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

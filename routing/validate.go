@@ -102,6 +102,22 @@ func (r *PublishDownlinkMessageRequest) Validate() error {
 }
 
 // Validate returns whether the request is valid.
+func (r *UplinkMessageDeliveryStateChangeRequest) Validate() error {
+	if r.StateChange == nil {
+		return errors.New("no state change")
+	}
+	return r.StateChange.Validate()
+}
+
+// Validate returns whether the request is valid.
+func (r *DownlinkMessageDeliveryStateChangeRequest) Validate() error {
+	if r.StateChange == nil {
+		return errors.New("no state change")
+	}
+	return r.StateChange.Validate()
+}
+
+// Validate returns whether the request is valid.
 func (r *SubscribeForwarderRequest) Validate() error {
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")

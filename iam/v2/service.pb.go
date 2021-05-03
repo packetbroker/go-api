@@ -495,7 +495,7 @@ func (m *CreateClusterAPIKeyResponse) GetKey() *v3.ClusterAPIKey {
 	return nil
 }
 
-type ListHomeNetworksRequest struct {
+type ListNetworksRequest struct {
 	// Number of items to skip.
 	Offset uint32 `protobuf:"varint,1,opt,name=offset,proto3" json:"offset,omitempty"`
 	// Limit the number of items.
@@ -506,17 +506,17 @@ type ListHomeNetworksRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListHomeNetworksRequest) Reset()      { *m = ListHomeNetworksRequest{} }
-func (*ListHomeNetworksRequest) ProtoMessage() {}
-func (*ListHomeNetworksRequest) Descriptor() ([]byte, []int) {
+func (m *ListNetworksRequest) Reset()      { *m = ListNetworksRequest{} }
+func (*ListNetworksRequest) ProtoMessage() {}
+func (*ListNetworksRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{9}
 }
-func (m *ListHomeNetworksRequest) XXX_Unmarshal(b []byte) error {
+func (m *ListNetworksRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ListHomeNetworksRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ListNetworksRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ListHomeNetworksRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ListNetworksRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -526,51 +526,51 @@ func (m *ListHomeNetworksRequest) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return b[:n], nil
 	}
 }
-func (m *ListHomeNetworksRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListHomeNetworksRequest.Merge(m, src)
+func (m *ListNetworksRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListNetworksRequest.Merge(m, src)
 }
-func (m *ListHomeNetworksRequest) XXX_Size() int {
+func (m *ListNetworksRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *ListHomeNetworksRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListHomeNetworksRequest.DiscardUnknown(m)
+func (m *ListNetworksRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListNetworksRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListHomeNetworksRequest proto.InternalMessageInfo
+var xxx_messageInfo_ListNetworksRequest proto.InternalMessageInfo
 
-func (m *ListHomeNetworksRequest) GetOffset() uint32 {
+func (m *ListNetworksRequest) GetOffset() uint32 {
 	if m != nil {
 		return m.Offset
 	}
 	return 0
 }
 
-func (m *ListHomeNetworksRequest) GetLimit() uint32 {
+func (m *ListNetworksRequest) GetLimit() uint32 {
 	if m != nil {
 		return m.Limit
 	}
 	return 0
 }
 
-type ListHomeNetworksResponse struct {
-	HomeNetworks []*v3.NetworkOrTenant `protobuf:"bytes,1,rep,name=home_networks,json=homeNetworks,proto3" json:"home_networks,omitempty"`
-	// Total number of Home Networks.
+type ListNetworksResponse struct {
+	Networks []*v3.NetworkOrTenant `protobuf:"bytes,1,rep,name=networks,proto3" json:"networks,omitempty"`
+	// Total number of networks.
 	Total                uint32   `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListHomeNetworksResponse) Reset()      { *m = ListHomeNetworksResponse{} }
-func (*ListHomeNetworksResponse) ProtoMessage() {}
-func (*ListHomeNetworksResponse) Descriptor() ([]byte, []int) {
+func (m *ListNetworksResponse) Reset()      { *m = ListNetworksResponse{} }
+func (*ListNetworksResponse) ProtoMessage() {}
+func (*ListNetworksResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{10}
 }
-func (m *ListHomeNetworksResponse) XXX_Unmarshal(b []byte) error {
+func (m *ListNetworksResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ListHomeNetworksResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ListNetworksResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ListHomeNetworksResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ListNetworksResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -580,26 +580,26 @@ func (m *ListHomeNetworksResponse) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *ListHomeNetworksResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListHomeNetworksResponse.Merge(m, src)
+func (m *ListNetworksResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListNetworksResponse.Merge(m, src)
 }
-func (m *ListHomeNetworksResponse) XXX_Size() int {
+func (m *ListNetworksResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *ListHomeNetworksResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListHomeNetworksResponse.DiscardUnknown(m)
+func (m *ListNetworksResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListNetworksResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListHomeNetworksResponse proto.InternalMessageInfo
+var xxx_messageInfo_ListNetworksResponse proto.InternalMessageInfo
 
-func (m *ListHomeNetworksResponse) GetHomeNetworks() []*v3.NetworkOrTenant {
+func (m *ListNetworksResponse) GetNetworks() []*v3.NetworkOrTenant {
 	if m != nil {
-		return m.HomeNetworks
+		return m.Networks
 	}
 	return nil
 }
 
-func (m *ListHomeNetworksResponse) GetTotal() uint32 {
+func (m *ListNetworksResponse) GetTotal() uint32 {
 	if m != nil {
 		return m.Total
 	}
@@ -625,10 +625,10 @@ func init() {
 	golang_proto.RegisterType((*CreateClusterAPIKeyRequest)(nil), "org.packetbroker.iam.v2.CreateClusterAPIKeyRequest")
 	proto.RegisterType((*CreateClusterAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateClusterAPIKeyResponse")
 	golang_proto.RegisterType((*CreateClusterAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateClusterAPIKeyResponse")
-	proto.RegisterType((*ListHomeNetworksRequest)(nil), "org.packetbroker.iam.v2.ListHomeNetworksRequest")
-	golang_proto.RegisterType((*ListHomeNetworksRequest)(nil), "org.packetbroker.iam.v2.ListHomeNetworksRequest")
-	proto.RegisterType((*ListHomeNetworksResponse)(nil), "org.packetbroker.iam.v2.ListHomeNetworksResponse")
-	golang_proto.RegisterType((*ListHomeNetworksResponse)(nil), "org.packetbroker.iam.v2.ListHomeNetworksResponse")
+	proto.RegisterType((*ListNetworksRequest)(nil), "org.packetbroker.iam.v2.ListNetworksRequest")
+	golang_proto.RegisterType((*ListNetworksRequest)(nil), "org.packetbroker.iam.v2.ListNetworksRequest")
+	proto.RegisterType((*ListNetworksResponse)(nil), "org.packetbroker.iam.v2.ListNetworksResponse")
+	golang_proto.RegisterType((*ListNetworksResponse)(nil), "org.packetbroker.iam.v2.ListNetworksResponse")
 }
 
 func init() {
@@ -639,57 +639,57 @@ func init() {
 }
 
 var fileDescriptor_04cdaf08feadd3d4 = []byte{
-	// 789 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0x3f, 0x4c, 0xdb, 0x58,
-	0x1c, 0x7e, 0x8f, 0x40, 0xee, 0xf2, 0x20, 0xa7, 0x93, 0x75, 0x07, 0x39, 0x73, 0xf7, 0x8e, 0xb3,
-	0x38, 0xc4, 0xe4, 0xb4, 0x0e, 0xaa, 0x54, 0x31, 0xb5, 0xb4, 0x6a, 0xa3, 0x56, 0xb4, 0x32, 0x14,
-	0x55, 0x5d, 0x90, 0x43, 0x1e, 0xc6, 0x8a, 0xed, 0xe7, 0xda, 0x2f, 0x41, 0x51, 0x17, 0xd4, 0x89,
-	0xb1, 0x63, 0xd5, 0xa9, 0x52, 0x17, 0x46, 0x46, 0x46, 0x46, 0x46, 0xb6, 0x32, 0x12, 0x7b, 0x61,
-	0x64, 0x64, 0xac, 0x62, 0x3f, 0xa3, 0x38, 0xb1, 0x21, 0xa9, 0x18, 0x5f, 0xde, 0xf7, 0xfd, 0xfe,
-	0x7c, 0xdf, 0xef, 0xf7, 0x62, 0xf4, 0xbf, 0xa3, 0x6d, 0x35, 0x08, 0xab, 0xb9, 0xb4, 0x41, 0xdc,
-	0xb2, 0xe6, 0x18, 0x65, 0x43, 0xb3, 0xca, 0x2d, 0xa5, 0xec, 0x11, 0xb7, 0x65, 0x6c, 0x11, 0xd9,
-	0x71, 0x29, 0xa3, 0xc2, 0x0c, 0x75, 0x75, 0xb9, 0x17, 0x2a, 0x1b, 0x9a, 0x25, 0xb7, 0x14, 0x71,
-	0x56, 0xa7, 0x54, 0x37, 0x49, 0x39, 0x84, 0xd5, 0x9a, 0xdb, 0x65, 0x62, 0x39, 0xac, 0x1d, 0xb1,
-	0x44, 0xdc, 0x7f, 0xb9, 0xeb, 0x6a, 0x8e, 0x43, 0x5c, 0x8f, 0xdf, 0xff, 0x3b, 0x90, 0xbc, 0x55,
-	0x29, 0x13, 0xbb, 0x69, 0xc5, 0x80, 0xff, 0xd2, 0x00, 0x5b, 0x66, 0xd3, 0x63, 0xc4, 0xe5, 0x10,
-	0x29, 0x0d, 0x62, 0x13, 0xb6, 0x4b, 0xdd, 0x06, 0x0f, 0x23, 0x9d, 0x40, 0xf4, 0xd7, 0x4b, 0xc3,
-	0x63, 0xab, 0xd1, 0xcf, 0x8f, 0x5e, 0x57, 0x5f, 0x90, 0xb6, 0xa7, 0x92, 0xf7, 0x4d, 0xe2, 0x31,
-	0xa1, 0x82, 0xf2, 0x36, 0x61, 0x9b, 0x46, 0xbd, 0x04, 0xe7, 0xe0, 0xe2, 0xa4, 0xf2, 0xb7, 0x1c,
-	0x95, 0x2d, 0xc7, 0x65, 0xcb, 0x6f, 0xaa, 0x36, 0xab, 0x28, 0x1b, 0x9a, 0xd9, 0x24, 0xea, 0x84,
-	0x4d, 0x58, 0xb5, 0x2e, 0x3c, 0x44, 0x05, 0x46, 0x6c, 0xcd, 0x0e, 0x79, 0x63, 0x19, 0xbc, 0x35,
-	0xe6, 0x1a, 0xb6, 0x1e, 0xf1, 0x7e, 0x8d, 0xe0, 0xd5, 0xba, 0xb0, 0x8c, 0x10, 0x6f, 0xa1, 0xcb,
-	0xcd, 0x0d, 0xc1, 0x2d, 0x70, 0x7c, 0xb5, 0x2e, 0xad, 0x23, 0x31, 0xad, 0x13, 0xcf, 0xa1, 0xb6,
-	0x47, 0x84, 0x07, 0x68, 0xbc, 0x41, 0xda, 0x5e, 0x09, 0xce, 0xe5, 0x16, 0x27, 0x15, 0x49, 0x1e,
-	0x70, 0xad, 0x55, 0x91, 0x13, 0x54, 0x35, 0xc4, 0x4b, 0xdf, 0x20, 0x12, 0x57, 0x5c, 0xa2, 0x31,
-	0x92, 0xbc, 0xe5, 0x0a, 0xfd, 0x99, 0x50, 0xa8, 0x18, 0x6b, 0x30, 0xdb, 0xaf, 0x41, 0xa1, 0xa7,
-	0xcb, 0x7f, 0x06, 0xba, 0x2c, 0xf4, 0xf4, 0x21, 0x28, 0x28, 0xef, 0x1a, 0xfa, 0x0e, 0xf3, 0x4a,
-	0xe3, 0x73, 0xb9, 0xc5, 0xdf, 0x14, 0x31, 0xb5, 0x56, 0xb5, 0x0b, 0x51, 0x39, 0x52, 0x5a, 0x40,
-	0xc5, 0x81, 0xba, 0x1a, 0xa4, 0x1d, 0xd7, 0x55, 0x50, 0x27, 0x1a, 0xa4, 0x5d, 0xad, 0x4b, 0x6b,
-	0x68, 0x36, 0xb5, 0x19, 0x2e, 0xd2, 0x12, 0xca, 0x35, 0x48, 0x9b, 0x9b, 0x3d, 0x8c, 0x46, 0x5d,
-	0xb8, 0xf4, 0x36, 0x1a, 0xa1, 0x95, 0xa8, 0x83, 0xbe, 0x11, 0xba, 0x0b, 0x4b, 0xfb, 0x23, 0x8f,
-	0x60, 0x69, 0x82, 0xca, 0x2d, 0xa5, 0xb1, 0xa3, 0xc9, 0x4b, 0x5e, 0x70, 0xd2, 0x1d, 0x98, 0xed,
-	0xce, 0xd8, 0xd0, 0xee, 0x5c, 0xab, 0xde, 0x97, 0x70, 0x78, 0xd5, 0x93, 0xc4, 0x50, 0xf5, 0x67,
-	0x68, 0xa6, 0xab, 0xcd, 0x73, 0x6a, 0xc5, 0x66, 0x5e, 0x6b, 0x3e, 0x8d, 0xf2, 0x74, 0x7b, 0xdb,
-	0x23, 0x8c, 0x0f, 0x25, 0x3f, 0x09, 0x7f, 0xa0, 0x09, 0xd3, 0xb0, 0x0c, 0x16, 0x4e, 0x64, 0x51,
-	0x8d, 0x0e, 0xd2, 0x07, 0x54, 0x1a, 0x0c, 0xc4, 0x4b, 0xab, 0xa2, 0xe2, 0x0e, 0xb5, 0xc8, 0x66,
-	0xfc, 0x6a, 0x70, 0xad, 0xe7, 0x6f, 0x1a, 0x8d, 0x57, 0xee, 0x7a, 0x38, 0xe9, 0xea, 0xd4, 0x4e,
-	0x4f, 0xc8, 0x6e, 0x72, 0x46, 0x99, 0x66, 0xc6, 0xc9, 0xc3, 0x83, 0xf2, 0x7d, 0x0c, 0x09, 0x89,
-	0x91, 0xda, 0xd0, 0x9a, 0x26, 0x13, 0x5a, 0x68, 0xb2, 0x5b, 0x13, 0x77, 0x5c, 0x50, 0xe4, 0x8c,
-	0x47, 0x56, 0xce, 0x7c, 0xbb, 0xc4, 0xca, 0x48, 0x1c, 0xde, 0x6f, 0x1b, 0x4d, 0x45, 0x4e, 0x45,
-	0x17, 0x42, 0x76, 0x90, 0xec, 0x37, 0x41, 0x5c, 0x1a, 0x8d, 0xc4, 0x53, 0xaf, 0xa2, 0xa9, 0x27,
-	0xc4, 0x24, 0xd7, 0xa9, 0x17, 0x32, 0xa3, 0x24, 0xb3, 0x4d, 0x0f, 0x2c, 0xd3, 0xd3, 0xee, 0xff,
-	0x4c, 0xa8, 0x6c, 0x62, 0x6c, 0x7e, 0x42, 0xd9, 0xd4, 0x95, 0xbe, 0x45, 0xd9, 0x8c, 0x65, 0x1d,
-	0x55, 0xd9, 0xb4, 0xdd, 0xbc, 0x55, 0xd9, 0xf4, 0xfd, 0xba, 0x6b, 0x65, 0x3f, 0x42, 0xf4, 0xcb,
-	0x8a, 0xc6, 0x34, 0x93, 0xea, 0xc2, 0x2e, 0xfa, 0xbd, 0x7f, 0x79, 0x84, 0x7b, 0x37, 0xea, 0x93,
-	0xb2, 0xb0, 0xe2, 0xfd, 0x11, 0x18, 0x51, 0x53, 0x8f, 0xbf, 0xc0, 0x93, 0x0e, 0x86, 0xa7, 0x1d,
-	0x0c, 0xcf, 0x3a, 0x18, 0x9c, 0x77, 0x30, 0xb8, 0xe8, 0x60, 0x70, 0xd9, 0xc1, 0xe0, 0xaa, 0x83,
-	0xe1, 0x9e, 0x8f, 0xe1, 0xbe, 0x8f, 0xc1, 0x81, 0x8f, 0xe1, 0xa1, 0x8f, 0xc1, 0x91, 0x8f, 0xc1,
-	0xb1, 0x8f, 0xc1, 0x89, 0x8f, 0xe1, 0xa9, 0x8f, 0xe1, 0x99, 0x8f, 0xc1, 0xb9, 0x8f, 0xe1, 0x85,
-	0x8f, 0xc1, 0xa5, 0x8f, 0xe1, 0x95, 0x8f, 0xc1, 0x5e, 0x80, 0xc1, 0x7e, 0x80, 0xe1, 0xa7, 0x00,
-	0x83, 0xcf, 0x01, 0x86, 0x5f, 0x03, 0x0c, 0x0e, 0x02, 0x0c, 0x0e, 0x03, 0x0c, 0x8f, 0x02, 0x0c,
-	0x8f, 0x03, 0x0c, 0xdf, 0xcd, 0xeb, 0x34, 0x59, 0x27, 0x75, 0xf5, 0x9e, 0x6f, 0xa3, 0x65, 0x43,
-	0xb3, 0x9c, 0x5a, 0x2d, 0x1f, 0x2a, 0x56, 0xf9, 0x11, 0x00, 0x00, 0xff, 0xff, 0x24, 0x8c, 0x2b,
-	0x3d, 0x43, 0x09, 0x00, 0x00,
+	// 788 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0x3f, 0x4c, 0xdb, 0x58,
+	0x18, 0xf7, 0x23, 0x90, 0x23, 0x0f, 0x38, 0x9d, 0x7c, 0x1c, 0xc7, 0x85, 0xbb, 0xef, 0xa8, 0x45,
+	0x11, 0x43, 0xeb, 0x48, 0x0e, 0xaa, 0x54, 0xb1, 0xb4, 0x4d, 0x2b, 0x35, 0x6a, 0x45, 0x2b, 0x43,
+	0x51, 0xd5, 0xa5, 0x72, 0xc8, 0xc3, 0xb5, 0xec, 0xf8, 0xb9, 0xf6, 0x4b, 0x50, 0x36, 0x46, 0xc6,
+	0x8e, 0x55, 0xa7, 0x4a, 0x5d, 0x18, 0x19, 0x19, 0x19, 0x19, 0xd9, 0xca, 0x48, 0xec, 0xa1, 0x8c,
+	0x8c, 0x8c, 0x55, 0xec, 0x97, 0x28, 0x4e, 0xec, 0x92, 0x54, 0xa8, 0xe3, 0xf3, 0xfb, 0xfd, 0xbe,
+	0x3f, 0xbf, 0xdf, 0xf7, 0xbd, 0x04, 0xdf, 0x76, 0xb4, 0x6d, 0x93, 0xb0, 0x8a, 0x4b, 0x4d, 0xe2,
+	0x16, 0x34, 0xc7, 0x28, 0x18, 0x5a, 0xad, 0xd0, 0x50, 0x0a, 0x1e, 0x71, 0x1b, 0xc6, 0x36, 0x91,
+	0x1d, 0x97, 0x32, 0x2a, 0xfe, 0x4d, 0x5d, 0x5d, 0xee, 0x85, 0xca, 0x86, 0x56, 0x93, 0x1b, 0x4a,
+	0x7e, 0x41, 0xa7, 0x54, 0xb7, 0x48, 0x21, 0x84, 0x55, 0xea, 0x3b, 0x05, 0x52, 0x73, 0x58, 0x33,
+	0x62, 0xe5, 0xa1, 0xff, 0x72, 0xd7, 0xd5, 0x1c, 0x87, 0xb8, 0x1e, 0xbf, 0xff, 0x7f, 0x20, 0x79,
+	0xa3, 0x58, 0x20, 0x76, 0xbd, 0xd6, 0x01, 0xdc, 0x4a, 0x02, 0x6c, 0x5b, 0x75, 0x8f, 0x11, 0x97,
+	0x43, 0xa4, 0x24, 0x88, 0x4d, 0xd8, 0x2e, 0x75, 0x4d, 0x1e, 0x46, 0x3a, 0x41, 0xf8, 0x9f, 0xe7,
+	0x86, 0xc7, 0xd6, 0xa3, 0xcf, 0x0f, 0x5f, 0x96, 0x9f, 0x91, 0xa6, 0xa7, 0x92, 0xf7, 0x75, 0xe2,
+	0x31, 0xb1, 0x88, 0xb3, 0x36, 0x61, 0x6f, 0x8d, 0xea, 0x3c, 0x5a, 0x44, 0x2b, 0x53, 0xca, 0xbf,
+	0x72, 0x54, 0xb6, 0xdc, 0x29, 0x5b, 0x7e, 0x55, 0xb6, 0x59, 0x51, 0xd9, 0xd2, 0xac, 0x3a, 0x51,
+	0x27, 0x6c, 0xc2, 0xca, 0x55, 0xf1, 0x3e, 0xce, 0x31, 0x62, 0x6b, 0x76, 0xc8, 0x1b, 0x4b, 0xe1,
+	0x6d, 0x30, 0xd7, 0xb0, 0xf5, 0x88, 0x37, 0x19, 0xc1, 0xcb, 0x55, 0x71, 0x0d, 0x63, 0xde, 0x42,
+	0x9b, 0x9b, 0x19, 0x82, 0x9b, 0xe3, 0xf8, 0x72, 0x55, 0xda, 0xc4, 0xf9, 0xa4, 0x4e, 0x3c, 0x87,
+	0xda, 0x1e, 0x11, 0xef, 0xe1, 0x71, 0x93, 0x34, 0xbd, 0x79, 0xb4, 0x98, 0x59, 0x99, 0x52, 0x24,
+	0x79, 0xc0, 0xb5, 0x46, 0x51, 0x8e, 0x51, 0xd5, 0x10, 0x2f, 0x7d, 0x41, 0x38, 0x5f, 0x72, 0x89,
+	0xc6, 0x48, 0xfc, 0x96, 0x2b, 0xf4, 0x57, 0x4c, 0xa1, 0x99, 0x8e, 0x06, 0x0b, 0xfd, 0x1a, 0xe4,
+	0x7a, 0xba, 0xfc, 0x6f, 0xa0, 0xcb, 0x5c, 0x4f, 0x1f, 0xa2, 0x82, 0xb3, 0xae, 0xa1, 0xbf, 0x63,
+	0xde, 0xfc, 0xf8, 0x62, 0x66, 0xe5, 0x77, 0x25, 0x9f, 0x58, 0xab, 0xda, 0x86, 0xa8, 0x1c, 0x29,
+	0x2d, 0xe3, 0x99, 0x81, 0xba, 0x4c, 0xd2, 0xec, 0xd4, 0x95, 0x53, 0x27, 0x4c, 0xd2, 0x2c, 0x57,
+	0xa5, 0x0d, 0xbc, 0x90, 0xd8, 0x0c, 0x17, 0x69, 0x15, 0x67, 0x4c, 0xd2, 0xe4, 0x66, 0x0f, 0xa3,
+	0x51, 0x1b, 0x2e, 0xbd, 0x8e, 0x46, 0xa8, 0x14, 0x75, 0xd0, 0x37, 0x42, 0x37, 0x61, 0x69, 0x7f,
+	0xe4, 0x11, 0x2c, 0x8d, 0x51, 0xb9, 0xa5, 0xb4, 0xe3, 0x68, 0xfc, 0x92, 0x17, 0x1c, 0x77, 0x07,
+	0xa5, 0xbb, 0x33, 0x36, 0xb4, 0x3b, 0x5d, 0xd5, 0xfb, 0x12, 0x0e, 0xaf, 0x7a, 0x9c, 0x18, 0xaa,
+	0x5e, 0xc2, 0x7f, 0xf6, 0x8c, 0x7b, 0x57, 0xef, 0x39, 0x9c, 0xa5, 0x3b, 0x3b, 0x1e, 0x61, 0x7c,
+	0x20, 0xf9, 0x49, 0x9c, 0xc5, 0x13, 0x96, 0x51, 0x33, 0x58, 0x38, 0x8d, 0x33, 0x6a, 0x74, 0x90,
+	0x6c, 0x3c, 0x1b, 0x0f, 0xc2, 0x4b, 0x7a, 0x80, 0x27, 0x3b, 0x0f, 0x05, 0x97, 0x77, 0xe9, 0x47,
+	0xd3, 0xf0, 0xc2, 0xdd, 0x0c, 0x87, 0x5b, 0xed, 0xb2, 0xda, 0xf9, 0x18, 0x65, 0x9a, 0xd5, 0xc9,
+	0x17, 0x1e, 0x94, 0xaf, 0x63, 0x58, 0x8c, 0x4d, 0xd0, 0x96, 0x56, 0xb7, 0x98, 0xd8, 0xc0, 0x53,
+	0xed, 0x32, 0xb8, 0xc1, 0xa2, 0x22, 0xa7, 0xbc, 0xa9, 0x72, 0xea, 0x53, 0x95, 0x2f, 0x8e, 0xc4,
+	0xe1, 0x6d, 0x36, 0xf1, 0x74, 0x64, 0x4c, 0x74, 0x21, 0xa6, 0x07, 0x49, 0x7f, 0x02, 0xf2, 0xab,
+	0xa3, 0x91, 0x78, 0xea, 0x75, 0x3c, 0xfd, 0x98, 0x58, 0xa4, 0x9b, 0x7a, 0x39, 0x35, 0x4a, 0x3c,
+	0xdb, 0xdc, 0xc0, 0xee, 0x3c, 0x69, 0xff, 0xac, 0x84, 0xca, 0xc6, 0xa6, 0xe4, 0x27, 0x94, 0x4d,
+	0xdc, 0xe0, 0x6b, 0x94, 0x4d, 0xd9, 0xcd, 0x51, 0x95, 0x4d, 0x5a, 0xc5, 0x6b, 0x95, 0x4d, 0x5e,
+	0xa7, 0x9b, 0x56, 0xf6, 0x1b, 0xc2, 0xbf, 0x95, 0x34, 0xa6, 0x59, 0x54, 0x17, 0x4d, 0x3c, 0xdd,
+	0xbb, 0x2f, 0xe2, 0x9d, 0x61, 0xa6, 0xae, 0xab, 0xe4, 0xdd, 0x21, 0xd1, 0xbc, 0x11, 0x8a, 0xff,
+	0x68, 0x7f, 0x7f, 0x4a, 0x6b, 0xe4, 0x97, 0x24, 0x7c, 0xf4, 0x09, 0x9d, 0xb4, 0x00, 0x9d, 0xb6,
+	0x00, 0x9d, 0xb5, 0x40, 0x38, 0x6f, 0x81, 0x70, 0xd1, 0x02, 0xe1, 0xb2, 0x05, 0xc2, 0x55, 0x0b,
+	0xd0, 0x9e, 0x0f, 0x68, 0xdf, 0x07, 0xe1, 0xc0, 0x07, 0x74, 0xe8, 0x83, 0x70, 0xe4, 0x83, 0x70,
+	0xec, 0x83, 0x70, 0xe2, 0x03, 0x3a, 0xf5, 0x01, 0x9d, 0xf9, 0x20, 0x9c, 0xfb, 0x80, 0x2e, 0x7c,
+	0x10, 0x2e, 0x7d, 0x40, 0x57, 0x3e, 0x08, 0x7b, 0x01, 0x08, 0xfb, 0x01, 0xa0, 0x0f, 0x01, 0x08,
+	0x1f, 0x03, 0x40, 0x9f, 0x03, 0x10, 0x0e, 0x02, 0x10, 0x0e, 0x03, 0x40, 0x47, 0x01, 0xa0, 0xe3,
+	0x00, 0xd0, 0x9b, 0x25, 0x9d, 0xc6, 0x6b, 0xa4, 0xae, 0xde, 0xf3, 0x7f, 0x6b, 0xcd, 0xd0, 0x6a,
+	0x4e, 0xa5, 0x92, 0x0d, 0x6d, 0x29, 0x7e, 0x0f, 0x00, 0x00, 0xff, 0xff, 0x57, 0x03, 0x6a, 0x7e,
+	0x97, 0x09, 0x00, 0x00,
 }
 
 func (this *ListNetworkAPIKeysRequest) Equal(that interface{}) bool {
@@ -946,14 +946,14 @@ func (this *CreateClusterAPIKeyResponse) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *ListHomeNetworksRequest) Equal(that interface{}) bool {
+func (this *ListNetworksRequest) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*ListHomeNetworksRequest)
+	that1, ok := that.(*ListNetworksRequest)
 	if !ok {
-		that2, ok := that.(ListHomeNetworksRequest)
+		that2, ok := that.(ListNetworksRequest)
 		if ok {
 			that1 = &that2
 		} else {
@@ -973,14 +973,14 @@ func (this *ListHomeNetworksRequest) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *ListHomeNetworksResponse) Equal(that interface{}) bool {
+func (this *ListNetworksResponse) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
 	}
 
-	that1, ok := that.(*ListHomeNetworksResponse)
+	that1, ok := that.(*ListNetworksResponse)
 	if !ok {
-		that2, ok := that.(ListHomeNetworksResponse)
+		that2, ok := that.(ListNetworksResponse)
 		if ok {
 			that1 = &that2
 		} else {
@@ -992,11 +992,11 @@ func (this *ListHomeNetworksResponse) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if len(this.HomeNetworks) != len(that1.HomeNetworks) {
+	if len(this.Networks) != len(that1.Networks) {
 		return false
 	}
-	for i := range this.HomeNetworks {
-		if !this.HomeNetworks[i].Equal(that1.HomeNetworks[i]) {
+	for i := range this.Networks {
+		if !this.Networks[i].Equal(that1.Networks[i]) {
 			return false
 		}
 	}
@@ -1318,8 +1318,10 @@ var _ClusterAPIKeyVault_serviceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type CatalogClient interface {
+	// List the networks and tenants.
+	ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
 	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
-	ListHomeNetworks(ctx context.Context, in *ListHomeNetworksRequest, opts ...grpc.CallOption) (*ListHomeNetworksResponse, error)
+	ListHomeNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
 }
 
 type catalogClient struct {
@@ -1330,8 +1332,17 @@ func NewCatalogClient(cc *grpc.ClientConn) CatalogClient {
 	return &catalogClient{cc}
 }
 
-func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListHomeNetworksRequest, opts ...grpc.CallOption) (*ListHomeNetworksResponse, error) {
-	out := new(ListHomeNetworksResponse)
+func (c *catalogClient) ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error) {
+	out := new(ListNetworksResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.Catalog/ListNetworks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error) {
+	out := new(ListNetworksResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.Catalog/ListHomeNetworks", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1341,15 +1352,20 @@ func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListHomeNetwor
 
 // CatalogServer is the server API for Catalog service.
 type CatalogServer interface {
+	// List the networks and tenants.
+	ListNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
 	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
-	ListHomeNetworks(context.Context, *ListHomeNetworksRequest) (*ListHomeNetworksResponse, error)
+	ListHomeNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
 }
 
 // UnimplementedCatalogServer can be embedded to have forward compatible implementations.
 type UnimplementedCatalogServer struct {
 }
 
-func (*UnimplementedCatalogServer) ListHomeNetworks(ctx context.Context, req *ListHomeNetworksRequest) (*ListHomeNetworksResponse, error) {
+func (*UnimplementedCatalogServer) ListNetworks(ctx context.Context, req *ListNetworksRequest) (*ListNetworksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNetworks not implemented")
+}
+func (*UnimplementedCatalogServer) ListHomeNetworks(ctx context.Context, req *ListNetworksRequest) (*ListNetworksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHomeNetworks not implemented")
 }
 
@@ -1357,8 +1373,26 @@ func RegisterCatalogServer(s *grpc.Server, srv CatalogServer) {
 	s.RegisterService(&_Catalog_serviceDesc, srv)
 }
 
+func _Catalog_ListNetworks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNetworksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogServer).ListNetworks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.Catalog/ListNetworks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogServer).ListNetworks(ctx, req.(*ListNetworksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Catalog_ListHomeNetworks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListHomeNetworksRequest)
+	in := new(ListNetworksRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1370,7 +1404,7 @@ func _Catalog_ListHomeNetworks_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/org.packetbroker.iam.v2.Catalog/ListHomeNetworks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatalogServer).ListHomeNetworks(ctx, req.(*ListHomeNetworksRequest))
+		return srv.(CatalogServer).ListHomeNetworks(ctx, req.(*ListNetworksRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1379,6 +1413,10 @@ var _Catalog_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.iam.v2.Catalog",
 	HandlerType: (*CatalogServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListNetworks",
+			Handler:    _Catalog_ListNetworks_Handler,
+		},
 		{
 			MethodName: "ListHomeNetworks",
 			Handler:    _Catalog_ListHomeNetworks_Handler,
@@ -1764,7 +1802,7 @@ func (m *CreateClusterAPIKeyResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 
-func (m *ListHomeNetworksRequest) Marshal() (dAtA []byte, err error) {
+func (m *ListNetworksRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1774,12 +1812,12 @@ func (m *ListHomeNetworksRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ListHomeNetworksRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *ListNetworksRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ListHomeNetworksRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *ListNetworksRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1797,7 +1835,7 @@ func (m *ListHomeNetworksRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *ListHomeNetworksResponse) Marshal() (dAtA []byte, err error) {
+func (m *ListNetworksResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1807,12 +1845,12 @@ func (m *ListHomeNetworksResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ListHomeNetworksResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *ListNetworksResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ListHomeNetworksResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *ListNetworksResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1822,10 +1860,10 @@ func (m *ListHomeNetworksResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 		i--
 		dAtA[i] = 0x10
 	}
-	if len(m.HomeNetworks) > 0 {
-		for iNdEx := len(m.HomeNetworks) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.Networks) > 0 {
+		for iNdEx := len(m.Networks) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.HomeNetworks[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.Networks[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -1888,7 +1926,7 @@ func NewPopulatedCreateNetworkAPIKeyRequest(r randyService, easy bool) *CreateNe
 	v2 := r.Intn(10)
 	this.Rights = make([]v3.Right, v2)
 	for i := 0; i < v2; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 2, 3, 4, 5}[r.Intn(6)])
+		this.Rights[i] = v3.Right([]int32{0, 1, 2, 3, 4, 5, 6}[r.Intn(7)])
 	}
 	if !easy && r.Intn(10) != 0 {
 	}
@@ -1943,7 +1981,7 @@ func NewPopulatedCreateClusterAPIKeyRequest(r randyService, easy bool) *CreateCl
 	v4 := r.Intn(10)
 	this.Rights = make([]v3.Right, v4)
 	for i := 0; i < v4; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 2, 3, 4, 5}[r.Intn(6)])
+		this.Rights[i] = v3.Right([]int32{0, 1, 2, 3, 4, 5, 6}[r.Intn(7)])
 	}
 	if !easy && r.Intn(10) != 0 {
 	}
@@ -1960,8 +1998,8 @@ func NewPopulatedCreateClusterAPIKeyResponse(r randyService, easy bool) *CreateC
 	return this
 }
 
-func NewPopulatedListHomeNetworksRequest(r randyService, easy bool) *ListHomeNetworksRequest {
-	this := &ListHomeNetworksRequest{}
+func NewPopulatedListNetworksRequest(r randyService, easy bool) *ListNetworksRequest {
+	this := &ListNetworksRequest{}
 	this.Offset = uint32(r.Uint32())
 	this.Limit = uint32(r.Uint32())
 	if !easy && r.Intn(10) != 0 {
@@ -1969,13 +2007,13 @@ func NewPopulatedListHomeNetworksRequest(r randyService, easy bool) *ListHomeNet
 	return this
 }
 
-func NewPopulatedListHomeNetworksResponse(r randyService, easy bool) *ListHomeNetworksResponse {
-	this := &ListHomeNetworksResponse{}
+func NewPopulatedListNetworksResponse(r randyService, easy bool) *ListNetworksResponse {
+	this := &ListNetworksResponse{}
 	if r.Intn(5) != 0 {
 		v5 := r.Intn(5)
-		this.HomeNetworks = make([]*v3.NetworkOrTenant, v5)
+		this.Networks = make([]*v3.NetworkOrTenant, v5)
 		for i := 0; i < v5; i++ {
-			this.HomeNetworks[i] = v3.NewPopulatedNetworkOrTenant(r, easy)
+			this.Networks[i] = v3.NewPopulatedNetworkOrTenant(r, easy)
 		}
 	}
 	this.Total = uint32(r.Uint32())
@@ -2206,7 +2244,7 @@ func (m *CreateClusterAPIKeyResponse) Size() (n int) {
 	return n
 }
 
-func (m *ListHomeNetworksRequest) Size() (n int) {
+func (m *ListNetworksRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2221,14 +2259,14 @@ func (m *ListHomeNetworksRequest) Size() (n int) {
 	return n
 }
 
-func (m *ListHomeNetworksResponse) Size() (n int) {
+func (m *ListNetworksResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if len(m.HomeNetworks) > 0 {
-		for _, e := range m.HomeNetworks {
+	if len(m.Networks) > 0 {
+		for _, e := range m.Networks {
 			l = e.Size()
 			n += 1 + l + sovService(uint64(l))
 		}
@@ -2351,28 +2389,28 @@ func (this *CreateClusterAPIKeyResponse) String() string {
 	}, "")
 	return s
 }
-func (this *ListHomeNetworksRequest) String() string {
+func (this *ListNetworksRequest) String() string {
 	if this == nil {
 		return "nil"
 	}
-	s := strings.Join([]string{`&ListHomeNetworksRequest{`,
+	s := strings.Join([]string{`&ListNetworksRequest{`,
 		`Offset:` + fmt.Sprintf("%v", this.Offset) + `,`,
 		`Limit:` + fmt.Sprintf("%v", this.Limit) + `,`,
 		`}`,
 	}, "")
 	return s
 }
-func (this *ListHomeNetworksResponse) String() string {
+func (this *ListNetworksResponse) String() string {
 	if this == nil {
 		return "nil"
 	}
-	repeatedStringForHomeNetworks := "[]*NetworkOrTenant{"
-	for _, f := range this.HomeNetworks {
-		repeatedStringForHomeNetworks += strings.Replace(fmt.Sprintf("%v", f), "NetworkOrTenant", "v3.NetworkOrTenant", 1) + ","
+	repeatedStringForNetworks := "[]*NetworkOrTenant{"
+	for _, f := range this.Networks {
+		repeatedStringForNetworks += strings.Replace(fmt.Sprintf("%v", f), "NetworkOrTenant", "v3.NetworkOrTenant", 1) + ","
 	}
-	repeatedStringForHomeNetworks += "}"
-	s := strings.Join([]string{`&ListHomeNetworksResponse{`,
-		`HomeNetworks:` + repeatedStringForHomeNetworks + `,`,
+	repeatedStringForNetworks += "}"
+	s := strings.Join([]string{`&ListNetworksResponse{`,
+		`Networks:` + repeatedStringForNetworks + `,`,
 		`Total:` + fmt.Sprintf("%v", this.Total) + `,`,
 		`}`,
 	}, "")
@@ -3432,7 +3470,7 @@ func (m *CreateClusterAPIKeyResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ListHomeNetworksRequest) Unmarshal(dAtA []byte) error {
+func (m *ListNetworksRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3455,10 +3493,10 @@ func (m *ListHomeNetworksRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ListHomeNetworksRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: ListNetworksRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListHomeNetworksRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ListNetworksRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3523,7 +3561,7 @@ func (m *ListHomeNetworksRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ListHomeNetworksResponse) Unmarshal(dAtA []byte) error {
+func (m *ListNetworksResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3546,15 +3584,15 @@ func (m *ListHomeNetworksResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ListHomeNetworksResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: ListNetworksResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListHomeNetworksResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ListNetworksResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field HomeNetworks", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Networks", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -3581,8 +3619,8 @@ func (m *ListHomeNetworksResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.HomeNetworks = append(m.HomeNetworks, &v3.NetworkOrTenant{})
-			if err := m.HomeNetworks[len(m.HomeNetworks)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.Networks = append(m.Networks, &v3.NetworkOrTenant{})
+			if err := m.Networks[len(m.Networks)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

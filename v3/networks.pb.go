@@ -4,6 +4,7 @@
 package packetbroker
 
 import (
+	bytes "bytes"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	types "github.com/gogo/protobuf/types"
@@ -39,7 +40,9 @@ type Network struct {
 	// Technical contact.
 	TechnicalContact *ContactInfo `protobuf:"bytes,5,opt,name=technical_contact,json=technicalContact,proto3" json:"technical_contact,omitempty"`
 	// Indicates whether the network is listed in the catalog.
-	Listed               bool     `protobuf:"varint,6,opt,name=listed,proto3" json:"listed,omitempty"`
+	Listed bool `protobuf:"varint,6,opt,name=listed,proto3" json:"listed,omitempty"`
+	// Optional target information.
+	Target               *Target  `protobuf:"bytes,7,opt,name=target,proto3" json:"target,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
@@ -118,6 +121,13 @@ func (m *Network) GetListed() bool {
 	return false
 }
 
+func (m *Network) GetTarget() *Target {
+	if m != nil {
+		return m.Target
+	}
+	return nil
+}
+
 type Tenant struct {
 	// LoRa Alliance NetID of the Member.
 	NetId uint32 `protobuf:"varint,1,opt,name=net_id,json=netId,proto3" json:"net_id,omitempty"`
@@ -132,7 +142,9 @@ type Tenant struct {
 	// Technical contact.
 	TechnicalContact *ContactInfo `protobuf:"bytes,7,opt,name=technical_contact,json=technicalContact,proto3" json:"technical_contact,omitempty"`
 	// Indicates whether the tenant is listed in the catalog.
-	Listed               bool     `protobuf:"varint,8,opt,name=listed,proto3" json:"listed,omitempty"`
+	Listed bool `protobuf:"varint,8,opt,name=listed,proto3" json:"listed,omitempty"`
+	// Optional target information.
+	Target               *Target  `protobuf:"bytes,9,opt,name=target,proto3" json:"target,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
@@ -216,6 +228,13 @@ func (m *Tenant) GetListed() bool {
 		return m.Listed
 	}
 	return false
+}
+
+func (m *Tenant) GetTarget() *Target {
+	if m != nil {
+		return m.Target
+	}
+	return nil
 }
 
 type NetworkOrTenant struct {
@@ -513,6 +532,294 @@ func (m *NetworkAPIKey) GetKey() string {
 	return ""
 }
 
+type Target struct {
+	// Protocol to use.
+	Protocol TargetProtocol `protobuf:"varint,1,opt,name=protocol,proto3,enum=org.packetbroker.v3.TargetProtocol" json:"protocol,omitempty"`
+	// Address of the target.
+	// When using an HTTP protocol, this can be a URL with scheme, host, port and path.
+	// This value may be empty if the protocol supports service lookup (e.g. via DNS).
+	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	// PEM encoded root CAs to verify the server certificate.
+	// This value may be empty to use the default trusted root certificates.
+	RootCas []byte `protobuf:"bytes,6,opt,name=root_cas,json=rootCas,proto3" json:"root_cas,omitempty"`
+	// Types that are valid to be assigned to Authorization:
+	//	*Target_BasicAuth_
+	//	*Target_CustomAuth_
+	//	*Target_TlsClientAuth
+	Authorization        isTarget_Authorization `protobuf_oneof:"authorization"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
+}
+
+func (m *Target) Reset()      { *m = Target{} }
+func (*Target) ProtoMessage() {}
+func (*Target) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9961a18bcd231dc0, []int{6}
+}
+func (m *Target) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Target) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Target.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Target) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Target.Merge(m, src)
+}
+func (m *Target) XXX_Size() int {
+	return m.Size()
+}
+func (m *Target) XXX_DiscardUnknown() {
+	xxx_messageInfo_Target.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Target proto.InternalMessageInfo
+
+type isTarget_Authorization interface {
+	isTarget_Authorization()
+	Equal(interface{}) bool
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type Target_BasicAuth_ struct {
+	BasicAuth *Target_BasicAuth `protobuf:"bytes,3,opt,name=basic_auth,json=basicAuth,proto3,oneof" json:"basic_auth,omitempty"`
+}
+type Target_CustomAuth_ struct {
+	CustomAuth *Target_CustomAuth `protobuf:"bytes,4,opt,name=custom_auth,json=customAuth,proto3,oneof" json:"custom_auth,omitempty"`
+}
+type Target_TlsClientAuth struct {
+	TlsClientAuth *Target_TLSClientAuth `protobuf:"bytes,5,opt,name=tls_client_auth,json=tlsClientAuth,proto3,oneof" json:"tls_client_auth,omitempty"`
+}
+
+func (*Target_BasicAuth_) isTarget_Authorization()    {}
+func (*Target_CustomAuth_) isTarget_Authorization()   {}
+func (*Target_TlsClientAuth) isTarget_Authorization() {}
+
+func (m *Target) GetAuthorization() isTarget_Authorization {
+	if m != nil {
+		return m.Authorization
+	}
+	return nil
+}
+
+func (m *Target) GetProtocol() TargetProtocol {
+	if m != nil {
+		return m.Protocol
+	}
+	return TargetProtocol_TS002_V1_0
+}
+
+func (m *Target) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+func (m *Target) GetRootCas() []byte {
+	if m != nil {
+		return m.RootCas
+	}
+	return nil
+}
+
+func (m *Target) GetBasicAuth() *Target_BasicAuth {
+	if x, ok := m.GetAuthorization().(*Target_BasicAuth_); ok {
+		return x.BasicAuth
+	}
+	return nil
+}
+
+func (m *Target) GetCustomAuth() *Target_CustomAuth {
+	if x, ok := m.GetAuthorization().(*Target_CustomAuth_); ok {
+		return x.CustomAuth
+	}
+	return nil
+}
+
+func (m *Target) GetTlsClientAuth() *Target_TLSClientAuth {
+	if x, ok := m.GetAuthorization().(*Target_TlsClientAuth); ok {
+		return x.TlsClientAuth
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Target) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*Target_BasicAuth_)(nil),
+		(*Target_CustomAuth_)(nil),
+		(*Target_TlsClientAuth)(nil),
+	}
+}
+
+type Target_BasicAuth struct {
+	// Username.
+	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	// Password.
+	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Target_BasicAuth) Reset()      { *m = Target_BasicAuth{} }
+func (*Target_BasicAuth) ProtoMessage() {}
+func (*Target_BasicAuth) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9961a18bcd231dc0, []int{6, 0}
+}
+func (m *Target_BasicAuth) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Target_BasicAuth) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Target_BasicAuth.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Target_BasicAuth) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Target_BasicAuth.Merge(m, src)
+}
+func (m *Target_BasicAuth) XXX_Size() int {
+	return m.Size()
+}
+func (m *Target_BasicAuth) XXX_DiscardUnknown() {
+	xxx_messageInfo_Target_BasicAuth.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Target_BasicAuth proto.InternalMessageInfo
+
+func (m *Target_BasicAuth) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+func (m *Target_BasicAuth) GetPassword() string {
+	if m != nil {
+		return m.Password
+	}
+	return ""
+}
+
+type Target_CustomAuth struct {
+	// Custom authorization value.
+	// When using an HTTP protocol, this is used as the raw Authorization header value. That is, it may include the
+	// authorization type (Bearer, Basic, Key, etc).
+	Value                string   `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Target_CustomAuth) Reset()      { *m = Target_CustomAuth{} }
+func (*Target_CustomAuth) ProtoMessage() {}
+func (*Target_CustomAuth) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9961a18bcd231dc0, []int{6, 1}
+}
+func (m *Target_CustomAuth) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Target_CustomAuth) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Target_CustomAuth.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Target_CustomAuth) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Target_CustomAuth.Merge(m, src)
+}
+func (m *Target_CustomAuth) XXX_Size() int {
+	return m.Size()
+}
+func (m *Target_CustomAuth) XXX_DiscardUnknown() {
+	xxx_messageInfo_Target_CustomAuth.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Target_CustomAuth proto.InternalMessageInfo
+
+func (m *Target_CustomAuth) GetValue() string {
+	if m != nil {
+		return m.Value
+	}
+	return ""
+}
+
+type Target_TLSClientAuth struct {
+	// PEM encoded client certificate.
+	Cert []byte `protobuf:"bytes,1,opt,name=cert,proto3" json:"cert,omitempty"`
+	// PEM encoded private key.
+	Key                  []byte   `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Target_TLSClientAuth) Reset()      { *m = Target_TLSClientAuth{} }
+func (*Target_TLSClientAuth) ProtoMessage() {}
+func (*Target_TLSClientAuth) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9961a18bcd231dc0, []int{6, 2}
+}
+func (m *Target_TLSClientAuth) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Target_TLSClientAuth) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Target_TLSClientAuth.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Target_TLSClientAuth) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Target_TLSClientAuth.Merge(m, src)
+}
+func (m *Target_TLSClientAuth) XXX_Size() int {
+	return m.Size()
+}
+func (m *Target_TLSClientAuth) XXX_DiscardUnknown() {
+	xxx_messageInfo_Target_TLSClientAuth.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Target_TLSClientAuth proto.InternalMessageInfo
+
+func (m *Target_TLSClientAuth) GetCert() []byte {
+	if m != nil {
+		return m.Cert
+	}
+	return nil
+}
+
+func (m *Target_TLSClientAuth) GetKey() []byte {
+	if m != nil {
+		return m.Key
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Network)(nil), "org.packetbroker.v3.Network")
 	golang_proto.RegisterType((*Network)(nil), "org.packetbroker.v3.Network")
@@ -526,6 +833,14 @@ func init() {
 	golang_proto.RegisterType((*DevAddrBlock)(nil), "org.packetbroker.v3.DevAddrBlock")
 	proto.RegisterType((*NetworkAPIKey)(nil), "org.packetbroker.v3.NetworkAPIKey")
 	golang_proto.RegisterType((*NetworkAPIKey)(nil), "org.packetbroker.v3.NetworkAPIKey")
+	proto.RegisterType((*Target)(nil), "org.packetbroker.v3.Target")
+	golang_proto.RegisterType((*Target)(nil), "org.packetbroker.v3.Target")
+	proto.RegisterType((*Target_BasicAuth)(nil), "org.packetbroker.v3.Target.BasicAuth")
+	golang_proto.RegisterType((*Target_BasicAuth)(nil), "org.packetbroker.v3.Target.BasicAuth")
+	proto.RegisterType((*Target_CustomAuth)(nil), "org.packetbroker.v3.Target.CustomAuth")
+	golang_proto.RegisterType((*Target_CustomAuth)(nil), "org.packetbroker.v3.Target.CustomAuth")
+	proto.RegisterType((*Target_TLSClientAuth)(nil), "org.packetbroker.v3.Target.TLSClientAuth")
+	golang_proto.RegisterType((*Target_TLSClientAuth)(nil), "org.packetbroker.v3.Target.TLSClientAuth")
 }
 
 func init() {
@@ -536,53 +851,68 @@ func init() {
 }
 
 var fileDescriptor_9961a18bcd231dc0 = []byte{
-	// 731 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0x3d, 0x6c, 0xd3, 0x40,
-	0x14, 0xbe, 0xcb, 0x8f, 0x93, 0x5c, 0x08, 0x0d, 0xa6, 0x2d, 0x51, 0x0a, 0xaf, 0xa9, 0x17, 0x32,
-	0x39, 0x52, 0xaa, 0x4a, 0x08, 0xc4, 0xd0, 0x16, 0xa4, 0x06, 0x04, 0x54, 0x56, 0x25, 0x24, 0x96,
-	0xc8, 0xb1, 0xaf, 0x89, 0x95, 0xc4, 0x8e, 0xec, 0x4b, 0x20, 0x5b, 0x59, 0x50, 0x25, 0x16, 0x46,
-	0x16, 0x24, 0xc6, 0x8e, 0x1d, 0xbb, 0xd1, 0xb1, 0x63, 0xc7, 0x8e, 0xb5, 0xbd, 0x74, 0xec, 0xd8,
-	0x11, 0xc5, 0x3e, 0x17, 0x17, 0xa5, 0x15, 0x43, 0xd9, 0x7c, 0xf7, 0xbe, 0xf7, 0x9e, 0xbf, 0xef,
-	0x7d, 0xf7, 0x88, 0x34, 0x50, 0xb5, 0x2e, 0x65, 0x2d, 0xdb, 0xea, 0x52, 0xbb, 0xa6, 0x0e, 0x8c,
-	0xda, 0x68, 0xb9, 0x66, 0x52, 0xf6, 0xd1, 0xb2, 0xbb, 0x8e, 0x3c, 0xb0, 0x2d, 0x66, 0x89, 0xf7,
-	0x2d, 0xbb, 0x2d, 0xc7, 0x71, 0xf2, 0x68, 0xb9, 0xbc, 0xd8, 0xb6, 0xac, 0x76, 0x8f, 0xd6, 0x02,
-	0x48, 0x6b, 0xb8, 0x5d, 0x63, 0x46, 0x9f, 0x3a, 0x4c, 0xed, 0x0f, 0xc2, 0xac, 0xf2, 0xd2, 0xb4,
-	0xca, 0x9a, 0x65, 0x32, 0x55, 0x63, 0x1c, 0xb2, 0x38, 0x0d, 0x42, 0xcd, 0x61, 0x9f, 0x77, 0x96,
-	0x7e, 0x25, 0x48, 0xe6, 0x6d, 0xf8, 0x33, 0xe2, 0x1c, 0x11, 0x4c, 0xca, 0x9a, 0x86, 0x5e, 0xc2,
-	0x15, 0x5c, 0x2d, 0x28, 0x69, 0x93, 0xb2, 0x86, 0x2e, 0x8a, 0x24, 0x65, 0xaa, 0x7d, 0x5a, 0x4a,
-	0x54, 0x70, 0x35, 0xa7, 0x04, 0xdf, 0x62, 0x83, 0xcc, 0xe8, 0x74, 0xd4, 0x54, 0x75, 0xdd, 0x6e,
-	0xb6, 0x7a, 0x96, 0xd6, 0x75, 0x4a, 0xc9, 0x4a, 0xb2, 0x9a, 0xaf, 0x2f, 0xc9, 0x53, 0xa8, 0xc8,
-	0x2f, 0xe8, 0x68, 0x55, 0xd7, 0xed, 0xb5, 0x09, 0x52, 0x29, 0xe8, 0xb1, 0x93, 0x23, 0xbe, 0x27,
-	0xf3, 0xaa, 0xde, 0x37, 0x4c, 0xc3, 0x61, 0xb6, 0xca, 0x8c, 0x11, 0x6d, 0x72, 0x0a, 0xa5, 0x54,
-	0x05, 0x57, 0xf3, 0xf5, 0xca, 0xd4, 0x8a, 0xeb, 0x21, 0xa6, 0x61, 0x6e, 0x5b, 0xca, 0xdc, 0xd5,
-	0x7c, 0x1e, 0x12, 0xdf, 0x90, 0x7b, 0x8c, 0x6a, 0x1d, 0xd3, 0xd0, 0xd4, 0xde, 0x65, 0xcd, 0xf4,
-	0x3f, 0xd6, 0x2c, 0x5e, 0xa6, 0x46, 0xe5, 0xe6, 0x89, 0xd0, 0x33, 0x1c, 0x46, 0xf5, 0x92, 0x50,
-	0xc1, 0xd5, 0xac, 0xc2, 0x4f, 0x92, 0x9b, 0x20, 0xc2, 0x16, 0x35, 0x55, 0x93, 0x5d, 0x27, 0xe0,
-	0x02, 0xc9, 0xb1, 0x00, 0x30, 0x89, 0x84, 0x2a, 0x66, 0xc3, 0x8b, 0x98, 0xba, 0xa9, 0x9b, 0xd5,
-	0x4d, 0xdf, 0xba, 0xba, 0xc2, 0x7f, 0x50, 0x37, 0x73, 0x0b, 0xea, 0x66, 0xe3, 0xea, 0xbe, 0x4a,
-	0x65, 0x93, 0xc5, 0x94, 0xf4, 0x15, 0x93, 0x19, 0xee, 0xd2, 0x77, 0x36, 0x17, 0xfb, 0x09, 0xc9,
-	0xf0, 0x57, 0x14, 0xa8, 0x9d, 0xaf, 0x3f, 0x9c, 0xda, 0x96, 0xa7, 0x6d, 0x20, 0x25, 0x82, 0x8b,
-	0x2b, 0x44, 0x08, 0xe5, 0x0f, 0x86, 0x91, 0xaf, 0x2f, 0x4c, 0x4d, 0x0c, 0xdb, 0x6c, 0x20, 0x85,
-	0x83, 0xd7, 0x32, 0x24, 0x3d, 0x52, 0x7b, 0x43, 0x2a, 0x3d, 0x27, 0x05, 0x2e, 0xf9, 0xa6, 0x4d,
-	0xb7, 0x8d, 0x4f, 0xe2, 0x2c, 0x8f, 0x44, 0x63, 0x0f, 0x0e, 0x01, 0x25, 0x6a, 0xb6, 0x59, 0x27,
-	0x68, 0x53, 0x50, 0xf8, 0x49, 0xfa, 0x8c, 0xc9, 0x9d, 0xf8, 0xc8, 0xc4, 0xa7, 0x44, 0x18, 0x04,
-	0x85, 0x38, 0x11, 0xe9, 0xa6, 0x29, 0x87, 0x2d, 0x15, 0x9e, 0x21, 0xae, 0x90, 0x07, 0x1d, 0xab,
-	0x4f, 0x9b, 0x9c, 0x5b, 0x53, 0xeb, 0x0d, 0x1d, 0x46, 0xed, 0x3f, 0x4e, 0x9b, 0x9d, 0x84, 0xb9,
-	0x08, 0xeb, 0x61, 0xb0, 0xa1, 0x4b, 0x5f, 0x12, 0xa4, 0xc0, 0x2f, 0x57, 0x37, 0x1b, 0xaf, 0xe9,
-	0x78, 0xe2, 0xdd, 0x2e, 0x1d, 0x47, 0xde, 0xcd, 0x29, 0xe9, 0x2e, 0x1d, 0x37, 0xf4, 0x98, 0xa5,
-	0x13, 0xd7, 0x5a, 0x3a, 0xf9, 0x97, 0xa5, 0x1f, 0x11, 0x12, 0xfb, 0x8d, 0xd0, 0xd8, 0x39, 0x2d,
-	0xea, 0x2d, 0xd6, 0x89, 0x60, 0x1b, 0xed, 0x0e, 0x73, 0x4a, 0x99, 0x4a, 0xb2, 0x7a, 0xb7, 0x5e,
-	0x9e, 0x4a, 0x57, 0x99, 0x40, 0x14, 0x8e, 0x14, 0x5f, 0x92, 0xa2, 0x3a, 0x64, 0x1d, 0x6a, 0x32,
-	0x43, 0x53, 0x19, 0xd5, 0x9b, 0x6a, 0xf4, 0x94, 0xcb, 0x72, 0xb8, 0x26, 0xe5, 0x68, 0x4d, 0xca,
-	0x5b, 0xd1, 0x9a, 0x54, 0x66, 0xae, 0xe4, 0xac, 0x32, 0xb1, 0x48, 0x92, 0x5d, 0x3a, 0x0e, 0xac,
-	0x9f, 0x53, 0x26, 0x9f, 0x6b, 0x3f, 0xf0, 0x91, 0x0b, 0xf8, 0xd8, 0x05, 0x7c, 0xe2, 0x02, 0x3a,
-	0x75, 0x01, 0x9d, 0xb9, 0x80, 0xce, 0x5d, 0x40, 0x17, 0x2e, 0xe0, 0x1d, 0x0f, 0xf0, 0xae, 0x07,
-	0x68, 0xcf, 0x03, 0xbc, 0xef, 0x01, 0x3a, 0xf0, 0x00, 0x1d, 0x7a, 0x80, 0x8e, 0x3c, 0xc0, 0xc7,
-	0x1e, 0xe0, 0x13, 0x0f, 0xd0, 0xa9, 0x07, 0xf8, 0xcc, 0x03, 0x74, 0xee, 0x01, 0xbe, 0xf0, 0x00,
-	0xed, 0xf8, 0x80, 0x76, 0x7d, 0xc0, 0xdf, 0x7c, 0x40, 0xdf, 0x7d, 0xc0, 0x3f, 0x7d, 0x40, 0x7b,
-	0x3e, 0xa0, 0x7d, 0x1f, 0xf0, 0x81, 0x0f, 0xf8, 0xd0, 0x07, 0xfc, 0xe1, 0x71, 0xdb, 0xba, 0xca,
-	0xd8, 0xb2, 0xdb, 0x7c, 0x3d, 0x3f, 0x8b, 0xdf, 0xb7, 0x84, 0x80, 0xd6, 0xf2, 0xef, 0x00, 0x00,
-	0x00, 0xff, 0xff, 0xd1, 0x3a, 0x60, 0xbd, 0x46, 0x06, 0x00, 0x00,
+	// 974 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0x3d, 0x8c, 0x1b, 0x45,
+	0x14, 0xde, 0xf1, 0xcf, 0xda, 0x7e, 0x8e, 0xe3, 0x63, 0x48, 0x82, 0x71, 0x60, 0xe2, 0x2c, 0x02,
+	0x4c, 0x63, 0x4b, 0x3e, 0x9d, 0x84, 0x40, 0x08, 0x9d, 0x0d, 0xe8, 0xcc, 0xef, 0x69, 0x73, 0x12,
+	0x12, 0xcd, 0x6a, 0xbc, 0x3b, 0x67, 0xaf, 0xbc, 0xde, 0xb1, 0x76, 0xc7, 0x0e, 0x47, 0x15, 0x1a,
+	0x14, 0x89, 0x86, 0x0a, 0x68, 0x90, 0x28, 0x53, 0xa6, 0x4c, 0x99, 0x32, 0x65, 0xca, 0x94, 0xf1,
+	0xba, 0x49, 0x99, 0x82, 0x22, 0x25, 0xda, 0xd9, 0x59, 0x9f, 0x8d, 0x7c, 0x56, 0x8a, 0xd0, 0xed,
+	0x9b, 0xf9, 0xde, 0x37, 0xef, 0xbd, 0xef, 0xbd, 0xa7, 0x05, 0x63, 0x4a, 0xed, 0x31, 0x13, 0x83,
+	0x80, 0x8f, 0x59, 0xd0, 0xa6, 0x53, 0xb7, 0x3d, 0xdf, 0x6f, 0xfb, 0x4c, 0xdc, 0xe6, 0xc1, 0x38,
+	0x6c, 0x4d, 0x03, 0x2e, 0x38, 0x7e, 0x9d, 0x07, 0xc3, 0xd6, 0x3a, 0xae, 0x35, 0xdf, 0xaf, 0xdf,
+	0x18, 0x72, 0x3e, 0xf4, 0x58, 0x5b, 0x42, 0x06, 0xb3, 0xd3, 0xb6, 0x70, 0x27, 0x2c, 0x14, 0x74,
+	0x32, 0x4d, 0xbc, 0xea, 0x37, 0xb7, 0x31, 0xdb, 0xdc, 0x17, 0xd4, 0x16, 0x0a, 0x72, 0x63, 0x1b,
+	0x84, 0xf9, 0xb3, 0x89, 0x7a, 0xd9, 0xf8, 0x27, 0x03, 0x85, 0x6f, 0x93, 0x60, 0xf0, 0x55, 0xd0,
+	0x7d, 0x26, 0x2c, 0xd7, 0xa9, 0xa1, 0x06, 0x6a, 0x56, 0xcc, 0xbc, 0xcf, 0x44, 0xdf, 0xc1, 0x18,
+	0x72, 0x3e, 0x9d, 0xb0, 0x5a, 0xa6, 0x81, 0x9a, 0x25, 0x53, 0x7e, 0xe3, 0x3e, 0x54, 0x1d, 0x36,
+	0xb7, 0xa8, 0xe3, 0x04, 0xd6, 0xc0, 0xe3, 0xf6, 0x38, 0xac, 0x65, 0x1b, 0xd9, 0x66, 0xb9, 0x73,
+	0xb3, 0xb5, 0x25, 0x95, 0xd6, 0x67, 0x6c, 0x7e, 0xe8, 0x38, 0x41, 0x37, 0x46, 0x9a, 0x15, 0x67,
+	0xcd, 0x0a, 0xf1, 0xf7, 0x70, 0x8d, 0x3a, 0x13, 0xd7, 0x77, 0x43, 0x11, 0x50, 0xe1, 0xce, 0x99,
+	0xa5, 0x52, 0xa8, 0xe5, 0x1a, 0xa8, 0x59, 0xee, 0x34, 0xb6, 0x32, 0xf6, 0x12, 0x4c, 0xdf, 0x3f,
+	0xe5, 0xe6, 0xd5, 0x4d, 0x7f, 0x75, 0x85, 0xbf, 0x81, 0xd7, 0x04, 0xb3, 0x47, 0xbe, 0x6b, 0x53,
+	0x6f, 0xc5, 0x99, 0x7f, 0x49, 0xce, 0xbd, 0x95, 0x6b, 0x4a, 0x77, 0x0d, 0x74, 0xcf, 0x0d, 0x05,
+	0x73, 0x6a, 0x7a, 0x03, 0x35, 0x8b, 0xa6, 0xb2, 0xf0, 0x3e, 0xe8, 0x82, 0x06, 0x43, 0x26, 0x6a,
+	0x05, 0xc9, 0x7d, 0x7d, 0x2b, 0xf7, 0x89, 0x84, 0x98, 0x0a, 0x6a, 0xfc, 0x9e, 0x05, 0xfd, 0x84,
+	0xf9, 0xd4, 0x17, 0x17, 0x55, 0xfd, 0x3a, 0x94, 0x84, 0x04, 0xc4, 0x37, 0x49, 0xe9, 0x8b, 0xc9,
+	0xc1, 0x9a, 0x24, 0xb9, 0xdd, 0x92, 0xe4, 0x5f, 0xb9, 0x24, 0xfa, 0xff, 0x20, 0x49, 0xe1, 0x15,
+	0x48, 0x52, 0xbc, 0x40, 0x92, 0xd2, 0x4b, 0x4b, 0xf2, 0x65, 0xae, 0x98, 0xdd, 0xcb, 0x19, 0xbf,
+	0x22, 0xa8, 0xaa, 0x79, 0xf8, 0x2e, 0x50, 0x0a, 0x7d, 0x08, 0x05, 0x35, 0xaf, 0x52, 0xa2, 0x72,
+	0xe7, 0xad, 0xad, 0x7c, 0xca, 0xed, 0x48, 0x33, 0x53, 0x38, 0x3e, 0x00, 0x3d, 0xd1, 0x4c, 0x2a,
+	0x78, 0x61, 0x20, 0x12, 0x72, 0xa4, 0x99, 0x0a, 0xdc, 0x2d, 0x40, 0x7e, 0x4e, 0xbd, 0x19, 0x33,
+	0x3e, 0x81, 0x8a, 0xd2, 0xe9, 0x38, 0x60, 0xa7, 0xee, 0x8f, 0xf8, 0x8a, 0xba, 0x49, 0x7b, 0x45,
+	0x1a, 0xb2, 0x0e, 0xcc, 0x1f, 0x8a, 0x91, 0x7c, 0xa6, 0x62, 0x2a, 0xcb, 0xf8, 0x19, 0xc1, 0xa5,
+	0x75, 0x9d, 0xf1, 0x47, 0xa0, 0x4f, 0x25, 0x91, 0x4a, 0xc4, 0xd8, 0xd5, 0x1a, 0xc9, 0x93, 0xa6,
+	0xf2, 0xc0, 0x07, 0xf0, 0xc6, 0x88, 0x4f, 0x98, 0xa5, 0x72, 0xb3, 0x6c, 0x6f, 0x16, 0x0a, 0x16,
+	0x9c, 0xb7, 0xe7, 0x95, 0xf8, 0x5a, 0x15, 0xa1, 0x97, 0x5c, 0xf6, 0x1d, 0xe3, 0x97, 0x0c, 0x54,
+	0xd4, 0xe1, 0xe1, 0x71, 0xff, 0x2b, 0x76, 0x16, 0x37, 0xfc, 0x98, 0x9d, 0xa5, 0x0d, 0x5f, 0x32,
+	0xf3, 0x63, 0x76, 0xd6, 0x77, 0xd6, 0xe6, 0x20, 0x73, 0xe1, 0x1c, 0x64, 0xff, 0x33, 0x07, 0x6f,
+	0x03, 0xac, 0x85, 0x91, 0x4c, 0x43, 0xc9, 0x4e, 0xdf, 0xc6, 0x1d, 0xd0, 0x03, 0x77, 0x38, 0x12,
+	0x61, 0xad, 0xd0, 0xc8, 0x36, 0x2f, 0x77, 0xea, 0x5b, 0xd3, 0x35, 0x63, 0x88, 0xa9, 0x90, 0xf8,
+	0x73, 0xd8, 0xa3, 0x33, 0x31, 0x62, 0xbe, 0x70, 0x6d, 0x2a, 0x98, 0x63, 0xd1, 0x74, 0x69, 0xd4,
+	0x5b, 0xc9, 0x42, 0x6e, 0xa5, 0x0b, 0xb9, 0x75, 0x92, 0x2e, 0x64, 0xb3, 0xba, 0xe1, 0x73, 0x28,
+	0xf0, 0x1e, 0x64, 0xc7, 0xec, 0x4c, 0xce, 0x4b, 0xc9, 0x8c, 0x3f, 0x8d, 0x3f, 0x72, 0xa0, 0x27,
+	0x2d, 0x87, 0x3f, 0x85, 0xa2, 0xe4, 0xb0, 0xb9, 0x27, 0x6b, 0x70, 0xb9, 0xf3, 0xce, 0x8e, 0x0e,
+	0x3d, 0x56, 0x50, 0x73, 0xe5, 0x84, 0x6b, 0x50, 0x88, 0xe7, 0x9c, 0x85, 0xa1, 0xaa, 0x7d, 0x6a,
+	0xe2, 0x37, 0xa1, 0x18, 0x70, 0x2e, 0x2c, 0x9b, 0x86, 0xf2, 0xf1, 0x4b, 0x66, 0x21, 0xb6, 0x7b,
+	0x34, 0xc4, 0x5f, 0x00, 0x0c, 0x68, 0xe8, 0xda, 0x56, 0x1c, 0xab, 0x2c, 0x65, 0xb9, 0xf3, 0xee,
+	0x8e, 0x77, 0x5b, 0xdd, 0x18, 0x7d, 0x38, 0x13, 0xa3, 0x23, 0xcd, 0x2c, 0x0d, 0x52, 0x03, 0xf7,
+	0xa1, 0x6c, 0xcf, 0x42, 0xc1, 0x27, 0x09, 0x51, 0xb2, 0xa5, 0xdf, 0xdb, 0x45, 0xd4, 0x93, 0x70,
+	0xc5, 0x04, 0xf6, 0xca, 0xc2, 0xb7, 0xa0, 0x2a, 0xbc, 0xd0, 0xb2, 0x3d, 0x97, 0xf9, 0x22, 0xa1,
+	0x4b, 0x6a, 0xfd, 0xc1, 0x2e, 0xba, 0x93, 0xaf, 0x6f, 0xf5, 0xa4, 0x87, 0x62, 0xac, 0x08, 0x2f,
+	0x3c, 0x3f, 0xa8, 0xf7, 0xa0, 0xb4, 0x8a, 0x1c, 0xd7, 0xa1, 0x38, 0x0b, 0x59, 0x20, 0xb7, 0x65,
+	0xd2, 0x6e, 0x2b, 0x3b, 0xbe, 0x9b, 0xd2, 0x30, 0xbc, 0xcd, 0x83, 0xd5, 0x86, 0x4d, 0xed, 0xba,
+	0x01, 0x70, 0x1e, 0xf5, 0xe6, 0xd8, 0x95, 0xd4, 0xd8, 0xd5, 0x0f, 0xa0, 0xb2, 0x11, 0x4a, 0xbc,
+	0x96, 0x6d, 0x16, 0x08, 0x89, 0xba, 0x64, 0xca, 0xef, 0xb4, 0x11, 0x32, 0xf2, 0x28, 0xfe, 0xec,
+	0x56, 0xa1, 0x12, 0x67, 0xca, 0x03, 0xf7, 0x27, 0x2a, 0x5c, 0xee, 0x77, 0xff, 0x42, 0x8f, 0x16,
+	0x04, 0x3d, 0x5e, 0x10, 0xf4, 0x64, 0x41, 0xb4, 0xa7, 0x0b, 0xa2, 0x3d, 0x5b, 0x10, 0xed, 0xf9,
+	0x82, 0x68, 0x2f, 0x16, 0x04, 0xdd, 0x89, 0x08, 0xba, 0x1b, 0x11, 0xed, 0x5e, 0x44, 0xd0, 0xfd,
+	0x88, 0x68, 0x0f, 0x22, 0xa2, 0x3d, 0x8c, 0x88, 0xf6, 0x28, 0x22, 0xe8, 0x71, 0x44, 0xd0, 0x93,
+	0x88, 0x68, 0x4f, 0x23, 0x82, 0x9e, 0x45, 0x44, 0x7b, 0x1e, 0x11, 0xf4, 0x22, 0x22, 0xda, 0x9d,
+	0x25, 0xd1, 0xee, 0x2e, 0x09, 0xfa, 0x6d, 0x49, 0xb4, 0x3f, 0x97, 0x04, 0xfd, 0xbd, 0x24, 0xda,
+	0xbd, 0x25, 0xd1, 0xee, 0x2f, 0x09, 0x7a, 0xb0, 0x24, 0xe8, 0xe1, 0x92, 0xa0, 0x1f, 0xde, 0x1f,
+	0xf2, 0xcd, 0x0a, 0xf3, 0x60, 0xa8, 0x7e, 0x11, 0x3e, 0x5e, 0x3f, 0x1f, 0xe8, 0xb2, 0xef, 0xf6,
+	0xff, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xec, 0x50, 0x67, 0x72, 0xca, 0x08, 0x00, 0x00,
 }
 
 func (this *Network) Equal(that interface{}) bool {
@@ -625,6 +955,9 @@ func (this *Network) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Listed != that1.Listed {
+		return false
+	}
+	if !this.Target.Equal(that1.Target) {
 		return false
 	}
 	return true
@@ -672,6 +1005,9 @@ func (this *Tenant) Equal(that interface{}) bool {
 		return false
 	}
 	if this.Listed != that1.Listed {
+		return false
+	}
+	if !this.Target.Equal(that1.Target) {
 		return false
 	}
 	return true
@@ -855,6 +1191,195 @@ func (this *NetworkAPIKey) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *Target) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Target)
+	if !ok {
+		that2, ok := that.(Target)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Protocol != that1.Protocol {
+		return false
+	}
+	if this.Address != that1.Address {
+		return false
+	}
+	if !bytes.Equal(this.RootCas, that1.RootCas) {
+		return false
+	}
+	if that1.Authorization == nil {
+		if this.Authorization != nil {
+			return false
+		}
+	} else if this.Authorization == nil {
+		return false
+	} else if !this.Authorization.Equal(that1.Authorization) {
+		return false
+	}
+	return true
+}
+func (this *Target_BasicAuth_) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Target_BasicAuth_)
+	if !ok {
+		that2, ok := that.(Target_BasicAuth_)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if !this.BasicAuth.Equal(that1.BasicAuth) {
+		return false
+	}
+	return true
+}
+func (this *Target_CustomAuth_) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Target_CustomAuth_)
+	if !ok {
+		that2, ok := that.(Target_CustomAuth_)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if !this.CustomAuth.Equal(that1.CustomAuth) {
+		return false
+	}
+	return true
+}
+func (this *Target_TlsClientAuth) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Target_TlsClientAuth)
+	if !ok {
+		that2, ok := that.(Target_TlsClientAuth)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if !this.TlsClientAuth.Equal(that1.TlsClientAuth) {
+		return false
+	}
+	return true
+}
+func (this *Target_BasicAuth) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Target_BasicAuth)
+	if !ok {
+		that2, ok := that.(Target_BasicAuth)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Username != that1.Username {
+		return false
+	}
+	if this.Password != that1.Password {
+		return false
+	}
+	return true
+}
+func (this *Target_CustomAuth) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Target_CustomAuth)
+	if !ok {
+		that2, ok := that.(Target_CustomAuth)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Value != that1.Value {
+		return false
+	}
+	return true
+}
+func (this *Target_TLSClientAuth) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*Target_TLSClientAuth)
+	if !ok {
+		that2, ok := that.(Target_TLSClientAuth)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if !bytes.Equal(this.Cert, that1.Cert) {
+		return false
+	}
+	if !bytes.Equal(this.Key, that1.Key) {
+		return false
+	}
+	return true
+}
 func (m *Network) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -875,6 +1400,18 @@ func (m *Network) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Target != nil {
+		{
+			size, err := m.Target.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetworks(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
+	}
 	if m.Listed {
 		i--
 		if m.Listed {
@@ -958,6 +1495,18 @@ func (m *Tenant) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Target != nil {
+		{
+			size, err := m.Target.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetworks(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x4a
+	}
 	if m.Listed {
 		i--
 		if m.Listed {
@@ -1198,20 +1747,20 @@ func (m *NetworkAPIKey) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if len(m.Rights) > 0 {
-		dAtA9 := make([]byte, len(m.Rights)*10)
-		var j8 int
+		dAtA11 := make([]byte, len(m.Rights)*10)
+		var j10 int
 		for _, num := range m.Rights {
 			for num >= 1<<7 {
-				dAtA9[j8] = uint8(uint64(num)&0x7f | 0x80)
+				dAtA11[j10] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
-				j8++
+				j10++
 			}
-			dAtA9[j8] = uint8(num)
-			j8++
+			dAtA11[j10] = uint8(num)
+			j10++
 		}
-		i -= j8
-		copy(dAtA[i:], dAtA9[:j8])
-		i = encodeVarintNetworks(dAtA, i, uint64(j8))
+		i -= j10
+		copy(dAtA[i:], dAtA11[:j10])
+		i = encodeVarintNetworks(dAtA, i, uint64(j10))
 		i--
 		dAtA[i] = 0x3a
 	}
@@ -1263,6 +1812,224 @@ func (m *NetworkAPIKey) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *Target) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Target) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Target) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.RootCas) > 0 {
+		i -= len(m.RootCas)
+		copy(dAtA[i:], m.RootCas)
+		i = encodeVarintNetworks(dAtA, i, uint64(len(m.RootCas)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.Authorization != nil {
+		{
+			size := m.Authorization.Size()
+			i -= size
+			if _, err := m.Authorization.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	if len(m.Address) > 0 {
+		i -= len(m.Address)
+		copy(dAtA[i:], m.Address)
+		i = encodeVarintNetworks(dAtA, i, uint64(len(m.Address)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Protocol != 0 {
+		i = encodeVarintNetworks(dAtA, i, uint64(m.Protocol))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Target_BasicAuth_) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Target_BasicAuth_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.BasicAuth != nil {
+		{
+			size, err := m.BasicAuth.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetworks(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Target_CustomAuth_) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Target_CustomAuth_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.CustomAuth != nil {
+		{
+			size, err := m.CustomAuth.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetworks(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Target_TlsClientAuth) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Target_TlsClientAuth) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.TlsClientAuth != nil {
+		{
+			size, err := m.TlsClientAuth.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNetworks(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Target_BasicAuth) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Target_BasicAuth) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Target_BasicAuth) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Password) > 0 {
+		i -= len(m.Password)
+		copy(dAtA[i:], m.Password)
+		i = encodeVarintNetworks(dAtA, i, uint64(len(m.Password)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Username) > 0 {
+		i -= len(m.Username)
+		copy(dAtA[i:], m.Username)
+		i = encodeVarintNetworks(dAtA, i, uint64(len(m.Username)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Target_CustomAuth) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Target_CustomAuth) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Target_CustomAuth) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Value) > 0 {
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
+		i = encodeVarintNetworks(dAtA, i, uint64(len(m.Value)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Target_TLSClientAuth) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Target_TLSClientAuth) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Target_TLSClientAuth) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintNetworks(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Cert) > 0 {
+		i -= len(m.Cert)
+		copy(dAtA[i:], m.Cert)
+		i = encodeVarintNetworks(dAtA, i, uint64(len(m.Cert)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintNetworks(dAtA []byte, offset int, v uint64) int {
 	offset -= sovNetworks(v)
 	base := offset
@@ -1292,6 +2059,9 @@ func NewPopulatedNetwork(r randyNetworks, easy bool) *Network {
 		this.TechnicalContact = NewPopulatedContactInfo(r, easy)
 	}
 	this.Listed = bool(bool(r.Intn(2) == 0))
+	if r.Intn(5) != 0 {
+		this.Target = NewPopulatedTarget(r, easy)
+	}
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
@@ -1316,6 +2086,9 @@ func NewPopulatedTenant(r randyNetworks, easy bool) *Tenant {
 		this.TechnicalContact = NewPopulatedContactInfo(r, easy)
 	}
 	this.Listed = bool(bool(r.Intn(2) == 0))
+	if r.Intn(5) != 0 {
+		this.Target = NewPopulatedTarget(r, easy)
+	}
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
@@ -1378,7 +2151,79 @@ func NewPopulatedNetworkAPIKey(r randyNetworks, easy bool) *NetworkAPIKey {
 	v3 := r.Intn(10)
 	this.Rights = make([]Right, v3)
 	for i := 0; i < v3; i++ {
-		this.Rights[i] = Right([]int32{0, 1, 2, 3, 4, 5}[r.Intn(6)])
+		this.Rights[i] = Right([]int32{0, 1, 2, 3, 4, 5, 6}[r.Intn(7)])
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedTarget(r randyNetworks, easy bool) *Target {
+	this := &Target{}
+	this.Protocol = TargetProtocol([]int32{0, 1}[r.Intn(2)])
+	this.Address = string(randStringNetworks(r))
+	oneofNumber_Authorization := []int32{3, 4, 5}[r.Intn(3)]
+	switch oneofNumber_Authorization {
+	case 3:
+		this.Authorization = NewPopulatedTarget_BasicAuth_(r, easy)
+	case 4:
+		this.Authorization = NewPopulatedTarget_CustomAuth_(r, easy)
+	case 5:
+		this.Authorization = NewPopulatedTarget_TlsClientAuth(r, easy)
+	}
+	v4 := r.Intn(100)
+	this.RootCas = make([]byte, v4)
+	for i := 0; i < v4; i++ {
+		this.RootCas[i] = byte(r.Intn(256))
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedTarget_BasicAuth_(r randyNetworks, easy bool) *Target_BasicAuth_ {
+	this := &Target_BasicAuth_{}
+	this.BasicAuth = NewPopulatedTarget_BasicAuth(r, easy)
+	return this
+}
+func NewPopulatedTarget_CustomAuth_(r randyNetworks, easy bool) *Target_CustomAuth_ {
+	this := &Target_CustomAuth_{}
+	this.CustomAuth = NewPopulatedTarget_CustomAuth(r, easy)
+	return this
+}
+func NewPopulatedTarget_TlsClientAuth(r randyNetworks, easy bool) *Target_TlsClientAuth {
+	this := &Target_TlsClientAuth{}
+	this.TlsClientAuth = NewPopulatedTarget_TLSClientAuth(r, easy)
+	return this
+}
+func NewPopulatedTarget_BasicAuth(r randyNetworks, easy bool) *Target_BasicAuth {
+	this := &Target_BasicAuth{}
+	this.Username = string(randStringNetworks(r))
+	this.Password = string(randStringNetworks(r))
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedTarget_CustomAuth(r randyNetworks, easy bool) *Target_CustomAuth {
+	this := &Target_CustomAuth{}
+	this.Value = string(randStringNetworks(r))
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedTarget_TLSClientAuth(r randyNetworks, easy bool) *Target_TLSClientAuth {
+	this := &Target_TLSClientAuth{}
+	v5 := r.Intn(100)
+	this.Cert = make([]byte, v5)
+	for i := 0; i < v5; i++ {
+		this.Cert[i] = byte(r.Intn(256))
+	}
+	v6 := r.Intn(100)
+	this.Key = make([]byte, v6)
+	for i := 0; i < v6; i++ {
+		this.Key[i] = byte(r.Intn(256))
 	}
 	if !easy && r.Intn(10) != 0 {
 	}
@@ -1404,9 +2249,9 @@ func randUTF8RuneNetworks(r randyNetworks) rune {
 	return rune(ru + 61)
 }
 func randStringNetworks(r randyNetworks) string {
-	v4 := r.Intn(100)
-	tmps := make([]rune, v4)
-	for i := 0; i < v4; i++ {
+	v7 := r.Intn(100)
+	tmps := make([]rune, v7)
+	for i := 0; i < v7; i++ {
 		tmps[i] = randUTF8RuneNetworks(r)
 	}
 	return string(tmps)
@@ -1428,11 +2273,11 @@ func randFieldNetworks(dAtA []byte, r randyNetworks, fieldNumber int, wire int) 
 	switch wire {
 	case 0:
 		dAtA = encodeVarintPopulateNetworks(dAtA, uint64(key))
-		v5 := r.Int63()
+		v8 := r.Int63()
 		if r.Intn(2) == 0 {
-			v5 *= -1
+			v8 *= -1
 		}
-		dAtA = encodeVarintPopulateNetworks(dAtA, uint64(v5))
+		dAtA = encodeVarintPopulateNetworks(dAtA, uint64(v8))
 	case 1:
 		dAtA = encodeVarintPopulateNetworks(dAtA, uint64(key))
 		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
@@ -1487,6 +2332,10 @@ func (m *Network) Size() (n int) {
 	if m.Listed {
 		n += 2
 	}
+	if m.Target != nil {
+		l = m.Target.Size()
+		n += 1 + l + sovNetworks(uint64(l))
+	}
 	return n
 }
 
@@ -1523,6 +2372,10 @@ func (m *Tenant) Size() (n int) {
 	}
 	if m.Listed {
 		n += 2
+	}
+	if m.Target != nil {
+		l = m.Target.Size()
+		n += 1 + l + sovNetworks(uint64(l))
 	}
 	return n
 }
@@ -1634,6 +2487,112 @@ func (m *NetworkAPIKey) Size() (n int) {
 	return n
 }
 
+func (m *Target) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Protocol != 0 {
+		n += 1 + sovNetworks(uint64(m.Protocol))
+	}
+	l = len(m.Address)
+	if l > 0 {
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	if m.Authorization != nil {
+		n += m.Authorization.Size()
+	}
+	l = len(m.RootCas)
+	if l > 0 {
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	return n
+}
+
+func (m *Target_BasicAuth_) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.BasicAuth != nil {
+		l = m.BasicAuth.Size()
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	return n
+}
+func (m *Target_CustomAuth_) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.CustomAuth != nil {
+		l = m.CustomAuth.Size()
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	return n
+}
+func (m *Target_TlsClientAuth) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.TlsClientAuth != nil {
+		l = m.TlsClientAuth.Size()
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	return n
+}
+func (m *Target_BasicAuth) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Username)
+	if l > 0 {
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	l = len(m.Password)
+	if l > 0 {
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	return n
+}
+
+func (m *Target_CustomAuth) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Value)
+	if l > 0 {
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	return n
+}
+
+func (m *Target_TLSClientAuth) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Cert)
+	if l > 0 {
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	l = len(m.Key)
+	if l > 0 {
+		n += 1 + l + sovNetworks(uint64(l))
+	}
+	return n
+}
+
 func sovNetworks(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
@@ -1656,6 +2615,7 @@ func (this *Network) String() string {
 		`AdministrativeContact:` + strings.Replace(fmt.Sprintf("%v", this.AdministrativeContact), "ContactInfo", "ContactInfo", 1) + `,`,
 		`TechnicalContact:` + strings.Replace(fmt.Sprintf("%v", this.TechnicalContact), "ContactInfo", "ContactInfo", 1) + `,`,
 		`Listed:` + fmt.Sprintf("%v", this.Listed) + `,`,
+		`Target:` + strings.Replace(this.Target.String(), "Target", "Target", 1) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1677,6 +2637,7 @@ func (this *Tenant) String() string {
 		`AdministrativeContact:` + strings.Replace(fmt.Sprintf("%v", this.AdministrativeContact), "ContactInfo", "ContactInfo", 1) + `,`,
 		`TechnicalContact:` + strings.Replace(fmt.Sprintf("%v", this.TechnicalContact), "ContactInfo", "ContactInfo", 1) + `,`,
 		`Listed:` + fmt.Sprintf("%v", this.Listed) + `,`,
+		`Target:` + strings.Replace(this.Target.String(), "Target", "Target", 1) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1745,6 +2706,81 @@ func (this *NetworkAPIKey) String() string {
 		`AuthenticatedAt:` + strings.Replace(fmt.Sprintf("%v", this.AuthenticatedAt), "Timestamp", "types.Timestamp", 1) + `,`,
 		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
 		`Rights:` + fmt.Sprintf("%v", this.Rights) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Target) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Target{`,
+		`Protocol:` + fmt.Sprintf("%v", this.Protocol) + `,`,
+		`Address:` + fmt.Sprintf("%v", this.Address) + `,`,
+		`Authorization:` + fmt.Sprintf("%v", this.Authorization) + `,`,
+		`RootCas:` + fmt.Sprintf("%v", this.RootCas) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Target_BasicAuth_) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Target_BasicAuth_{`,
+		`BasicAuth:` + strings.Replace(fmt.Sprintf("%v", this.BasicAuth), "Target_BasicAuth", "Target_BasicAuth", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Target_CustomAuth_) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Target_CustomAuth_{`,
+		`CustomAuth:` + strings.Replace(fmt.Sprintf("%v", this.CustomAuth), "Target_CustomAuth", "Target_CustomAuth", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Target_TlsClientAuth) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Target_TlsClientAuth{`,
+		`TlsClientAuth:` + strings.Replace(fmt.Sprintf("%v", this.TlsClientAuth), "Target_TLSClientAuth", "Target_TLSClientAuth", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Target_BasicAuth) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Target_BasicAuth{`,
+		`Username:` + fmt.Sprintf("%v", this.Username) + `,`,
+		`Password:` + fmt.Sprintf("%v", this.Password) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Target_CustomAuth) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Target_CustomAuth{`,
+		`Value:` + fmt.Sprintf("%v", this.Value) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *Target_TLSClientAuth) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&Target_TLSClientAuth{`,
+		`Cert:` + fmt.Sprintf("%v", this.Cert) + `,`,
+		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1963,6 +2999,42 @@ func (m *Network) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Listed = bool(v != 0)
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Target", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Target == nil {
+				m.Target = &Target{}
+			}
+			if err := m.Target.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipNetworks(dAtA[iNdEx:])
@@ -2225,6 +3297,42 @@ func (m *Tenant) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Listed = bool(v != 0)
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Target", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Target == nil {
+				m.Target = &Target{}
+			}
+			if err := m.Target.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipNetworks(dAtA[iNdEx:])
@@ -2865,6 +3973,572 @@ func (m *NetworkAPIKey) Unmarshal(dAtA []byte) error {
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field Rights", wireType)
 			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetworks(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Target) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetworks
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Target: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Target: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Protocol", wireType)
+			}
+			m.Protocol = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Protocol |= TargetProtocol(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Address = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BasicAuth", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &Target_BasicAuth{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Authorization = &Target_BasicAuth_{v}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CustomAuth", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &Target_CustomAuth{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Authorization = &Target_CustomAuth_{v}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TlsClientAuth", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &Target_TLSClientAuth{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Authorization = &Target_TlsClientAuth{v}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RootCas", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RootCas = append(m.RootCas[:0], dAtA[iNdEx:postIndex]...)
+			if m.RootCas == nil {
+				m.RootCas = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetworks(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Target_BasicAuth) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetworks
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: BasicAuth: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: BasicAuth: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Username", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Username = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Password", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Password = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetworks(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Target_CustomAuth) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetworks
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CustomAuth: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CustomAuth: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Value = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNetworks(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Target_TLSClientAuth) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNetworks
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TLSClientAuth: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TLSClientAuth: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Cert", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Cert = append(m.Cert[:0], dAtA[iNdEx:postIndex]...)
+			if m.Cert == nil {
+				m.Cert = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNetworks
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNetworks
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Key = append(m.Key[:0], dAtA[iNdEx:postIndex]...)
+			if m.Key == nil {
+				m.Key = []byte{}
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipNetworks(dAtA[iNdEx:])

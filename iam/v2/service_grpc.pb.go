@@ -347,8 +347,10 @@ var ClusterAPIKeyVault_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CatalogClient interface {
+	// List the networks and tenants.
+	ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
 	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
-	ListHomeNetworks(ctx context.Context, in *ListHomeNetworksRequest, opts ...grpc.CallOption) (*ListHomeNetworksResponse, error)
+	ListHomeNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
 }
 
 type catalogClient struct {
@@ -359,8 +361,17 @@ func NewCatalogClient(cc grpc.ClientConnInterface) CatalogClient {
 	return &catalogClient{cc}
 }
 
-func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListHomeNetworksRequest, opts ...grpc.CallOption) (*ListHomeNetworksResponse, error) {
-	out := new(ListHomeNetworksResponse)
+func (c *catalogClient) ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error) {
+	out := new(ListNetworksResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.Catalog/ListNetworks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error) {
+	out := new(ListNetworksResponse)
 	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.Catalog/ListHomeNetworks", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -372,8 +383,10 @@ func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListHomeNetwor
 // All implementations must embed UnimplementedCatalogServer
 // for forward compatibility
 type CatalogServer interface {
+	// List the networks and tenants.
+	ListNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
 	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
-	ListHomeNetworks(context.Context, *ListHomeNetworksRequest) (*ListHomeNetworksResponse, error)
+	ListHomeNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
 	mustEmbedUnimplementedCatalogServer()
 }
 
@@ -381,7 +394,10 @@ type CatalogServer interface {
 type UnimplementedCatalogServer struct {
 }
 
-func (UnimplementedCatalogServer) ListHomeNetworks(context.Context, *ListHomeNetworksRequest) (*ListHomeNetworksResponse, error) {
+func (UnimplementedCatalogServer) ListNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNetworks not implemented")
+}
+func (UnimplementedCatalogServer) ListHomeNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHomeNetworks not implemented")
 }
 func (UnimplementedCatalogServer) mustEmbedUnimplementedCatalogServer() {}
@@ -397,8 +413,26 @@ func RegisterCatalogServer(s grpc.ServiceRegistrar, srv CatalogServer) {
 	s.RegisterService(&Catalog_ServiceDesc, srv)
 }
 
+func _Catalog_ListNetworks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNetworksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogServer).ListNetworks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.Catalog/ListNetworks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogServer).ListNetworks(ctx, req.(*ListNetworksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Catalog_ListHomeNetworks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListHomeNetworksRequest)
+	in := new(ListNetworksRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -410,7 +444,7 @@ func _Catalog_ListHomeNetworks_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/org.packetbroker.iam.v2.Catalog/ListHomeNetworks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatalogServer).ListHomeNetworks(ctx, req.(*ListHomeNetworksRequest))
+		return srv.(CatalogServer).ListHomeNetworks(ctx, req.(*ListNetworksRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -422,6 +456,10 @@ var Catalog_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.iam.v2.Catalog",
 	HandlerType: (*CatalogServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListNetworks",
+			Handler:    _Catalog_ListNetworks_Handler,
+		},
 		{
 			MethodName: "ListHomeNetworks",
 			Handler:    _Catalog_ListHomeNetworks_Handler,

@@ -33,8 +33,8 @@ all: $(targets)
 
 .PHONY: deps
 deps:
-	$(GO) get -u google.golang.org/protobuf/cmd/protoc-gen-go@v1.25.0
-	$(GO) get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1.0
+	$(GO) get -u google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
+	$(GO) get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
 
 .PHONY: clean
 clean:

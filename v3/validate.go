@@ -51,6 +51,27 @@ func (t *Target) Validate() error {
 	}
 }
 
+// Validate returns whether the GatewayIdentifier is valid.
+func (i *GatewayIdentifier) Validate() error {
+	if hash := i.GetHash(); hash != nil && len(hash) != 32 {
+		return errors.New("invalid SHA-256 hash length")
+	}
+	return nil
+}
+
+func (m *UplinkMessage) Validate() error {
+	if m.GetGatewayId() != nil {
+		if err := m.GatewayId.Validate(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (m *DownlinkMessage) Validate() error {
+	return nil
+}
+
 // Validate returns whether the UplinkMessageDeliveryStateChange is valid.
 func (c *UplinkMessageDeliveryStateChange) Validate() error {
 	if !ClusterIDRegex.MatchString(c.GetForwarderClusterId()) {

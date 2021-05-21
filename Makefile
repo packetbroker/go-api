@@ -16,20 +16,24 @@ SHELL = bash
 GO = go
 PROTOC = protoc
 
-PROTO_PATH ?= ../..
+PBAPI ?= ../..
 VERSION ?= v3
 ROUTING_VERSION ?= v1
 MAPPING_VERSION ?= v2
 IAM_VERSION ?= v2
 
-protos = $(wildcard $(PROTO_PATH)/packetbroker/api/$(VERSION)/*.proto) \
-	$(wildcard $(PROTO_PATH)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \
-	$(wildcard $(PROTO_PATH)/packetbroker/api/mapping/$(MAPPING_VERSION)/*.proto) \
-	$(wildcard $(PROTO_PATH)/packetbroker/api/iam/$(IAM_VERSION)/*.proto)
-targets = $(subst v1/,,$(patsubst $(PROTO_PATH)/packetbroker/api/%.proto,%.pb.go,$(protos)))
+protos = $(wildcard $(PBAPI)/packetbroker/api/$(VERSION)/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/mapping/$(MAPPING_VERSION)/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/iam/$(IAM_VERSION)/*.proto)
+prototargets = $(subst v1/,,$(patsubst $(PBAPI)/packetbroker/api/%.proto,%.pb.go,$(protos)))
+
+openapis = $(PBAPI)/packetbroker/api/mapping/$(MAPPING_VERSION)/openapi.tmpl.json
+openapitargets = $(subst v1/,,$(patsubst $(PBAPI)/packetbroker/api/%/openapi.tmpl.json,%/openapi/openapi.tmpl.json,$(openapis)))
 
 .PHONY: all
-all: $(targets)
+all: $(prototargets)
+all: $(openapitargets)
 
 .PHONY: deps
 deps:
@@ -38,15 +42,19 @@ deps:
 
 .PHONY: clean
 clean:
-	@rm $(targets)
+	@rm $(prototargets)
+	@rm $(openapitargets)
 
-$(targets): $(protos)
+$(prototargets): $(protos)
 	@mkdir -p build $(@D)
 	@$(PROTOC) \
 		--go_out="build" \
 		--go-grpc_out="build" \
-		--proto_path=$(PROTO_PATH) $^
+		--proto_path=$(PBAPI) $^
 	@mv build/go.packetbroker.org/api/$(@D)/*.pb.go $(@D)/
 	@rm -rf build
+
+$(openapitargets): $(openapis)
+	@cp $^ $@
 
 # vim: ft=make

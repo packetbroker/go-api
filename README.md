@@ -9,8 +9,9 @@ Use `go get` to retrieve the Go API.
 ```bash
 $ go get go.packetbroker.org/api/v3
 $ go get go.packetbroker.org/api/routing/v1
-$ go get go.packetbroker.org/api/mapping/v1
-$ go get go.packetbroker.org/api/admin/v1
+$ go get go.packetbroker.org/api/mapping/v2
+$ go get go.packetbroker.org/api/iam
+$ go get go.packetbroker.org/api/iam/v2
 ```
 
 ## Regenerating
@@ -42,7 +43,7 @@ $ make
 If you clone the API repository somewhere else, pass the import path where the `packetbroker/api` folder resides like this:
 
 ```bash
-$ PROTO_PATH=<path> make
+$ PBAPI=<path> make
 ```
 
 ## License

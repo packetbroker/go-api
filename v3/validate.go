@@ -53,6 +53,9 @@ func (t *Target) Validate() error {
 
 // Validate returns whether the GatewayIdentifier is valid.
 func (i *GatewayIdentifier) Validate() error {
+	if i.Eui == nil && len(i.GetPlain()) == 0 && len(i.GetHash()) == 0 {
+		return errors.New("no gateway identifier specified")
+	}
 	if hash := i.GetHash(); hash != nil && len(hash) != 32 {
 		return errors.New("invalid SHA-256 hash length")
 	}

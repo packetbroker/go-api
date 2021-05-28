@@ -85,7 +85,15 @@ func (r *PublishUplinkMessageRequest) Validate() error {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
 	if r.GetForwarderTenantId() != "" {
-		return packetbroker.ForwarderTenantID(r).Validate()
+		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
+			return err
+		}
+	}
+	if r.GetMessage() == nil {
+		return errors.New("message is required")
+	}
+	if err := r.Message.Validate(); err != nil {
+		return err
 	}
 	return nil
 }
@@ -104,23 +112,31 @@ func (r *PublishDownlinkMessageRequest) Validate() error {
 		return errors.New("invalid Home Network Cluster ID format")
 	}
 	if r.GetHomeNetworkTenantId() != "" {
-		return packetbroker.HomeNetworkTenantID(r).Validate()
+		if err := packetbroker.HomeNetworkTenantID(r).Validate(); err != nil {
+			return err
+		}
+	}
+	if r.GetMessage() == nil {
+		return errors.New("message is required")
+	}
+	if err := r.Message.Validate(); err != nil {
+		return err
 	}
 	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *UplinkMessageDeliveryStateChangeRequest) Validate() error {
-	if r.StateChange == nil {
-		return errors.New("no state change")
+	if r.GetStateChange() == nil {
+		return errors.New("state is required")
 	}
 	return r.StateChange.Validate()
 }
 
 // Validate returns whether the request is valid.
 func (r *DownlinkMessageDeliveryStateChangeRequest) Validate() error {
-	if r.StateChange == nil {
-		return errors.New("no state change")
+	if r.GetStateChange() == nil {
+		return errors.New("state is required")
 	}
 	return r.StateChange.Validate()
 }

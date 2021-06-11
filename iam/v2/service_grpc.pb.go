@@ -25,6 +25,8 @@ type NetworkAPIKeyVaultClient interface {
 	CreateAPIKey(ctx context.Context, in *CreateNetworkAPIKeyRequest, opts ...grpc.CallOption) (*CreateNetworkAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type networkAPIKeyVaultClient struct {
@@ -62,6 +64,15 @@ func (c *networkAPIKeyVaultClient) DeleteAPIKey(ctx context.Context, in *APIKeyR
 	return out, nil
 }
 
+func (c *networkAPIKeyVaultClient) UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.NetworkAPIKeyVault/UpdateAPIKeyState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NetworkAPIKeyVaultServer is the server API for NetworkAPIKeyVault service.
 // All implementations must embed UnimplementedNetworkAPIKeyVaultServer
 // for forward compatibility
@@ -72,6 +83,8 @@ type NetworkAPIKeyVaultServer interface {
 	CreateAPIKey(context.Context, *CreateNetworkAPIKeyRequest) (*CreateNetworkAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(context.Context, *UpdateAPIKeyStateRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedNetworkAPIKeyVaultServer()
 }
 
@@ -87,6 +100,9 @@ func (UnimplementedNetworkAPIKeyVaultServer) CreateAPIKey(context.Context, *Crea
 }
 func (UnimplementedNetworkAPIKeyVaultServer) DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAPIKey not implemented")
+}
+func (UnimplementedNetworkAPIKeyVaultServer) UpdateAPIKeyState(context.Context, *UpdateAPIKeyStateRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAPIKeyState not implemented")
 }
 func (UnimplementedNetworkAPIKeyVaultServer) mustEmbedUnimplementedNetworkAPIKeyVaultServer() {}
 
@@ -155,6 +171,24 @@ func _NetworkAPIKeyVault_DeleteAPIKey_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NetworkAPIKeyVault_UpdateAPIKeyState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAPIKeyStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NetworkAPIKeyVaultServer).UpdateAPIKeyState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.NetworkAPIKeyVault/UpdateAPIKeyState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NetworkAPIKeyVaultServer).UpdateAPIKeyState(ctx, req.(*UpdateAPIKeyStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NetworkAPIKeyVault_ServiceDesc is the grpc.ServiceDesc for NetworkAPIKeyVault service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -174,6 +208,10 @@ var NetworkAPIKeyVault_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteAPIKey",
 			Handler:    _NetworkAPIKeyVault_DeleteAPIKey_Handler,
 		},
+		{
+			MethodName: "UpdateAPIKeyState",
+			Handler:    _NetworkAPIKeyVault_UpdateAPIKeyState_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "packetbroker/api/iam/v2/service.proto",
@@ -189,6 +227,8 @@ type ClusterAPIKeyVaultClient interface {
 	CreateAPIKey(ctx context.Context, in *CreateClusterAPIKeyRequest, opts ...grpc.CallOption) (*CreateClusterAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type clusterAPIKeyVaultClient struct {
@@ -226,6 +266,15 @@ func (c *clusterAPIKeyVaultClient) DeleteAPIKey(ctx context.Context, in *APIKeyR
 	return out, nil
 }
 
+func (c *clusterAPIKeyVaultClient) UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.ClusterAPIKeyVault/UpdateAPIKeyState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClusterAPIKeyVaultServer is the server API for ClusterAPIKeyVault service.
 // All implementations must embed UnimplementedClusterAPIKeyVaultServer
 // for forward compatibility
@@ -236,6 +285,8 @@ type ClusterAPIKeyVaultServer interface {
 	CreateAPIKey(context.Context, *CreateClusterAPIKeyRequest) (*CreateClusterAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(context.Context, *UpdateAPIKeyStateRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedClusterAPIKeyVaultServer()
 }
 
@@ -251,6 +302,9 @@ func (UnimplementedClusterAPIKeyVaultServer) CreateAPIKey(context.Context, *Crea
 }
 func (UnimplementedClusterAPIKeyVaultServer) DeleteAPIKey(context.Context, *APIKeyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAPIKey not implemented")
+}
+func (UnimplementedClusterAPIKeyVaultServer) UpdateAPIKeyState(context.Context, *UpdateAPIKeyStateRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAPIKeyState not implemented")
 }
 func (UnimplementedClusterAPIKeyVaultServer) mustEmbedUnimplementedClusterAPIKeyVaultServer() {}
 
@@ -319,6 +373,24 @@ func _ClusterAPIKeyVault_DeleteAPIKey_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClusterAPIKeyVault_UpdateAPIKeyState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAPIKeyStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClusterAPIKeyVaultServer).UpdateAPIKeyState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.ClusterAPIKeyVault/UpdateAPIKeyState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClusterAPIKeyVaultServer).UpdateAPIKeyState(ctx, req.(*UpdateAPIKeyStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClusterAPIKeyVault_ServiceDesc is the grpc.ServiceDesc for ClusterAPIKeyVault service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -337,6 +409,10 @@ var ClusterAPIKeyVault_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAPIKey",
 			Handler:    _ClusterAPIKeyVault_DeleteAPIKey_Handler,
+		},
+		{
+			MethodName: "UpdateAPIKeyState",
+			Handler:    _ClusterAPIKeyVault_UpdateAPIKeyState_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

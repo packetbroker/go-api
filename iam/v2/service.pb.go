@@ -163,6 +163,8 @@ type CreateNetworkAPIKeyRequest struct {
 	ClusterId string `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	// Network rights.
 	Rights []v3.Right `protobuf:"varint,4,rep,packed,name=rights,proto3,enum=org.packetbroker.v3.Right" json:"rights,omitempty"`
+	// Secret key value. Leave empty to generate one.
+	Key string `protobuf:"bytes,5,opt,name=key,proto3" json:"key,omitempty"`
 }
 
 func (x *CreateNetworkAPIKeyRequest) Reset() {
@@ -223,6 +225,13 @@ func (x *CreateNetworkAPIKeyRequest) GetRights() []v3.Right {
 		return x.Rights
 	}
 	return nil
+}
+
+func (x *CreateNetworkAPIKeyRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
 }
 
 type APIKeyRequest struct {
@@ -319,6 +328,61 @@ func (x *CreateNetworkAPIKeyResponse) GetKey() *v3.NetworkAPIKey {
 	return nil
 }
 
+type UpdateAPIKeyStateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	KeyId string         `protobuf:"bytes,1,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
+	State v3.APIKeyState `protobuf:"varint,2,opt,name=state,proto3,enum=org.packetbroker.v3.APIKeyState" json:"state,omitempty"`
+}
+
+func (x *UpdateAPIKeyStateRequest) Reset() {
+	*x = UpdateAPIKeyStateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateAPIKeyStateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAPIKeyStateRequest) ProtoMessage() {}
+
+func (x *UpdateAPIKeyStateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAPIKeyStateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateAPIKeyStateRequest) Descriptor() ([]byte, []int) {
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UpdateAPIKeyStateRequest) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+func (x *UpdateAPIKeyStateRequest) GetState() v3.APIKeyState {
+	if x != nil {
+		return x.State
+	}
+	return v3.APIKeyState_REQUESTED
+}
+
 type ListClusterAPIKeysRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -331,7 +395,7 @@ type ListClusterAPIKeysRequest struct {
 func (x *ListClusterAPIKeysRequest) Reset() {
 	*x = ListClusterAPIKeysRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[5]
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -344,7 +408,7 @@ func (x *ListClusterAPIKeysRequest) String() string {
 func (*ListClusterAPIKeysRequest) ProtoMessage() {}
 
 func (x *ListClusterAPIKeysRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[5]
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -357,7 +421,7 @@ func (x *ListClusterAPIKeysRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterAPIKeysRequest.ProtoReflect.Descriptor instead.
 func (*ListClusterAPIKeysRequest) Descriptor() ([]byte, []int) {
-	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{5}
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListClusterAPIKeysRequest) GetClusterId() *wrapperspb.StringValue {
@@ -378,7 +442,7 @@ type ListClusterAPIKeysResponse struct {
 func (x *ListClusterAPIKeysResponse) Reset() {
 	*x = ListClusterAPIKeysResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[6]
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -391,7 +455,7 @@ func (x *ListClusterAPIKeysResponse) String() string {
 func (*ListClusterAPIKeysResponse) ProtoMessage() {}
 
 func (x *ListClusterAPIKeysResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[6]
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -404,7 +468,7 @@ func (x *ListClusterAPIKeysResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterAPIKeysResponse.ProtoReflect.Descriptor instead.
 func (*ListClusterAPIKeysResponse) Descriptor() ([]byte, []int) {
-	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{6}
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListClusterAPIKeysResponse) GetKeys() []*v3.ClusterAPIKey {
@@ -423,12 +487,14 @@ type CreateClusterAPIKeyRequest struct {
 	ClusterId string `protobuf:"bytes,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	// Network rights.
 	Rights []v3.Right `protobuf:"varint,2,rep,packed,name=rights,proto3,enum=org.packetbroker.v3.Right" json:"rights,omitempty"`
+	// Secret key value. Leave empty to generate one.
+	Key string `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
 }
 
 func (x *CreateClusterAPIKeyRequest) Reset() {
 	*x = CreateClusterAPIKeyRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[7]
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -441,7 +507,7 @@ func (x *CreateClusterAPIKeyRequest) String() string {
 func (*CreateClusterAPIKeyRequest) ProtoMessage() {}
 
 func (x *CreateClusterAPIKeyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[7]
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -454,7 +520,7 @@ func (x *CreateClusterAPIKeyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateClusterAPIKeyRequest.ProtoReflect.Descriptor instead.
 func (*CreateClusterAPIKeyRequest) Descriptor() ([]byte, []int) {
-	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{7}
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *CreateClusterAPIKeyRequest) GetClusterId() string {
@@ -471,6 +537,13 @@ func (x *CreateClusterAPIKeyRequest) GetRights() []v3.Right {
 	return nil
 }
 
+func (x *CreateClusterAPIKeyRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
 type CreateClusterAPIKeyResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -482,7 +555,7 @@ type CreateClusterAPIKeyResponse struct {
 func (x *CreateClusterAPIKeyResponse) Reset() {
 	*x = CreateClusterAPIKeyResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[8]
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -495,7 +568,7 @@ func (x *CreateClusterAPIKeyResponse) String() string {
 func (*CreateClusterAPIKeyResponse) ProtoMessage() {}
 
 func (x *CreateClusterAPIKeyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[8]
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -508,7 +581,7 @@ func (x *CreateClusterAPIKeyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateClusterAPIKeyResponse.ProtoReflect.Descriptor instead.
 func (*CreateClusterAPIKeyResponse) Descriptor() ([]byte, []int) {
-	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{8}
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CreateClusterAPIKeyResponse) GetKey() *v3.ClusterAPIKey {
@@ -538,7 +611,7 @@ type ListNetworksRequest struct {
 func (x *ListNetworksRequest) Reset() {
 	*x = ListNetworksRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[9]
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -551,7 +624,7 @@ func (x *ListNetworksRequest) String() string {
 func (*ListNetworksRequest) ProtoMessage() {}
 
 func (x *ListNetworksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[9]
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -564,7 +637,7 @@ func (x *ListNetworksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListNetworksRequest.ProtoReflect.Descriptor instead.
 func (*ListNetworksRequest) Descriptor() ([]byte, []int) {
-	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{9}
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListNetworksRequest) GetOffset() uint32 {
@@ -608,7 +681,7 @@ type ListNetworksResponse struct {
 func (x *ListNetworksResponse) Reset() {
 	*x = ListNetworksResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[10]
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -621,7 +694,7 @@ func (x *ListNetworksResponse) String() string {
 func (*ListNetworksResponse) ProtoMessage() {}
 
 func (x *ListNetworksResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[10]
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -634,7 +707,7 @@ func (x *ListNetworksResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListNetworksResponse.ProtoReflect.Descriptor instead.
 func (*ListNetworksResponse) Descriptor() ([]byte, []int) {
-	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{10}
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListNetworksResponse) GetNetworks() []*v3.NetworkOrTenant {
@@ -686,7 +759,7 @@ var file_packetbroker_api_iam_v2_service_proto_rawDesc = []byte{
 	0x0a, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6f,
 	0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e,
 	0x76, 0x33, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79,
-	0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x22, 0xa3, 0x01, 0x0a, 0x1a, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x22, 0xb5, 0x01, 0x0a, 0x1a, 0x43, 0x72, 0x65, 0x61, 0x74,
 	0x65, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x6e, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x6e, 0x65, 0x74, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09,
@@ -696,33 +769,42 @@ var file_packetbroker_api_iam_v2_service_proto_rawDesc = []byte{
 	0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x06, 0x72, 0x69, 0x67, 0x68,
 	0x74, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70,
 	0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x52,
-	0x69, 0x67, 0x68, 0x74, 0x52, 0x06, 0x72, 0x69, 0x67, 0x68, 0x74, 0x73, 0x22, 0x26, 0x0a, 0x0d,
-	0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a,
-	0x06, 0x6b, 0x65, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6b,
-	0x65, 0x79, 0x49, 0x64, 0x22, 0x53, 0x0a, 0x1b, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x65,
-	0x74, 0x77, 0x6f, 0x72, 0x6b, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x22, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f,
-	0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x41, 0x50,
-	0x49, 0x4b, 0x65, 0x79, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x58, 0x0a, 0x19, 0x4c, 0x69, 0x73,
-	0x74, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3b, 0x0a, 0x0a, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65,
-	0x72, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72,
-	0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x09, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65,
-	0x72, 0x49, 0x64, 0x22, 0x54, 0x0a, 0x1a, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x6c, 0x75, 0x73, 0x74,
-	0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x36, 0x0a, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
-	0x22, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b,
-	0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49,
-	0x4b, 0x65, 0x79, 0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x22, 0x6f, 0x0a, 0x1a, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x6c, 0x75, 0x73, 0x74,
-	0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x6c, 0x75,
-	0x73, 0x74, 0x65, 0x72, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x06, 0x72, 0x69, 0x67, 0x68, 0x74, 0x73,
-	0x18, 0x02, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63,
-	0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x52, 0x69, 0x67,
-	0x68, 0x74, 0x52, 0x06, 0x72, 0x69, 0x67, 0x68, 0x74, 0x73, 0x22, 0x53, 0x0a, 0x1b, 0x43, 0x72,
+	0x69, 0x67, 0x68, 0x74, 0x52, 0x06, 0x72, 0x69, 0x67, 0x68, 0x74, 0x73, 0x12, 0x10, 0x0a, 0x03,
+	0x6b, 0x65, 0x79, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x26,
+	0x0a, 0x0d, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x15, 0x0a, 0x06, 0x6b, 0x65, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x22, 0x53, 0x0a, 0x1b, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62,
+	0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b,
+	0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x69, 0x0a, 0x18, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x53, 0x74, 0x61, 0x74, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x6b, 0x65, 0x79, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x12, 0x36,
+	0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x20, 0x2e,
+	0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72,
+	0x2e, 0x76, 0x33, 0x2e, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52,
+	0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0x58, 0x0a, 0x19, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x6c,
+	0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x3b, 0x0a, 0x0a, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x5f, 0x69,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67,
+	0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x09, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x49, 0x64,
+	0x22, 0x54, 0x0a, 0x1a, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41,
+	0x50, 0x49, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x36,
+	0x0a, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6f,
+	0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e,
+	0x76, 0x33, 0x2e, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79,
+	0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x22, 0x81, 0x01, 0x0a, 0x1a, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72,
+	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x6c, 0x75, 0x73, 0x74,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x06, 0x72, 0x69, 0x67, 0x68, 0x74, 0x73, 0x18, 0x02,
+	0x20, 0x03, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65,
+	0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x52, 0x69, 0x67, 0x68, 0x74,
+	0x52, 0x06, 0x72, 0x69, 0x67, 0x68, 0x74, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x53, 0x0a, 0x1b, 0x43, 0x72,
 	0x65, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65,
 	0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x03, 0x6b, 0x65, 0x79,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63,
@@ -744,7 +826,7 @@ var file_packetbroker_api_iam_v2_service_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b,
 	0x4f, 0x72, 0x54, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x52, 0x08, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72,
 	0x6b, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x0d, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x32, 0xd7, 0x02, 0x0a, 0x12, 0x4e, 0x65, 0x74,
+	0x0d, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x32, 0xb7, 0x03, 0x0a, 0x12, 0x4e, 0x65, 0x74,
 	0x77, 0x6f, 0x72, 0x6b, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x56, 0x61, 0x75, 0x6c, 0x74, 0x12,
 	0x76, 0x0a, 0x0b, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x73, 0x12, 0x32,
 	0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65,
@@ -766,7 +848,13 @@ var file_packetbroker_api_iam_v2_service_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x32, 0x2e, 0x41, 0x50, 0x49,
 	0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f,
 	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70,
-	0x74, 0x79, 0x32, 0xd7, 0x02, 0x0a, 0x12, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50,
+	0x74, 0x79, 0x12, 0x5e, 0x0a, 0x11, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x41, 0x50, 0x49, 0x4b,
+	0x65, 0x79, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61,
+	0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76,
+	0x32, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70,
+	0x74, 0x79, 0x32, 0xb7, 0x03, 0x0a, 0x12, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x41, 0x50,
 	0x49, 0x4b, 0x65, 0x79, 0x56, 0x61, 0x75, 0x6c, 0x74, 0x12, 0x76, 0x0a, 0x0b, 0x4c, 0x69, 0x73,
 	0x74, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x73, 0x12, 0x32, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70,
 	0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x69, 0x61, 0x6d, 0x2e,
@@ -786,6 +874,12 @@ var file_packetbroker_api_iam_v2_service_proto_rawDesc = []byte{
 	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x12, 0x26, 0x2e, 0x6f,
 	0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e,
 	0x69, 0x61, 0x6d, 0x2e, 0x76, 0x32, 0x2e, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x5e, 0x0a, 0x11,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x12, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62, 0x72,
+	0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x32, 0x2e, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x32, 0xe7, 0x01, 0x0a,
 	0x07, 0x43, 0x61, 0x74, 0x61, 0x6c, 0x6f, 0x67, 0x12, 0x6b, 0x0a, 0x0c, 0x4c, 0x69, 0x73, 0x74,
@@ -820,60 +914,67 @@ func file_packetbroker_api_iam_v2_service_proto_rawDescGZIP() []byte {
 	return file_packetbroker_api_iam_v2_service_proto_rawDescData
 }
 
-var file_packetbroker_api_iam_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_packetbroker_api_iam_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_packetbroker_api_iam_v2_service_proto_goTypes = []interface{}{
 	(*ListNetworkAPIKeysRequest)(nil),   // 0: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest
 	(*ListNetworkAPIKeysResponse)(nil),  // 1: org.packetbroker.iam.v2.ListNetworkAPIKeysResponse
 	(*CreateNetworkAPIKeyRequest)(nil),  // 2: org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest
 	(*APIKeyRequest)(nil),               // 3: org.packetbroker.iam.v2.APIKeyRequest
 	(*CreateNetworkAPIKeyResponse)(nil), // 4: org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse
-	(*ListClusterAPIKeysRequest)(nil),   // 5: org.packetbroker.iam.v2.ListClusterAPIKeysRequest
-	(*ListClusterAPIKeysResponse)(nil),  // 6: org.packetbroker.iam.v2.ListClusterAPIKeysResponse
-	(*CreateClusterAPIKeyRequest)(nil),  // 7: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
-	(*CreateClusterAPIKeyResponse)(nil), // 8: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
-	(*ListNetworksRequest)(nil),         // 9: org.packetbroker.iam.v2.ListNetworksRequest
-	(*ListNetworksResponse)(nil),        // 10: org.packetbroker.iam.v2.ListNetworksResponse
-	(*wrapperspb.UInt32Value)(nil),      // 11: google.protobuf.UInt32Value
-	(*wrapperspb.StringValue)(nil),      // 12: google.protobuf.StringValue
-	(*v3.NetworkAPIKey)(nil),            // 13: org.packetbroker.v3.NetworkAPIKey
-	(v3.Right)(0),                       // 14: org.packetbroker.v3.Right
-	(*v3.ClusterAPIKey)(nil),            // 15: org.packetbroker.v3.ClusterAPIKey
-	(*v3.NetworkOrTenant)(nil),          // 16: org.packetbroker.v3.NetworkOrTenant
-	(*emptypb.Empty)(nil),               // 17: google.protobuf.Empty
+	(*UpdateAPIKeyStateRequest)(nil),    // 5: org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
+	(*ListClusterAPIKeysRequest)(nil),   // 6: org.packetbroker.iam.v2.ListClusterAPIKeysRequest
+	(*ListClusterAPIKeysResponse)(nil),  // 7: org.packetbroker.iam.v2.ListClusterAPIKeysResponse
+	(*CreateClusterAPIKeyRequest)(nil),  // 8: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
+	(*CreateClusterAPIKeyResponse)(nil), // 9: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
+	(*ListNetworksRequest)(nil),         // 10: org.packetbroker.iam.v2.ListNetworksRequest
+	(*ListNetworksResponse)(nil),        // 11: org.packetbroker.iam.v2.ListNetworksResponse
+	(*wrapperspb.UInt32Value)(nil),      // 12: google.protobuf.UInt32Value
+	(*wrapperspb.StringValue)(nil),      // 13: google.protobuf.StringValue
+	(*v3.NetworkAPIKey)(nil),            // 14: org.packetbroker.v3.NetworkAPIKey
+	(v3.Right)(0),                       // 15: org.packetbroker.v3.Right
+	(v3.APIKeyState)(0),                 // 16: org.packetbroker.v3.APIKeyState
+	(*v3.ClusterAPIKey)(nil),            // 17: org.packetbroker.v3.ClusterAPIKey
+	(*v3.NetworkOrTenant)(nil),          // 18: org.packetbroker.v3.NetworkOrTenant
+	(*emptypb.Empty)(nil),               // 19: google.protobuf.Empty
 }
 var file_packetbroker_api_iam_v2_service_proto_depIdxs = []int32{
-	11, // 0: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.net_id:type_name -> google.protobuf.UInt32Value
-	12, // 1: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.tenant_id:type_name -> google.protobuf.StringValue
-	12, // 2: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
-	13, // 3: org.packetbroker.iam.v2.ListNetworkAPIKeysResponse.keys:type_name -> org.packetbroker.v3.NetworkAPIKey
-	14, // 4: org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
-	13, // 5: org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse.key:type_name -> org.packetbroker.v3.NetworkAPIKey
-	12, // 6: org.packetbroker.iam.v2.ListClusterAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
-	15, // 7: org.packetbroker.iam.v2.ListClusterAPIKeysResponse.keys:type_name -> org.packetbroker.v3.ClusterAPIKey
-	14, // 8: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
-	15, // 9: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse.key:type_name -> org.packetbroker.v3.ClusterAPIKey
-	16, // 10: org.packetbroker.iam.v2.ListNetworksResponse.networks:type_name -> org.packetbroker.v3.NetworkOrTenant
-	0,  // 11: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysRequest
-	2,  // 12: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest
-	3,  // 13: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
-	5,  // 14: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListClusterAPIKeysRequest
-	7,  // 15: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
-	3,  // 16: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
-	9,  // 17: org.packetbroker.iam.v2.Catalog.ListNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
-	9,  // 18: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
-	1,  // 19: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysResponse
-	4,  // 20: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse
-	17, // 21: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
-	6,  // 22: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListClusterAPIKeysResponse
-	8,  // 23: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
-	17, // 24: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
-	10, // 25: org.packetbroker.iam.v2.Catalog.ListNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
-	10, // 26: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
-	19, // [19:27] is the sub-list for method output_type
-	11, // [11:19] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	12, // 0: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.net_id:type_name -> google.protobuf.UInt32Value
+	13, // 1: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.tenant_id:type_name -> google.protobuf.StringValue
+	13, // 2: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
+	14, // 3: org.packetbroker.iam.v2.ListNetworkAPIKeysResponse.keys:type_name -> org.packetbroker.v3.NetworkAPIKey
+	15, // 4: org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
+	14, // 5: org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse.key:type_name -> org.packetbroker.v3.NetworkAPIKey
+	16, // 6: org.packetbroker.iam.v2.UpdateAPIKeyStateRequest.state:type_name -> org.packetbroker.v3.APIKeyState
+	13, // 7: org.packetbroker.iam.v2.ListClusterAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
+	17, // 8: org.packetbroker.iam.v2.ListClusterAPIKeysResponse.keys:type_name -> org.packetbroker.v3.ClusterAPIKey
+	15, // 9: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
+	17, // 10: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse.key:type_name -> org.packetbroker.v3.ClusterAPIKey
+	18, // 11: org.packetbroker.iam.v2.ListNetworksResponse.networks:type_name -> org.packetbroker.v3.NetworkOrTenant
+	0,  // 12: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysRequest
+	2,  // 13: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest
+	3,  // 14: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
+	5,  // 15: org.packetbroker.iam.v2.NetworkAPIKeyVault.UpdateAPIKeyState:input_type -> org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
+	6,  // 16: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListClusterAPIKeysRequest
+	8,  // 17: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
+	3,  // 18: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
+	5,  // 19: org.packetbroker.iam.v2.ClusterAPIKeyVault.UpdateAPIKeyState:input_type -> org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
+	10, // 20: org.packetbroker.iam.v2.Catalog.ListNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
+	10, // 21: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
+	1,  // 22: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysResponse
+	4,  // 23: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse
+	19, // 24: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
+	19, // 25: org.packetbroker.iam.v2.NetworkAPIKeyVault.UpdateAPIKeyState:output_type -> google.protobuf.Empty
+	7,  // 26: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListClusterAPIKeysResponse
+	9,  // 27: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
+	19, // 28: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
+	19, // 29: org.packetbroker.iam.v2.ClusterAPIKeyVault.UpdateAPIKeyState:output_type -> google.protobuf.Empty
+	11, // 30: org.packetbroker.iam.v2.Catalog.ListNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
+	11, // 31: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
+	22, // [22:32] is the sub-list for method output_type
+	12, // [12:22] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_packetbroker_api_iam_v2_service_proto_init() }
@@ -943,7 +1044,7 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			}
 		}
 		file_packetbroker_api_iam_v2_service_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListClusterAPIKeysRequest); i {
+			switch v := v.(*UpdateAPIKeyStateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -955,7 +1056,7 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			}
 		}
 		file_packetbroker_api_iam_v2_service_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListClusterAPIKeysResponse); i {
+			switch v := v.(*ListClusterAPIKeysRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -967,7 +1068,7 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			}
 		}
 		file_packetbroker_api_iam_v2_service_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateClusterAPIKeyRequest); i {
+			switch v := v.(*ListClusterAPIKeysResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -979,7 +1080,7 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			}
 		}
 		file_packetbroker_api_iam_v2_service_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateClusterAPIKeyResponse); i {
+			switch v := v.(*CreateClusterAPIKeyRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -991,7 +1092,7 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			}
 		}
 		file_packetbroker_api_iam_v2_service_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListNetworksRequest); i {
+			switch v := v.(*CreateClusterAPIKeyResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1003,6 +1104,18 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			}
 		}
 		file_packetbroker_api_iam_v2_service_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListNetworksRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_packetbroker_api_iam_v2_service_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListNetworksResponse); i {
 			case 0:
 				return &v.state
@@ -1021,7 +1134,7 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_packetbroker_api_iam_v2_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   3,
 		},

@@ -36,8 +36,8 @@ github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
-go.packetbroker.org/api/v3 v3.7.0 h1:249Jv/VPVQ/HldIF57Ehh51Un+nYngYNgelK3hT/LrQ=
-go.packetbroker.org/api/v3 v3.7.0/go.mod h1:OgPhfqEPnHOGURheAWIQX9yl0hXanEovFjNpuCYhvPw=
+go.packetbroker.org/api/v3 v3.8.0 h1:PiXd4wzY8TXIzhU5TvTSZZB7oJj0lfl2gKRWF+5A/ss=
+go.packetbroker.org/api/v3 v3.8.0/go.mod h1:OgPhfqEPnHOGURheAWIQX9yl0hXanEovFjNpuCYhvPw=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
 golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=

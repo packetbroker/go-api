@@ -17,14 +17,6 @@ func (r *GetDefaultGatewayVisibilityRequest) Validate() error {
 }
 
 // Validate returns whether the request is valid.
-func (r *SetDefaultGatewayVisibilityRequest) Validate() error {
-	if r.GetForwarderTenantId() != "" {
-		return packetbroker.ForwarderTenantID(r).Validate()
-	}
-	return nil
-}
-
-// Validate returns whether the request is valid.
 func (r *GetHomeNetworkGatewayVisibilityRequest) Validate() error {
 	if r.GetForwarderTenantId() != "" {
 		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
@@ -38,14 +30,14 @@ func (r *GetHomeNetworkGatewayVisibilityRequest) Validate() error {
 }
 
 // Validate returns whether the request is valid.
-func (r *SetHomeNetworkGatewayVisibilityRequest) Validate() error {
-	if r.GetForwarderTenantId() != "" {
-		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
+func (r *SetGatewayVisibilityRequest) Validate() error {
+	if r.GetVisibility().GetForwarderTenantId() != "" {
+		if err := packetbroker.ForwarderTenantID(r.GetVisibility()).Validate(); err != nil {
 			return err
 		}
 	}
-	if r.GetHomeNetworkTenantId() != "" {
-		return packetbroker.HomeNetworkTenantID(r).Validate()
+	if r.GetVisibility().GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r.GetVisibility()).Validate()
 	}
 	return nil
 }

@@ -19,9 +19,9 @@ DOCKER = docker
 PROTO_PATH ?= ../..
 VERSION ?= v3
 ROUTING_VERSION ?= v1
-MAPPING_VERSION ?= v1
+MAPPING_VERSION ?= v2
 IAM_VERSION ?= v2
-PROTOC_IMAGE = thethingsindustries/protoc:3.1.28-tts
+PROTOC_IMAGE = thethingsindustries/protoc:3.1.33-tts
 
 PROTOC = $(DOCKER) run --rm \
 	--mount type=bind,src=$(abspath $(PROTO_PATH))/packetbroker,dst=/src/packetbroker \

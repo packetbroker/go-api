@@ -149,9 +149,11 @@ type CreateNetworkAPIKeyRequest struct {
 	// Cluster of the Member.
 	ClusterId string `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	// Network rights.
-	Rights               []v3.Right `protobuf:"varint,4,rep,packed,name=rights,proto3,enum=org.packetbroker.v3.Right" json:"rights,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Rights []v3.Right `protobuf:"varint,4,rep,packed,name=rights,proto3,enum=org.packetbroker.v3.Right" json:"rights,omitempty"`
+	// Secret key value. Leave empty to generate one.
+	Key                  string   `protobuf:"bytes,5,opt,name=key,proto3" json:"key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CreateNetworkAPIKeyRequest) Reset()      { *m = CreateNetworkAPIKeyRequest{} }
@@ -212,6 +214,13 @@ func (m *CreateNetworkAPIKeyRequest) GetRights() []v3.Right {
 		return m.Rights
 	}
 	return nil
+}
+
+func (m *CreateNetworkAPIKeyRequest) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
 }
 
 type APIKeyRequest struct {
@@ -304,6 +313,59 @@ func (m *CreateNetworkAPIKeyResponse) GetKey() *v3.NetworkAPIKey {
 	return nil
 }
 
+type UpdateAPIKeyStateRequest struct {
+	KeyId                string         `protobuf:"bytes,1,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
+	State                v3.APIKeyState `protobuf:"varint,2,opt,name=state,proto3,enum=org.packetbroker.v3.APIKeyState" json:"state,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *UpdateAPIKeyStateRequest) Reset()      { *m = UpdateAPIKeyStateRequest{} }
+func (*UpdateAPIKeyStateRequest) ProtoMessage() {}
+func (*UpdateAPIKeyStateRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_04cdaf08feadd3d4, []int{5}
+}
+func (m *UpdateAPIKeyStateRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateAPIKeyStateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateAPIKeyStateRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateAPIKeyStateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateAPIKeyStateRequest.Merge(m, src)
+}
+func (m *UpdateAPIKeyStateRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateAPIKeyStateRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateAPIKeyStateRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateAPIKeyStateRequest proto.InternalMessageInfo
+
+func (m *UpdateAPIKeyStateRequest) GetKeyId() string {
+	if m != nil {
+		return m.KeyId
+	}
+	return ""
+}
+
+func (m *UpdateAPIKeyStateRequest) GetState() v3.APIKeyState {
+	if m != nil {
+		return m.State
+	}
+	return v3.APIKeyState_REQUESTED
+}
+
 type ListClusterAPIKeysRequest struct {
 	// Cluster identifier.
 	ClusterId            *types.StringValue `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
@@ -314,7 +376,7 @@ type ListClusterAPIKeysRequest struct {
 func (m *ListClusterAPIKeysRequest) Reset()      { *m = ListClusterAPIKeysRequest{} }
 func (*ListClusterAPIKeysRequest) ProtoMessage() {}
 func (*ListClusterAPIKeysRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_04cdaf08feadd3d4, []int{5}
+	return fileDescriptor_04cdaf08feadd3d4, []int{6}
 }
 func (m *ListClusterAPIKeysRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -359,7 +421,7 @@ type ListClusterAPIKeysResponse struct {
 func (m *ListClusterAPIKeysResponse) Reset()      { *m = ListClusterAPIKeysResponse{} }
 func (*ListClusterAPIKeysResponse) ProtoMessage() {}
 func (*ListClusterAPIKeysResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_04cdaf08feadd3d4, []int{6}
+	return fileDescriptor_04cdaf08feadd3d4, []int{7}
 }
 func (m *ListClusterAPIKeysResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -399,15 +461,17 @@ type CreateClusterAPIKeyRequest struct {
 	// Cluster identifier.
 	ClusterId string `protobuf:"bytes,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	// Network rights.
-	Rights               []v3.Right `protobuf:"varint,2,rep,packed,name=rights,proto3,enum=org.packetbroker.v3.Right" json:"rights,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Rights []v3.Right `protobuf:"varint,2,rep,packed,name=rights,proto3,enum=org.packetbroker.v3.Right" json:"rights,omitempty"`
+	// Secret key value. Leave empty to generate one.
+	Key                  string   `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CreateClusterAPIKeyRequest) Reset()      { *m = CreateClusterAPIKeyRequest{} }
 func (*CreateClusterAPIKeyRequest) ProtoMessage() {}
 func (*CreateClusterAPIKeyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_04cdaf08feadd3d4, []int{7}
+	return fileDescriptor_04cdaf08feadd3d4, []int{8}
 }
 func (m *CreateClusterAPIKeyRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -450,6 +514,13 @@ func (m *CreateClusterAPIKeyRequest) GetRights() []v3.Right {
 	return nil
 }
 
+func (m *CreateClusterAPIKeyRequest) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
+}
+
 type CreateClusterAPIKeyResponse struct {
 	Key                  *v3.ClusterAPIKey `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
@@ -459,7 +530,7 @@ type CreateClusterAPIKeyResponse struct {
 func (m *CreateClusterAPIKeyResponse) Reset()      { *m = CreateClusterAPIKeyResponse{} }
 func (*CreateClusterAPIKeyResponse) ProtoMessage() {}
 func (*CreateClusterAPIKeyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_04cdaf08feadd3d4, []int{8}
+	return fileDescriptor_04cdaf08feadd3d4, []int{9}
 }
 func (m *CreateClusterAPIKeyResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -513,7 +584,7 @@ type ListNetworksRequest struct {
 func (m *ListNetworksRequest) Reset()      { *m = ListNetworksRequest{} }
 func (*ListNetworksRequest) ProtoMessage() {}
 func (*ListNetworksRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_04cdaf08feadd3d4, []int{9}
+	return fileDescriptor_04cdaf08feadd3d4, []int{10}
 }
 func (m *ListNetworksRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -581,7 +652,7 @@ type ListNetworksResponse struct {
 func (m *ListNetworksResponse) Reset()      { *m = ListNetworksResponse{} }
 func (*ListNetworksResponse) ProtoMessage() {}
 func (*ListNetworksResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_04cdaf08feadd3d4, []int{10}
+	return fileDescriptor_04cdaf08feadd3d4, []int{11}
 }
 func (m *ListNetworksResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -635,6 +706,8 @@ func init() {
 	golang_proto.RegisterType((*APIKeyRequest)(nil), "org.packetbroker.iam.v2.APIKeyRequest")
 	proto.RegisterType((*CreateNetworkAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse")
 	golang_proto.RegisterType((*CreateNetworkAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse")
+	proto.RegisterType((*UpdateAPIKeyStateRequest)(nil), "org.packetbroker.iam.v2.UpdateAPIKeyStateRequest")
+	golang_proto.RegisterType((*UpdateAPIKeyStateRequest)(nil), "org.packetbroker.iam.v2.UpdateAPIKeyStateRequest")
 	proto.RegisterType((*ListClusterAPIKeysRequest)(nil), "org.packetbroker.iam.v2.ListClusterAPIKeysRequest")
 	golang_proto.RegisterType((*ListClusterAPIKeysRequest)(nil), "org.packetbroker.iam.v2.ListClusterAPIKeysRequest")
 	proto.RegisterType((*ListClusterAPIKeysResponse)(nil), "org.packetbroker.iam.v2.ListClusterAPIKeysResponse")
@@ -657,59 +730,63 @@ func init() {
 }
 
 var fileDescriptor_04cdaf08feadd3d4 = []byte{
-	// 823 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0x3d, 0x6c, 0xfb, 0x44,
-	0x14, 0xf7, 0x35, 0x6d, 0x68, 0xae, 0x09, 0xaa, 0x8e, 0x52, 0x4a, 0x0a, 0x47, 0x31, 0xa5, 0xea,
-	0x50, 0x1c, 0xc9, 0xa9, 0x90, 0x50, 0x17, 0x20, 0x20, 0x11, 0x81, 0x0a, 0x72, 0x4b, 0x85, 0x58,
-	0x2a, 0x27, 0xb9, 0x1a, 0xcb, 0x1f, 0x67, 0xec, 0x4b, 0xaa, 0x6c, 0x1d, 0x3b, 0x32, 0x21, 0xc4,
-	0x84, 0xc4, 0xd2, 0xb1, 0x63, 0xc7, 0x8e, 0x1d, 0xbb, 0xd1, 0xb1, 0xb1, 0x07, 0x3a, 0x76, 0xec,
-	0x88, 0x6c, 0x9f, 0x43, 0x9c, 0xd8, 0x34, 0x41, 0xd5, 0x7f, 0xf4, 0xdd, 0xef, 0xdd, 0x7b, 0xbf,
-	0x8f, 0xbb, 0x04, 0x7e, 0xe8, 0xa8, 0x6d, 0x83, 0xb0, 0x96, 0x4b, 0x0d, 0xe2, 0xd6, 0x54, 0x47,
-	0xaf, 0xe9, 0xaa, 0x55, 0xeb, 0xc9, 0x35, 0x8f, 0xb8, 0x3d, 0xbd, 0x4d, 0x24, 0xc7, 0xa5, 0x8c,
-	0xa2, 0xb7, 0xa8, 0xab, 0x49, 0xa3, 0x50, 0x49, 0x57, 0x2d, 0xa9, 0x27, 0x57, 0xd7, 0x35, 0x4a,
-	0x35, 0x93, 0xd4, 0x22, 0x58, 0xab, 0x7b, 0x52, 0x23, 0x96, 0xc3, 0xfa, 0x71, 0x55, 0x15, 0x8f,
-	0x6f, 0x9e, 0xba, 0xaa, 0xe3, 0x10, 0xd7, 0xe3, 0xfb, 0xef, 0x4d, 0x34, 0xef, 0xd5, 0x6b, 0xc4,
-	0xee, 0x5a, 0x09, 0xe0, 0xfd, 0x2c, 0x40, 0xdb, 0xec, 0x7a, 0x8c, 0xb8, 0x1c, 0x22, 0x66, 0x41,
-	0x6c, 0xc2, 0x4e, 0xa9, 0x6b, 0xf0, 0x63, 0xc4, 0x1b, 0x00, 0xdf, 0xfe, 0x46, 0xf7, 0xd8, 0x7e,
-	0xbc, 0xfc, 0xd9, 0x77, 0xcd, 0xaf, 0x49, 0xdf, 0x53, 0xc8, 0xcf, 0x5d, 0xe2, 0x31, 0x54, 0x87,
-	0x45, 0x9b, 0xb0, 0x63, 0xbd, 0xb3, 0x06, 0x36, 0xc0, 0xf6, 0x92, 0xfc, 0x8e, 0x14, 0x8f, 0x2d,
-	0x25, 0x63, 0x4b, 0xdf, 0x37, 0x6d, 0x56, 0x97, 0x8f, 0x54, 0xb3, 0x4b, 0x94, 0x05, 0x9b, 0xb0,
-	0x66, 0x07, 0x7d, 0x02, 0x4b, 0x8c, 0xd8, 0xaa, 0x1d, 0xd5, 0xcd, 0xe5, 0xd4, 0x1d, 0x30, 0x57,
-	0xb7, 0xb5, 0xb8, 0x6e, 0x31, 0x86, 0x37, 0x3b, 0x68, 0x0f, 0x42, 0x4e, 0x21, 0xac, 0x2d, 0x4c,
-	0x51, 0x5b, 0xe2, 0xf8, 0x66, 0x47, 0x3c, 0x84, 0xd5, 0x2c, 0x26, 0x9e, 0x43, 0x6d, 0x8f, 0xa0,
-	0x8f, 0xe1, 0xbc, 0x41, 0xfa, 0xde, 0x1a, 0xd8, 0x28, 0x6c, 0x2f, 0xc9, 0xa2, 0x34, 0xe1, 0x5a,
-	0xaf, 0x2e, 0xa5, 0x4a, 0x95, 0x08, 0x2f, 0xfe, 0x09, 0x60, 0xb5, 0xe1, 0x12, 0x95, 0x91, 0xf4,
-	0x2e, 0x57, 0xe8, 0xcd, 0x94, 0x42, 0x95, 0x44, 0x83, 0xf5, 0x71, 0x0d, 0x4a, 0x23, 0x2c, 0xdf,
-	0x9d, 0x60, 0x59, 0x1a, 0xe1, 0x81, 0x64, 0x58, 0x74, 0x75, 0xed, 0x27, 0xe6, 0xad, 0xcd, 0x6f,
-	0x14, 0xb6, 0x5f, 0x97, 0xab, 0x99, 0xb3, 0x2a, 0x21, 0x44, 0xe1, 0x48, 0x71, 0x0b, 0x56, 0x26,
-	0xe6, 0x32, 0x48, 0x3f, 0x99, 0xab, 0xa4, 0x2c, 0x18, 0xa4, 0xdf, 0xec, 0x88, 0x07, 0x70, 0x3d,
-	0x93, 0x0c, 0x17, 0x69, 0x17, 0x16, 0x0c, 0xd2, 0xe7, 0x66, 0x4f, 0xa3, 0x51, 0x08, 0x17, 0x7f,
-	0x88, 0x23, 0xd4, 0x88, 0x19, 0x8c, 0x45, 0xe8, 0x25, 0x2c, 0x1d, 0x3f, 0x79, 0x06, 0x4b, 0x53,
-	0xa5, 0xdc, 0x52, 0x9a, 0x38, 0x9a, 0xde, 0xe4, 0x03, 0xa7, 0xdd, 0x01, 0xf9, 0xee, 0xcc, 0x4d,
-	0xed, 0xce, 0x50, 0xf5, 0xb1, 0x86, 0xd3, 0xab, 0x9e, 0x2e, 0x8c, 0x54, 0xff, 0x15, 0xc0, 0x37,
-	0x46, 0xf2, 0x3e, 0x14, 0x7c, 0x15, 0x16, 0xe9, 0xc9, 0x89, 0x47, 0x18, 0x4f, 0x24, 0xff, 0x42,
-	0x2b, 0x70, 0xc1, 0xd4, 0x2d, 0x9d, 0x45, 0x71, 0xac, 0x28, 0xf1, 0x07, 0xda, 0x81, 0x68, 0x18,
-	0xd4, 0xe3, 0x36, 0xb5, 0x99, 0xaa, 0xdb, 0x1e, 0xcf, 0xe4, 0x72, 0x92, 0xd8, 0x06, 0x5f, 0x47,
-	0x1f, 0xc0, 0x8a, 0xad, 0x5a, 0xe4, 0x5f, 0xe0, 0x7c, 0x04, 0x2c, 0x87, 0x8b, 0x09, 0x48, 0xb4,
-	0xe1, 0x4a, 0x7a, 0x2e, 0x4e, 0xf3, 0x53, 0xb8, 0x98, 0x3c, 0x3e, 0xdc, 0xb2, 0xcd, 0xff, 0x4a,
-	0xd8, 0xb7, 0xee, 0x61, 0xd4, 0x5e, 0x19, 0x56, 0x85, 0x14, 0x18, 0x65, 0xaa, 0x99, 0x50, 0x88,
-	0x3e, 0xe4, 0xbf, 0xe6, 0x20, 0x4a, 0xa5, 0xf2, 0x48, 0xed, 0x9a, 0x0c, 0xf5, 0xe0, 0x52, 0x38,
-	0x06, 0x0f, 0x0d, 0x92, 0xa5, 0x9c, 0x77, 0x5a, 0xca, 0x7d, 0xfe, 0xaa, 0xf5, 0x99, 0x6a, 0x38,
-	0xcd, 0x3e, 0x2c, 0xc7, 0x66, 0xc7, 0x1b, 0x28, 0xff, 0x90, 0xfc, 0x67, 0xa5, 0xba, 0x3b, 0x5b,
-	0x11, 0x6f, 0xbd, 0x0f, 0xcb, 0x5f, 0x10, 0x93, 0x0c, 0x5b, 0x6f, 0xe5, 0x9e, 0x92, 0xee, 0xb6,
-	0x3a, 0x71, 0x1f, 0xbf, 0x0c, 0x7f, 0xaa, 0x22, 0x65, 0x53, 0xc9, 0xfb, 0x1f, 0xca, 0x66, 0xbe,
-	0x0a, 0xcf, 0x28, 0x9b, 0x73, 0xdf, 0x67, 0x55, 0x36, 0xeb, 0x7a, 0x3f, 0xab, 0x6c, 0xf6, 0x15,
-	0x7d, 0x69, 0x65, 0xff, 0x06, 0xf0, 0xb5, 0x86, 0xca, 0x54, 0x93, 0x6a, 0xc8, 0x80, 0xe5, 0xd1,
-	0xfb, 0x82, 0x76, 0xa6, 0x49, 0xdd, 0x50, 0xc9, 0x8f, 0xa6, 0x44, 0x73, 0x22, 0x14, 0x2e, 0x87,
-	0xeb, 0x5f, 0x51, 0x8b, 0xbc, 0x92, 0x86, 0x9f, 0xff, 0x0e, 0x6e, 0x06, 0x18, 0xdc, 0x0e, 0x30,
-	0xb8, 0x1b, 0x60, 0xe1, 0x7e, 0x80, 0x85, 0x87, 0x01, 0x16, 0x1e, 0x07, 0x58, 0x78, 0x1a, 0x60,
-	0x70, 0xe6, 0x63, 0x70, 0xee, 0x63, 0xe1, 0xc2, 0xc7, 0xe0, 0xd2, 0xc7, 0xc2, 0x95, 0x8f, 0x85,
-	0x6b, 0x1f, 0x0b, 0x37, 0x3e, 0x06, 0xb7, 0x3e, 0x06, 0x77, 0x3e, 0x16, 0xee, 0x7d, 0x0c, 0x1e,
-	0x7c, 0x2c, 0x3c, 0xfa, 0x18, 0x3c, 0xf9, 0x58, 0x38, 0x0b, 0xb0, 0x70, 0x1e, 0x60, 0xf0, 0x4b,
-	0x80, 0x85, 0xdf, 0x02, 0x0c, 0xfe, 0x08, 0xb0, 0x70, 0x11, 0x60, 0xe1, 0x32, 0xc0, 0xe0, 0x2a,
-	0xc0, 0xe0, 0x3a, 0xc0, 0xe0, 0xc7, 0x4d, 0x8d, 0xa6, 0x67, 0xa4, 0xae, 0x36, 0xf2, 0x1f, 0x6e,
-	0x4f, 0x57, 0x2d, 0xa7, 0xd5, 0x2a, 0x46, 0xb6, 0xd4, 0xff, 0x09, 0x00, 0x00, 0xff, 0xff, 0x6f,
-	0x8e, 0x71, 0x2c, 0xeb, 0x09, 0x00, 0x00,
+	// 892 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x56, 0x3f, 0x8c, 0xdb, 0x54,
+	0x18, 0xf7, 0x6b, 0x2e, 0xa1, 0x79, 0x97, 0x54, 0xc7, 0xa3, 0x94, 0x90, 0x83, 0x47, 0x30, 0xa5,
+	0xba, 0xa1, 0x38, 0xc2, 0xa9, 0x2a, 0xa1, 0x2e, 0x40, 0x40, 0x22, 0x02, 0x15, 0xe4, 0x6b, 0x2b,
+	0xc4, 0x40, 0xf5, 0x92, 0xbc, 0x33, 0x96, 0xff, 0x3c, 0x63, 0xbf, 0xa4, 0xca, 0x56, 0xb6, 0x8e,
+	0x4c, 0x08, 0x31, 0x31, 0x76, 0xec, 0x82, 0xe8, 0x78, 0xe3, 0x8d, 0x37, 0xde, 0x78, 0xb1, 0x07,
+	0x6e, 0xbc, 0xf1, 0x46, 0x64, 0xfb, 0x39, 0x17, 0x27, 0xf6, 0x5d, 0x82, 0x10, 0x12, 0x5b, 0xde,
+	0x7b, 0xbf, 0xef, 0xef, 0xef, 0xf7, 0x7d, 0x0e, 0x7c, 0xdf, 0x25, 0x03, 0x93, 0xf2, 0xbe, 0xc7,
+	0x4c, 0xea, 0xb5, 0x89, 0x6b, 0xb4, 0x0d, 0x62, 0xb7, 0xc7, 0x6a, 0xdb, 0xa7, 0xde, 0xd8, 0x18,
+	0x50, 0xc5, 0xf5, 0x18, 0x67, 0xe8, 0x0d, 0xe6, 0xe9, 0xca, 0x3c, 0x54, 0x31, 0x88, 0xad, 0x8c,
+	0xd5, 0xe6, 0xb6, 0xce, 0x98, 0x6e, 0xd1, 0x76, 0x0c, 0xeb, 0x8f, 0xf6, 0xda, 0xd4, 0x76, 0xf9,
+	0x24, 0xb1, 0x6a, 0xe2, 0xc5, 0xc7, 0x27, 0x1e, 0x71, 0x5d, 0xea, 0xf9, 0xe2, 0xfd, 0x9d, 0xa5,
+	0xe0, 0xe3, 0x4e, 0x9b, 0x3a, 0x23, 0x3b, 0x05, 0xbc, 0x9b, 0x07, 0x18, 0x58, 0x23, 0x9f, 0x53,
+	0x4f, 0x40, 0xe4, 0x3c, 0x88, 0x43, 0xf9, 0x13, 0xe6, 0x99, 0xc2, 0x8d, 0x7c, 0x00, 0xe0, 0x9b,
+	0x5f, 0x19, 0x3e, 0xbf, 0x9f, 0x5c, 0x7f, 0xf2, 0x4d, 0xef, 0x4b, 0x3a, 0xf1, 0x35, 0xfa, 0xe3,
+	0x88, 0xfa, 0x1c, 0x75, 0x60, 0xc5, 0xa1, 0xfc, 0xb1, 0x31, 0x6c, 0x80, 0x16, 0xd8, 0xd9, 0x54,
+	0xdf, 0x52, 0x92, 0xb4, 0x95, 0x34, 0x6d, 0xe5, 0x61, 0xcf, 0xe1, 0x1d, 0xf5, 0x11, 0xb1, 0x46,
+	0x54, 0x2b, 0x3b, 0x94, 0xf7, 0x86, 0xe8, 0x23, 0x58, 0xe5, 0xd4, 0x21, 0x4e, 0x6c, 0x77, 0xa5,
+	0xc0, 0x6e, 0x97, 0x7b, 0x86, 0xa3, 0x27, 0x76, 0x57, 0x13, 0x78, 0x6f, 0x88, 0xee, 0x41, 0x28,
+	0x4a, 0x88, 0x6c, 0x4b, 0x2b, 0xd8, 0x56, 0x05, 0xbe, 0x37, 0x94, 0x1f, 0xc0, 0x66, 0x5e, 0x25,
+	0xbe, 0xcb, 0x1c, 0x9f, 0xa2, 0xbb, 0x70, 0xc3, 0xa4, 0x13, 0xbf, 0x01, 0x5a, 0xa5, 0x9d, 0x4d,
+	0x55, 0x56, 0x96, 0x58, 0x1b, 0x77, 0x94, 0x8c, 0xa9, 0x16, 0xe3, 0xe5, 0x3f, 0x00, 0x6c, 0x76,
+	0x3d, 0x4a, 0x38, 0xcd, 0xbe, 0x8a, 0x0e, 0xbd, 0x9e, 0xe9, 0x50, 0x3d, 0xed, 0xc1, 0xf6, 0x62,
+	0x0f, 0xaa, 0x73, 0x55, 0xbe, 0xbd, 0x54, 0x65, 0x75, 0xae, 0x0e, 0xa4, 0xc2, 0x8a, 0x67, 0xe8,
+	0x3f, 0x70, 0xbf, 0xb1, 0xd1, 0x2a, 0xed, 0x5c, 0x53, 0x9b, 0xb9, 0xb9, 0x6a, 0x11, 0x44, 0x13,
+	0x48, 0xb4, 0x05, 0x4b, 0x26, 0x9d, 0x34, 0xca, 0xb1, 0xaf, 0xe8, 0xa7, 0x7c, 0x0b, 0xd6, 0x97,
+	0x32, 0x35, 0xe9, 0x24, 0xcd, 0xb4, 0xaa, 0x95, 0x4d, 0x3a, 0xe9, 0x0d, 0xe5, 0x5d, 0xb8, 0x9d,
+	0x5b, 0x9e, 0x68, 0xdb, 0x9d, 0xc4, 0x71, 0x42, 0xff, 0x2a, 0x5d, 0x8b, 0x83, 0x1b, 0xb0, 0xf1,
+	0xd0, 0x1d, 0x12, 0x4e, 0x93, 0xcb, 0x5d, 0x4e, 0x38, 0xbd, 0x38, 0x0f, 0x74, 0x17, 0x96, 0xfd,
+	0x08, 0x16, 0x77, 0xeb, 0x9a, 0xda, 0xca, 0x0d, 0x35, 0xef, 0x2e, 0x81, 0xcb, 0xdf, 0x26, 0xfa,
+	0xed, 0x26, 0xed, 0x5b, 0xd0, 0xef, 0xbf, 0xa1, 0xa7, 0x45, 0xcf, 0x6b, 0xe8, 0x29, 0x63, 0x2a,
+	0xf4, 0xf4, 0xd3, 0x4c, 0x4f, 0xd9, 0x57, 0x91, 0x71, 0x56, 0x1b, 0xa0, 0x58, 0x1b, 0x57, 0xd6,
+	0xd5, 0x46, 0xe9, 0x5c, 0x1b, 0x33, 0xce, 0x17, 0x52, 0x58, 0x9d, 0xf3, 0xac, 0x61, 0xec, 0xf4,
+	0x17, 0x00, 0x5f, 0x9b, 0x9b, 0xbf, 0x19, 0x07, 0x37, 0x60, 0x85, 0xed, 0xed, 0xf9, 0x94, 0x8b,
+	0x09, 0x11, 0x27, 0x74, 0x1d, 0x96, 0x2d, 0xc3, 0x36, 0x78, 0x4c, 0x78, 0x5d, 0x4b, 0x0e, 0xe8,
+	0x36, 0x44, 0xb3, 0xc1, 0x79, 0x3c, 0x60, 0x0e, 0x27, 0x86, 0xe3, 0x8b, 0xdc, 0xb7, 0xd2, 0x09,
+	0xea, 0x8a, 0x7b, 0xf4, 0x1e, 0xac, 0x3b, 0xc4, 0xa6, 0xe7, 0xc0, 0x8d, 0x18, 0x58, 0x8b, 0x2e,
+	0x53, 0x90, 0xec, 0xc0, 0xeb, 0xd9, 0xbc, 0x44, 0x99, 0x1f, 0xc3, 0xab, 0xe9, 0x32, 0x14, 0x2c,
+	0xde, 0xbc, 0x48, 0xdf, 0x5f, 0x7b, 0x0f, 0xe2, 0xf0, 0xda, 0xcc, 0x2a, 0x2a, 0x81, 0x33, 0x4e,
+	0xac, 0xb4, 0x84, 0xf8, 0xa0, 0xfe, 0x59, 0x82, 0x28, 0x33, 0x13, 0x8f, 0xc8, 0xc8, 0xe2, 0x68,
+	0x0c, 0x37, 0xa3, 0x34, 0x84, 0x8e, 0x90, 0xaa, 0x14, 0x7c, 0x37, 0x94, 0xc2, 0x75, 0xdc, 0xec,
+	0xac, 0x65, 0x23, 0xca, 0x9c, 0xc0, 0x5a, 0x42, 0x76, 0xf2, 0x80, 0x8a, 0x9d, 0x14, 0xaf, 0xb9,
+	0xe6, 0x9d, 0xf5, 0x8c, 0x44, 0xe8, 0xfb, 0xb0, 0xf6, 0x19, 0xb5, 0xe8, 0x2c, 0xf4, 0xad, 0x42,
+	0x2f, 0xd9, 0x68, 0x37, 0x96, 0x46, 0xf4, 0xf3, 0xe8, 0xd3, 0x89, 0xbe, 0x87, 0xaf, 0x2e, 0xad,
+	0x15, 0xf4, 0x61, 0xa1, 0xd3, 0xa2, 0x15, 0x54, 0xe4, 0x3f, 0x66, 0x2e, 0xa3, 0xec, 0x7f, 0xc0,
+	0x5c, 0xee, 0x22, 0xba, 0x84, 0xb9, 0x82, 0x15, 0xb3, 0x2e, 0x73, 0x79, 0x0b, 0xe5, 0x52, 0xe6,
+	0xf2, 0x57, 0xc0, 0xff, 0x8d, 0xb9, 0xbf, 0x00, 0x7c, 0xa5, 0x4b, 0x38, 0xb1, 0x98, 0x8e, 0x4c,
+	0x58, 0x9b, 0x9f, 0x77, 0x74, 0x7b, 0x95, 0xa9, 0x99, 0x31, 0xf5, 0xc1, 0x8a, 0x68, 0xd1, 0x28,
+	0x06, 0xb7, 0xa2, 0xfb, 0x2f, 0x98, 0x4d, 0xff, 0x93, 0x80, 0x9f, 0xfe, 0x06, 0x0e, 0xa6, 0x18,
+	0x1c, 0x4e, 0x31, 0x38, 0x9a, 0x62, 0xe9, 0x78, 0x8a, 0xa5, 0x93, 0x29, 0x96, 0x4e, 0xa7, 0x58,
+	0x3a, 0x9b, 0x62, 0xf0, 0x34, 0xc0, 0xe0, 0x59, 0x80, 0xa5, 0xe7, 0x01, 0x06, 0x2f, 0x02, 0x2c,
+	0xbd, 0x0c, 0xb0, 0xb4, 0x1f, 0x60, 0xe9, 0x20, 0xc0, 0xe0, 0x30, 0xc0, 0xe0, 0x28, 0xc0, 0xd2,
+	0x71, 0x80, 0xc1, 0x49, 0x80, 0xa5, 0xd3, 0x00, 0x83, 0xb3, 0x00, 0x4b, 0x4f, 0x43, 0x2c, 0x3d,
+	0x0b, 0x31, 0xf8, 0x39, 0xc4, 0xd2, 0xaf, 0x21, 0x06, 0xbf, 0x87, 0x58, 0x7a, 0x1e, 0x62, 0xe9,
+	0x45, 0x88, 0xc1, 0xcb, 0x10, 0x83, 0xfd, 0x10, 0x83, 0xef, 0x6e, 0xea, 0x2c, 0x9b, 0x23, 0xf3,
+	0xf4, 0xb9, 0xff, 0xc4, 0xf7, 0x0c, 0x62, 0xbb, 0xfd, 0x7e, 0x25, 0xa6, 0xa5, 0xf3, 0x77, 0x00,
+	0x00, 0x00, 0xff, 0xff, 0x7c, 0x48, 0x4a, 0x99, 0x3b, 0x0b, 0x00, 0x00,
 }
 
 func (this *ListNetworkAPIKeysRequest) Equal(that interface{}) bool {
@@ -807,6 +884,9 @@ func (this *CreateNetworkAPIKeyRequest) Equal(that interface{}) bool {
 			return false
 		}
 	}
+	if this.Key != that1.Key {
+		return false
+	}
 	return true
 }
 func (this *APIKeyRequest) Equal(that interface{}) bool {
@@ -853,6 +933,33 @@ func (this *CreateNetworkAPIKeyResponse) Equal(that interface{}) bool {
 		return false
 	}
 	if !this.Key.Equal(that1.Key) {
+		return false
+	}
+	return true
+}
+func (this *UpdateAPIKeyStateRequest) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*UpdateAPIKeyStateRequest)
+	if !ok {
+		that2, ok := that.(UpdateAPIKeyStateRequest)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.KeyId != that1.KeyId {
+		return false
+	}
+	if this.State != that1.State {
 		return false
 	}
 	return true
@@ -939,6 +1046,9 @@ func (this *CreateClusterAPIKeyRequest) Equal(that interface{}) bool {
 		if this.Rights[i] != that1.Rights[i] {
 			return false
 		}
+	}
+	if this.Key != that1.Key {
+		return false
 	}
 	return true
 }
@@ -1050,6 +1160,8 @@ type NetworkAPIKeyVaultClient interface {
 	CreateAPIKey(ctx context.Context, in *CreateNetworkAPIKeyRequest, opts ...grpc.CallOption) (*CreateNetworkAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*types.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*types.Empty, error)
 }
 
 type networkAPIKeyVaultClient struct {
@@ -1087,6 +1199,15 @@ func (c *networkAPIKeyVaultClient) DeleteAPIKey(ctx context.Context, in *APIKeyR
 	return out, nil
 }
 
+func (c *networkAPIKeyVaultClient) UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*types.Empty, error) {
+	out := new(types.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.NetworkAPIKeyVault/UpdateAPIKeyState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NetworkAPIKeyVaultServer is the server API for NetworkAPIKeyVault service.
 type NetworkAPIKeyVaultServer interface {
 	// List API keys.
@@ -1095,6 +1216,8 @@ type NetworkAPIKeyVaultServer interface {
 	CreateAPIKey(context.Context, *CreateNetworkAPIKeyRequest) (*CreateNetworkAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(context.Context, *APIKeyRequest) (*types.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(context.Context, *UpdateAPIKeyStateRequest) (*types.Empty, error)
 }
 
 // UnimplementedNetworkAPIKeyVaultServer can be embedded to have forward compatible implementations.
@@ -1109,6 +1232,9 @@ func (*UnimplementedNetworkAPIKeyVaultServer) CreateAPIKey(ctx context.Context, 
 }
 func (*UnimplementedNetworkAPIKeyVaultServer) DeleteAPIKey(ctx context.Context, req *APIKeyRequest) (*types.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAPIKey not implemented")
+}
+func (*UnimplementedNetworkAPIKeyVaultServer) UpdateAPIKeyState(ctx context.Context, req *UpdateAPIKeyStateRequest) (*types.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAPIKeyState not implemented")
 }
 
 func RegisterNetworkAPIKeyVaultServer(s *grpc.Server, srv NetworkAPIKeyVaultServer) {
@@ -1169,6 +1295,24 @@ func _NetworkAPIKeyVault_DeleteAPIKey_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NetworkAPIKeyVault_UpdateAPIKeyState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAPIKeyStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NetworkAPIKeyVaultServer).UpdateAPIKeyState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.NetworkAPIKeyVault/UpdateAPIKeyState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NetworkAPIKeyVaultServer).UpdateAPIKeyState(ctx, req.(*UpdateAPIKeyStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _NetworkAPIKeyVault_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.iam.v2.NetworkAPIKeyVault",
 	HandlerType: (*NetworkAPIKeyVaultServer)(nil),
@@ -1185,6 +1329,10 @@ var _NetworkAPIKeyVault_serviceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteAPIKey",
 			Handler:    _NetworkAPIKeyVault_DeleteAPIKey_Handler,
 		},
+		{
+			MethodName: "UpdateAPIKeyState",
+			Handler:    _NetworkAPIKeyVault_UpdateAPIKeyState_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "packetbroker/api/iam/v2/service.proto",
@@ -1200,6 +1348,8 @@ type ClusterAPIKeyVaultClient interface {
 	CreateAPIKey(ctx context.Context, in *CreateClusterAPIKeyRequest, opts ...grpc.CallOption) (*CreateClusterAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(ctx context.Context, in *APIKeyRequest, opts ...grpc.CallOption) (*types.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*types.Empty, error)
 }
 
 type clusterAPIKeyVaultClient struct {
@@ -1237,6 +1387,15 @@ func (c *clusterAPIKeyVaultClient) DeleteAPIKey(ctx context.Context, in *APIKeyR
 	return out, nil
 }
 
+func (c *clusterAPIKeyVaultClient) UpdateAPIKeyState(ctx context.Context, in *UpdateAPIKeyStateRequest, opts ...grpc.CallOption) (*types.Empty, error) {
+	out := new(types.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.ClusterAPIKeyVault/UpdateAPIKeyState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClusterAPIKeyVaultServer is the server API for ClusterAPIKeyVault service.
 type ClusterAPIKeyVaultServer interface {
 	// List API keys.
@@ -1245,6 +1404,8 @@ type ClusterAPIKeyVaultServer interface {
 	CreateAPIKey(context.Context, *CreateClusterAPIKeyRequest) (*CreateClusterAPIKeyResponse, error)
 	// Delete an API key.
 	DeleteAPIKey(context.Context, *APIKeyRequest) (*types.Empty, error)
+	// Update API key state.
+	UpdateAPIKeyState(context.Context, *UpdateAPIKeyStateRequest) (*types.Empty, error)
 }
 
 // UnimplementedClusterAPIKeyVaultServer can be embedded to have forward compatible implementations.
@@ -1259,6 +1420,9 @@ func (*UnimplementedClusterAPIKeyVaultServer) CreateAPIKey(ctx context.Context, 
 }
 func (*UnimplementedClusterAPIKeyVaultServer) DeleteAPIKey(ctx context.Context, req *APIKeyRequest) (*types.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAPIKey not implemented")
+}
+func (*UnimplementedClusterAPIKeyVaultServer) UpdateAPIKeyState(ctx context.Context, req *UpdateAPIKeyStateRequest) (*types.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAPIKeyState not implemented")
 }
 
 func RegisterClusterAPIKeyVaultServer(s *grpc.Server, srv ClusterAPIKeyVaultServer) {
@@ -1319,6 +1483,24 @@ func _ClusterAPIKeyVault_DeleteAPIKey_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClusterAPIKeyVault_UpdateAPIKeyState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAPIKeyStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClusterAPIKeyVaultServer).UpdateAPIKeyState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.ClusterAPIKeyVault/UpdateAPIKeyState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClusterAPIKeyVaultServer).UpdateAPIKeyState(ctx, req.(*UpdateAPIKeyStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ClusterAPIKeyVault_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "org.packetbroker.iam.v2.ClusterAPIKeyVault",
 	HandlerType: (*ClusterAPIKeyVaultServer)(nil),
@@ -1334,6 +1516,10 @@ var _ClusterAPIKeyVault_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAPIKey",
 			Handler:    _ClusterAPIKeyVault_DeleteAPIKey_Handler,
+		},
+		{
+			MethodName: "UpdateAPIKeyState",
+			Handler:    _ClusterAPIKeyVault_UpdateAPIKeyState_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1568,6 +1754,13 @@ func (m *CreateNetworkAPIKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintService(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x2a
+	}
 	if len(m.Rights) > 0 {
 		dAtA5 := make([]byte, len(m.Rights)*10)
 		var j4 int
@@ -1673,6 +1866,41 @@ func (m *CreateNetworkAPIKeyResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 
+func (m *UpdateAPIKeyStateRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateAPIKeyStateRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateAPIKeyStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.State != 0 {
+		i = encodeVarintService(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.KeyId) > 0 {
+		i -= len(m.KeyId)
+		copy(dAtA[i:], m.KeyId)
+		i = encodeVarintService(dAtA, i, uint64(len(m.KeyId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *ListClusterAPIKeysRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1765,6 +1993,13 @@ func (m *CreateClusterAPIKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintService(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if len(m.Rights) > 0 {
 		dAtA9 := make([]byte, len(m.Rights)*10)
 		var j8 int
@@ -1966,8 +2201,9 @@ func NewPopulatedCreateNetworkAPIKeyRequest(r randyService, easy bool) *CreateNe
 	v2 := r.Intn(10)
 	this.Rights = make([]v3.Right, v2)
 	for i := 0; i < v2; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 2, 3, 4, 5, 6}[r.Intn(7)])
+		this.Rights[i] = v3.Right([]int32{0, 1, 4, 5, 6}[r.Intn(5)])
 	}
+	this.Key = string(randStringService(r))
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
@@ -1986,6 +2222,15 @@ func NewPopulatedCreateNetworkAPIKeyResponse(r randyService, easy bool) *CreateN
 	if r.Intn(5) != 0 {
 		this.Key = v3.NewPopulatedNetworkAPIKey(r, easy)
 	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedUpdateAPIKeyStateRequest(r randyService, easy bool) *UpdateAPIKeyStateRequest {
+	this := &UpdateAPIKeyStateRequest{}
+	this.KeyId = string(randStringService(r))
+	this.State = v3.APIKeyState([]int32{0, 1, 2}[r.Intn(3)])
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
@@ -2021,8 +2266,9 @@ func NewPopulatedCreateClusterAPIKeyRequest(r randyService, easy bool) *CreateCl
 	v4 := r.Intn(10)
 	this.Rights = make([]v3.Right, v4)
 	for i := 0; i < v4; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 2, 3, 4, 5, 6}[r.Intn(7)])
+		this.Rights[i] = v3.Right([]int32{0, 1, 4, 5, 6}[r.Intn(5)])
 	}
+	this.Key = string(randStringService(r))
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
@@ -2196,6 +2442,10 @@ func (m *CreateNetworkAPIKeyRequest) Size() (n int) {
 		}
 		n += 1 + sovService(uint64(l)) + l
 	}
+	l = len(m.Key)
+	if l > 0 {
+		n += 1 + l + sovService(uint64(l))
+	}
 	return n
 }
 
@@ -2221,6 +2471,22 @@ func (m *CreateNetworkAPIKeyResponse) Size() (n int) {
 	if m.Key != nil {
 		l = m.Key.Size()
 		n += 1 + l + sovService(uint64(l))
+	}
+	return n
+}
+
+func (m *UpdateAPIKeyStateRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.KeyId)
+	if l > 0 {
+		n += 1 + l + sovService(uint64(l))
+	}
+	if m.State != 0 {
+		n += 1 + sovService(uint64(m.State))
 	}
 	return n
 }
@@ -2269,6 +2535,10 @@ func (m *CreateClusterAPIKeyRequest) Size() (n int) {
 			l += sovService(uint64(e))
 		}
 		n += 1 + sovService(uint64(l)) + l
+	}
+	l = len(m.Key)
+	if l > 0 {
+		n += 1 + l + sovService(uint64(l))
 	}
 	return n
 }
@@ -2369,6 +2639,7 @@ func (this *CreateNetworkAPIKeyRequest) String() string {
 		`TenantId:` + fmt.Sprintf("%v", this.TenantId) + `,`,
 		`ClusterId:` + fmt.Sprintf("%v", this.ClusterId) + `,`,
 		`Rights:` + fmt.Sprintf("%v", this.Rights) + `,`,
+		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -2389,6 +2660,17 @@ func (this *CreateNetworkAPIKeyResponse) String() string {
 	}
 	s := strings.Join([]string{`&CreateNetworkAPIKeyResponse{`,
 		`Key:` + strings.Replace(fmt.Sprintf("%v", this.Key), "NetworkAPIKey", "v3.NetworkAPIKey", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *UpdateAPIKeyStateRequest) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&UpdateAPIKeyStateRequest{`,
+		`KeyId:` + fmt.Sprintf("%v", this.KeyId) + `,`,
+		`State:` + fmt.Sprintf("%v", this.State) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -2425,6 +2707,7 @@ func (this *CreateClusterAPIKeyRequest) String() string {
 	s := strings.Join([]string{`&CreateClusterAPIKeyRequest{`,
 		`ClusterId:` + fmt.Sprintf("%v", this.ClusterId) + `,`,
 		`Rights:` + fmt.Sprintf("%v", this.Rights) + `,`,
+		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -2905,6 +3188,38 @@ func (m *CreateNetworkAPIKeyRequest) Unmarshal(dAtA []byte) error {
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field Rights", wireType)
 			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Key = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipService(dAtA[iNdEx:])
@@ -3079,6 +3394,110 @@ func (m *CreateNetworkAPIKeyResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthService
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateAPIKeyStateRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateAPIKeyStateRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateAPIKeyStateRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.KeyId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= v3.APIKeyState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipService(dAtA[iNdEx:])
@@ -3409,6 +3828,38 @@ func (m *CreateClusterAPIKeyRequest) Unmarshal(dAtA []byte) error {
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field Rights", wireType)
 			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Key = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipService(dAtA[iNdEx:])

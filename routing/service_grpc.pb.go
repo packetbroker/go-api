@@ -886,6 +886,8 @@ var RouterData_ServiceDesc = grpc.ServiceDesc{
 type RoutesClient interface {
 	// Returns the routes.
 	ListRoutes(ctx context.Context, in *ListRoutesRequest, opts ...grpc.CallOption) (*ListRoutesResponse, error)
+	// Returns the targets.
+	ListTargets(ctx context.Context, in *ListTargetsRequest, opts ...grpc.CallOption) (*ListTargetsResponse, error)
 }
 
 type routesClient struct {
@@ -905,12 +907,23 @@ func (c *routesClient) ListRoutes(ctx context.Context, in *ListRoutesRequest, op
 	return out, nil
 }
 
+func (c *routesClient) ListTargets(ctx context.Context, in *ListTargetsRequest, opts ...grpc.CallOption) (*ListTargetsResponse, error) {
+	out := new(ListTargetsResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.routing.v1.Routes/ListTargets", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RoutesServer is the server API for Routes service.
 // All implementations must embed UnimplementedRoutesServer
 // for forward compatibility
 type RoutesServer interface {
 	// Returns the routes.
 	ListRoutes(context.Context, *ListRoutesRequest) (*ListRoutesResponse, error)
+	// Returns the targets.
+	ListTargets(context.Context, *ListTargetsRequest) (*ListTargetsResponse, error)
 	mustEmbedUnimplementedRoutesServer()
 }
 
@@ -920,6 +933,9 @@ type UnimplementedRoutesServer struct {
 
 func (UnimplementedRoutesServer) ListRoutes(context.Context, *ListRoutesRequest) (*ListRoutesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRoutes not implemented")
+}
+func (UnimplementedRoutesServer) ListTargets(context.Context, *ListTargetsRequest) (*ListTargetsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTargets not implemented")
 }
 func (UnimplementedRoutesServer) mustEmbedUnimplementedRoutesServer() {}
 
@@ -952,6 +968,24 @@ func _Routes_ListRoutes_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Routes_ListTargets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTargetsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoutesServer).ListTargets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.routing.v1.Routes/ListTargets",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoutesServer).ListTargets(ctx, req.(*ListTargetsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Routes_ServiceDesc is the grpc.ServiceDesc for Routes service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -962,6 +996,10 @@ var Routes_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRoutes",
 			Handler:    _Routes_ListRoutes_Handler,
+		},
+		{
+			MethodName: "ListTargets",
+			Handler:    _Routes_ListTargets_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

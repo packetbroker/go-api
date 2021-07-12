@@ -299,7 +299,7 @@ func NewPopulatedClusterAPIKey(r randyCluster, easy bool) *ClusterAPIKey {
 	v1 := r.Intn(10)
 	this.Rights = make([]Right, v1)
 	for i := 0; i < v1; i++ {
-		this.Rights[i] = Right([]int32{0, 1, 4, 5, 6}[r.Intn(5)])
+		this.Rights[i] = Right([]int32{0, 1, 5, 6, 4, 7, 8, 9, 10, 11}[r.Intn(10)])
 	}
 	if r.Intn(5) != 0 {
 		this.AuthenticatedAt = types.NewPopulatedTimestamp(r, easy)

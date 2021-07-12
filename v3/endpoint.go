@@ -2,7 +2,10 @@
 
 package packetbroker
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // Endpoint defines an endpoint.
 type Endpoint struct {
@@ -25,7 +28,13 @@ func (e Endpoint) IsEmpty() bool {
 
 // Validate returns an error if the Endpoint is invalid.
 func (e Endpoint) Validate() error {
-	return e.TenantID.Validate()
+	if err := e.TenantID.Validate(); err != nil {
+		return err
+	}
+	if !ClusterIDRegex.MatchString(e.ClusterID) {
+		return errors.New("invalid cluster ID format")
+	}
+	return nil
 }
 
 // ForwarderEndpointRequest is a request with a Forwarder Endpoint.

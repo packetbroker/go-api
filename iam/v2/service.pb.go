@@ -8,21 +8,15 @@ import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	types "github.com/gogo/protobuf/types"
-	golang_proto "github.com/golang/protobuf/proto"
 	v3 "go.packetbroker.org/api/v3"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	io "io"
 	math "math"
-	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
-var _ = golang_proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
@@ -40,34 +34,27 @@ type ListNetworkAPIKeysRequest struct {
 	// Cluster of the Member.
 	ClusterId            *types.StringValue `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
 	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ListNetworkAPIKeysRequest) Reset()      { *m = ListNetworkAPIKeysRequest{} }
-func (*ListNetworkAPIKeysRequest) ProtoMessage() {}
+func (m *ListNetworkAPIKeysRequest) Reset()         { *m = ListNetworkAPIKeysRequest{} }
+func (m *ListNetworkAPIKeysRequest) String() string { return proto.CompactTextString(m) }
+func (*ListNetworkAPIKeysRequest) ProtoMessage()    {}
 func (*ListNetworkAPIKeysRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{0}
 }
 func (m *ListNetworkAPIKeysRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_ListNetworkAPIKeysRequest.Unmarshal(m, b)
 }
 func (m *ListNetworkAPIKeysRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListNetworkAPIKeysRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_ListNetworkAPIKeysRequest.Marshal(b, m, deterministic)
 }
 func (m *ListNetworkAPIKeysRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ListNetworkAPIKeysRequest.Merge(m, src)
 }
 func (m *ListNetworkAPIKeysRequest) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_ListNetworkAPIKeysRequest.Size(m)
 }
 func (m *ListNetworkAPIKeysRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_ListNetworkAPIKeysRequest.DiscardUnknown(m)
@@ -99,34 +86,27 @@ func (m *ListNetworkAPIKeysRequest) GetClusterId() *types.StringValue {
 type ListNetworkAPIKeysResponse struct {
 	Keys                 []*v3.NetworkAPIKey `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
 	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *ListNetworkAPIKeysResponse) Reset()      { *m = ListNetworkAPIKeysResponse{} }
-func (*ListNetworkAPIKeysResponse) ProtoMessage() {}
+func (m *ListNetworkAPIKeysResponse) Reset()         { *m = ListNetworkAPIKeysResponse{} }
+func (m *ListNetworkAPIKeysResponse) String() string { return proto.CompactTextString(m) }
+func (*ListNetworkAPIKeysResponse) ProtoMessage()    {}
 func (*ListNetworkAPIKeysResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{1}
 }
 func (m *ListNetworkAPIKeysResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_ListNetworkAPIKeysResponse.Unmarshal(m, b)
 }
 func (m *ListNetworkAPIKeysResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListNetworkAPIKeysResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_ListNetworkAPIKeysResponse.Marshal(b, m, deterministic)
 }
 func (m *ListNetworkAPIKeysResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ListNetworkAPIKeysResponse.Merge(m, src)
 }
 func (m *ListNetworkAPIKeysResponse) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_ListNetworkAPIKeysResponse.Size(m)
 }
 func (m *ListNetworkAPIKeysResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_ListNetworkAPIKeysResponse.DiscardUnknown(m)
@@ -153,34 +133,27 @@ type CreateNetworkAPIKeyRequest struct {
 	// Secret key value. Leave empty to generate one.
 	Key                  string   `protobuf:"bytes,5,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CreateNetworkAPIKeyRequest) Reset()      { *m = CreateNetworkAPIKeyRequest{} }
-func (*CreateNetworkAPIKeyRequest) ProtoMessage() {}
+func (m *CreateNetworkAPIKeyRequest) Reset()         { *m = CreateNetworkAPIKeyRequest{} }
+func (m *CreateNetworkAPIKeyRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateNetworkAPIKeyRequest) ProtoMessage()    {}
 func (*CreateNetworkAPIKeyRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{2}
 }
 func (m *CreateNetworkAPIKeyRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_CreateNetworkAPIKeyRequest.Unmarshal(m, b)
 }
 func (m *CreateNetworkAPIKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CreateNetworkAPIKeyRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_CreateNetworkAPIKeyRequest.Marshal(b, m, deterministic)
 }
 func (m *CreateNetworkAPIKeyRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateNetworkAPIKeyRequest.Merge(m, src)
 }
 func (m *CreateNetworkAPIKeyRequest) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_CreateNetworkAPIKeyRequest.Size(m)
 }
 func (m *CreateNetworkAPIKeyRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateNetworkAPIKeyRequest.DiscardUnknown(m)
@@ -226,34 +199,27 @@ func (m *CreateNetworkAPIKeyRequest) GetKey() string {
 type APIKeyRequest struct {
 	KeyId                string   `protobuf:"bytes,1,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *APIKeyRequest) Reset()      { *m = APIKeyRequest{} }
-func (*APIKeyRequest) ProtoMessage() {}
+func (m *APIKeyRequest) Reset()         { *m = APIKeyRequest{} }
+func (m *APIKeyRequest) String() string { return proto.CompactTextString(m) }
+func (*APIKeyRequest) ProtoMessage()    {}
 func (*APIKeyRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{3}
 }
 func (m *APIKeyRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_APIKeyRequest.Unmarshal(m, b)
 }
 func (m *APIKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_APIKeyRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_APIKeyRequest.Marshal(b, m, deterministic)
 }
 func (m *APIKeyRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_APIKeyRequest.Merge(m, src)
 }
 func (m *APIKeyRequest) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_APIKeyRequest.Size(m)
 }
 func (m *APIKeyRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_APIKeyRequest.DiscardUnknown(m)
@@ -271,34 +237,27 @@ func (m *APIKeyRequest) GetKeyId() string {
 type CreateNetworkAPIKeyResponse struct {
 	Key                  *v3.NetworkAPIKey `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *CreateNetworkAPIKeyResponse) Reset()      { *m = CreateNetworkAPIKeyResponse{} }
-func (*CreateNetworkAPIKeyResponse) ProtoMessage() {}
+func (m *CreateNetworkAPIKeyResponse) Reset()         { *m = CreateNetworkAPIKeyResponse{} }
+func (m *CreateNetworkAPIKeyResponse) String() string { return proto.CompactTextString(m) }
+func (*CreateNetworkAPIKeyResponse) ProtoMessage()    {}
 func (*CreateNetworkAPIKeyResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{4}
 }
 func (m *CreateNetworkAPIKeyResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_CreateNetworkAPIKeyResponse.Unmarshal(m, b)
 }
 func (m *CreateNetworkAPIKeyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CreateNetworkAPIKeyResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_CreateNetworkAPIKeyResponse.Marshal(b, m, deterministic)
 }
 func (m *CreateNetworkAPIKeyResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateNetworkAPIKeyResponse.Merge(m, src)
 }
 func (m *CreateNetworkAPIKeyResponse) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_CreateNetworkAPIKeyResponse.Size(m)
 }
 func (m *CreateNetworkAPIKeyResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateNetworkAPIKeyResponse.DiscardUnknown(m)
@@ -317,34 +276,27 @@ type UpdateAPIKeyStateRequest struct {
 	KeyId                string         `protobuf:"bytes,1,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
 	State                v3.APIKeyState `protobuf:"varint,2,opt,name=state,proto3,enum=org.packetbroker.v3.APIKeyState" json:"state,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *UpdateAPIKeyStateRequest) Reset()      { *m = UpdateAPIKeyStateRequest{} }
-func (*UpdateAPIKeyStateRequest) ProtoMessage() {}
+func (m *UpdateAPIKeyStateRequest) Reset()         { *m = UpdateAPIKeyStateRequest{} }
+func (m *UpdateAPIKeyStateRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateAPIKeyStateRequest) ProtoMessage()    {}
 func (*UpdateAPIKeyStateRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{5}
 }
 func (m *UpdateAPIKeyStateRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_UpdateAPIKeyStateRequest.Unmarshal(m, b)
 }
 func (m *UpdateAPIKeyStateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateAPIKeyStateRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_UpdateAPIKeyStateRequest.Marshal(b, m, deterministic)
 }
 func (m *UpdateAPIKeyStateRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_UpdateAPIKeyStateRequest.Merge(m, src)
 }
 func (m *UpdateAPIKeyStateRequest) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_UpdateAPIKeyStateRequest.Size(m)
 }
 func (m *UpdateAPIKeyStateRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_UpdateAPIKeyStateRequest.DiscardUnknown(m)
@@ -370,34 +322,27 @@ type ListClusterAPIKeysRequest struct {
 	// Cluster identifier.
 	ClusterId            *types.StringValue `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
 	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ListClusterAPIKeysRequest) Reset()      { *m = ListClusterAPIKeysRequest{} }
-func (*ListClusterAPIKeysRequest) ProtoMessage() {}
+func (m *ListClusterAPIKeysRequest) Reset()         { *m = ListClusterAPIKeysRequest{} }
+func (m *ListClusterAPIKeysRequest) String() string { return proto.CompactTextString(m) }
+func (*ListClusterAPIKeysRequest) ProtoMessage()    {}
 func (*ListClusterAPIKeysRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{6}
 }
 func (m *ListClusterAPIKeysRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_ListClusterAPIKeysRequest.Unmarshal(m, b)
 }
 func (m *ListClusterAPIKeysRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListClusterAPIKeysRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_ListClusterAPIKeysRequest.Marshal(b, m, deterministic)
 }
 func (m *ListClusterAPIKeysRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ListClusterAPIKeysRequest.Merge(m, src)
 }
 func (m *ListClusterAPIKeysRequest) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_ListClusterAPIKeysRequest.Size(m)
 }
 func (m *ListClusterAPIKeysRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_ListClusterAPIKeysRequest.DiscardUnknown(m)
@@ -415,34 +360,27 @@ func (m *ListClusterAPIKeysRequest) GetClusterId() *types.StringValue {
 type ListClusterAPIKeysResponse struct {
 	Keys                 []*v3.ClusterAPIKey `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
 	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *ListClusterAPIKeysResponse) Reset()      { *m = ListClusterAPIKeysResponse{} }
-func (*ListClusterAPIKeysResponse) ProtoMessage() {}
+func (m *ListClusterAPIKeysResponse) Reset()         { *m = ListClusterAPIKeysResponse{} }
+func (m *ListClusterAPIKeysResponse) String() string { return proto.CompactTextString(m) }
+func (*ListClusterAPIKeysResponse) ProtoMessage()    {}
 func (*ListClusterAPIKeysResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{7}
 }
 func (m *ListClusterAPIKeysResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_ListClusterAPIKeysResponse.Unmarshal(m, b)
 }
 func (m *ListClusterAPIKeysResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListClusterAPIKeysResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_ListClusterAPIKeysResponse.Marshal(b, m, deterministic)
 }
 func (m *ListClusterAPIKeysResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ListClusterAPIKeysResponse.Merge(m, src)
 }
 func (m *ListClusterAPIKeysResponse) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_ListClusterAPIKeysResponse.Size(m)
 }
 func (m *ListClusterAPIKeysResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_ListClusterAPIKeysResponse.DiscardUnknown(m)
@@ -465,34 +403,27 @@ type CreateClusterAPIKeyRequest struct {
 	// Secret key value. Leave empty to generate one.
 	Key                  string   `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CreateClusterAPIKeyRequest) Reset()      { *m = CreateClusterAPIKeyRequest{} }
-func (*CreateClusterAPIKeyRequest) ProtoMessage() {}
+func (m *CreateClusterAPIKeyRequest) Reset()         { *m = CreateClusterAPIKeyRequest{} }
+func (m *CreateClusterAPIKeyRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateClusterAPIKeyRequest) ProtoMessage()    {}
 func (*CreateClusterAPIKeyRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{8}
 }
 func (m *CreateClusterAPIKeyRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_CreateClusterAPIKeyRequest.Unmarshal(m, b)
 }
 func (m *CreateClusterAPIKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CreateClusterAPIKeyRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_CreateClusterAPIKeyRequest.Marshal(b, m, deterministic)
 }
 func (m *CreateClusterAPIKeyRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateClusterAPIKeyRequest.Merge(m, src)
 }
 func (m *CreateClusterAPIKeyRequest) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_CreateClusterAPIKeyRequest.Size(m)
 }
 func (m *CreateClusterAPIKeyRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateClusterAPIKeyRequest.DiscardUnknown(m)
@@ -524,34 +455,27 @@ func (m *CreateClusterAPIKeyRequest) GetKey() string {
 type CreateClusterAPIKeyResponse struct {
 	Key                  *v3.ClusterAPIKey `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *CreateClusterAPIKeyResponse) Reset()      { *m = CreateClusterAPIKeyResponse{} }
-func (*CreateClusterAPIKeyResponse) ProtoMessage() {}
+func (m *CreateClusterAPIKeyResponse) Reset()         { *m = CreateClusterAPIKeyResponse{} }
+func (m *CreateClusterAPIKeyResponse) String() string { return proto.CompactTextString(m) }
+func (*CreateClusterAPIKeyResponse) ProtoMessage()    {}
 func (*CreateClusterAPIKeyResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{9}
 }
 func (m *CreateClusterAPIKeyResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_CreateClusterAPIKeyResponse.Unmarshal(m, b)
 }
 func (m *CreateClusterAPIKeyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CreateClusterAPIKeyResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_CreateClusterAPIKeyResponse.Marshal(b, m, deterministic)
 }
 func (m *CreateClusterAPIKeyResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_CreateClusterAPIKeyResponse.Merge(m, src)
 }
 func (m *CreateClusterAPIKeyResponse) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_CreateClusterAPIKeyResponse.Size(m)
 }
 func (m *CreateClusterAPIKeyResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_CreateClusterAPIKeyResponse.DiscardUnknown(m)
@@ -578,34 +502,27 @@ type ListNetworksRequest struct {
 	// Filter networks by name.
 	NameContains         string   `protobuf:"bytes,4,opt,name=name_contains,json=nameContains,proto3" json:"name_contains,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListNetworksRequest) Reset()      { *m = ListNetworksRequest{} }
-func (*ListNetworksRequest) ProtoMessage() {}
+func (m *ListNetworksRequest) Reset()         { *m = ListNetworksRequest{} }
+func (m *ListNetworksRequest) String() string { return proto.CompactTextString(m) }
+func (*ListNetworksRequest) ProtoMessage()    {}
 func (*ListNetworksRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{10}
 }
 func (m *ListNetworksRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_ListNetworksRequest.Unmarshal(m, b)
 }
 func (m *ListNetworksRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListNetworksRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_ListNetworksRequest.Marshal(b, m, deterministic)
 }
 func (m *ListNetworksRequest) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ListNetworksRequest.Merge(m, src)
 }
 func (m *ListNetworksRequest) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_ListNetworksRequest.Size(m)
 }
 func (m *ListNetworksRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_ListNetworksRequest.DiscardUnknown(m)
@@ -646,34 +563,27 @@ type ListNetworksResponse struct {
 	// Total number of networks.
 	Total                uint32   `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListNetworksResponse) Reset()      { *m = ListNetworksResponse{} }
-func (*ListNetworksResponse) ProtoMessage() {}
+func (m *ListNetworksResponse) Reset()         { *m = ListNetworksResponse{} }
+func (m *ListNetworksResponse) String() string { return proto.CompactTextString(m) }
+func (*ListNetworksResponse) ProtoMessage()    {}
 func (*ListNetworksResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_04cdaf08feadd3d4, []int{11}
 }
 func (m *ListNetworksResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
+	return xxx_messageInfo_ListNetworksResponse.Unmarshal(m, b)
 }
 func (m *ListNetworksResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListNetworksResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
+	return xxx_messageInfo_ListNetworksResponse.Marshal(b, m, deterministic)
 }
 func (m *ListNetworksResponse) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_ListNetworksResponse.Merge(m, src)
 }
 func (m *ListNetworksResponse) XXX_Size() int {
-	return m.Size()
+	return xxx_messageInfo_ListNetworksResponse.Size(m)
 }
 func (m *ListNetworksResponse) XXX_DiscardUnknown() {
 	xxx_messageInfo_ListNetworksResponse.DiscardUnknown(m)
@@ -697,449 +607,73 @@ func (m *ListNetworksResponse) GetTotal() uint32 {
 
 func init() {
 	proto.RegisterType((*ListNetworkAPIKeysRequest)(nil), "org.packetbroker.iam.v2.ListNetworkAPIKeysRequest")
-	golang_proto.RegisterType((*ListNetworkAPIKeysRequest)(nil), "org.packetbroker.iam.v2.ListNetworkAPIKeysRequest")
 	proto.RegisterType((*ListNetworkAPIKeysResponse)(nil), "org.packetbroker.iam.v2.ListNetworkAPIKeysResponse")
-	golang_proto.RegisterType((*ListNetworkAPIKeysResponse)(nil), "org.packetbroker.iam.v2.ListNetworkAPIKeysResponse")
 	proto.RegisterType((*CreateNetworkAPIKeyRequest)(nil), "org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest")
-	golang_proto.RegisterType((*CreateNetworkAPIKeyRequest)(nil), "org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest")
 	proto.RegisterType((*APIKeyRequest)(nil), "org.packetbroker.iam.v2.APIKeyRequest")
-	golang_proto.RegisterType((*APIKeyRequest)(nil), "org.packetbroker.iam.v2.APIKeyRequest")
 	proto.RegisterType((*CreateNetworkAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse")
-	golang_proto.RegisterType((*CreateNetworkAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse")
 	proto.RegisterType((*UpdateAPIKeyStateRequest)(nil), "org.packetbroker.iam.v2.UpdateAPIKeyStateRequest")
-	golang_proto.RegisterType((*UpdateAPIKeyStateRequest)(nil), "org.packetbroker.iam.v2.UpdateAPIKeyStateRequest")
 	proto.RegisterType((*ListClusterAPIKeysRequest)(nil), "org.packetbroker.iam.v2.ListClusterAPIKeysRequest")
-	golang_proto.RegisterType((*ListClusterAPIKeysRequest)(nil), "org.packetbroker.iam.v2.ListClusterAPIKeysRequest")
 	proto.RegisterType((*ListClusterAPIKeysResponse)(nil), "org.packetbroker.iam.v2.ListClusterAPIKeysResponse")
-	golang_proto.RegisterType((*ListClusterAPIKeysResponse)(nil), "org.packetbroker.iam.v2.ListClusterAPIKeysResponse")
 	proto.RegisterType((*CreateClusterAPIKeyRequest)(nil), "org.packetbroker.iam.v2.CreateClusterAPIKeyRequest")
-	golang_proto.RegisterType((*CreateClusterAPIKeyRequest)(nil), "org.packetbroker.iam.v2.CreateClusterAPIKeyRequest")
 	proto.RegisterType((*CreateClusterAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateClusterAPIKeyResponse")
-	golang_proto.RegisterType((*CreateClusterAPIKeyResponse)(nil), "org.packetbroker.iam.v2.CreateClusterAPIKeyResponse")
 	proto.RegisterType((*ListNetworksRequest)(nil), "org.packetbroker.iam.v2.ListNetworksRequest")
-	golang_proto.RegisterType((*ListNetworksRequest)(nil), "org.packetbroker.iam.v2.ListNetworksRequest")
 	proto.RegisterType((*ListNetworksResponse)(nil), "org.packetbroker.iam.v2.ListNetworksResponse")
-	golang_proto.RegisterType((*ListNetworksResponse)(nil), "org.packetbroker.iam.v2.ListNetworksResponse")
 }
 
 func init() {
 	proto.RegisterFile("packetbroker/api/iam/v2/service.proto", fileDescriptor_04cdaf08feadd3d4)
 }
-func init() {
-	golang_proto.RegisterFile("packetbroker/api/iam/v2/service.proto", fileDescriptor_04cdaf08feadd3d4)
-}
 
 var fileDescriptor_04cdaf08feadd3d4 = []byte{
-	// 892 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x56, 0x3f, 0x8c, 0xdb, 0x54,
-	0x18, 0xf7, 0x6b, 0x2e, 0xa1, 0x79, 0x97, 0x54, 0xc7, 0xa3, 0x94, 0x90, 0x83, 0x47, 0x30, 0xa5,
-	0xba, 0xa1, 0x38, 0xc2, 0xa9, 0x2a, 0xa1, 0x2e, 0x40, 0x40, 0x22, 0x02, 0x15, 0xe4, 0x6b, 0x2b,
-	0xc4, 0x40, 0xf5, 0x92, 0xbc, 0x33, 0x96, 0xff, 0x3c, 0x63, 0xbf, 0xa4, 0xca, 0x56, 0xb6, 0x8e,
-	0x4c, 0x08, 0x31, 0x31, 0x76, 0xec, 0x82, 0xe8, 0x78, 0xe3, 0x8d, 0x37, 0xde, 0x78, 0xb1, 0x07,
-	0x6e, 0xbc, 0xf1, 0x46, 0x64, 0xfb, 0x39, 0x17, 0x27, 0xf6, 0x5d, 0x82, 0x10, 0x12, 0x5b, 0xde,
-	0x7b, 0xbf, 0xef, 0xef, 0xef, 0xf7, 0x7d, 0x0e, 0x7c, 0xdf, 0x25, 0x03, 0x93, 0xf2, 0xbe, 0xc7,
-	0x4c, 0xea, 0xb5, 0x89, 0x6b, 0xb4, 0x0d, 0x62, 0xb7, 0xc7, 0x6a, 0xdb, 0xa7, 0xde, 0xd8, 0x18,
-	0x50, 0xc5, 0xf5, 0x18, 0x67, 0xe8, 0x0d, 0xe6, 0xe9, 0xca, 0x3c, 0x54, 0x31, 0x88, 0xad, 0x8c,
-	0xd5, 0xe6, 0xb6, 0xce, 0x98, 0x6e, 0xd1, 0x76, 0x0c, 0xeb, 0x8f, 0xf6, 0xda, 0xd4, 0x76, 0xf9,
-	0x24, 0xb1, 0x6a, 0xe2, 0xc5, 0xc7, 0x27, 0x1e, 0x71, 0x5d, 0xea, 0xf9, 0xe2, 0xfd, 0x9d, 0xa5,
-	0xe0, 0xe3, 0x4e, 0x9b, 0x3a, 0x23, 0x3b, 0x05, 0xbc, 0x9b, 0x07, 0x18, 0x58, 0x23, 0x9f, 0x53,
-	0x4f, 0x40, 0xe4, 0x3c, 0x88, 0x43, 0xf9, 0x13, 0xe6, 0x99, 0xc2, 0x8d, 0x7c, 0x00, 0xe0, 0x9b,
-	0x5f, 0x19, 0x3e, 0xbf, 0x9f, 0x5c, 0x7f, 0xf2, 0x4d, 0xef, 0x4b, 0x3a, 0xf1, 0x35, 0xfa, 0xe3,
-	0x88, 0xfa, 0x1c, 0x75, 0x60, 0xc5, 0xa1, 0xfc, 0xb1, 0x31, 0x6c, 0x80, 0x16, 0xd8, 0xd9, 0x54,
-	0xdf, 0x52, 0x92, 0xb4, 0x95, 0x34, 0x6d, 0xe5, 0x61, 0xcf, 0xe1, 0x1d, 0xf5, 0x11, 0xb1, 0x46,
-	0x54, 0x2b, 0x3b, 0x94, 0xf7, 0x86, 0xe8, 0x23, 0x58, 0xe5, 0xd4, 0x21, 0x4e, 0x6c, 0x77, 0xa5,
-	0xc0, 0x6e, 0x97, 0x7b, 0x86, 0xa3, 0x27, 0x76, 0x57, 0x13, 0x78, 0x6f, 0x88, 0xee, 0x41, 0x28,
-	0x4a, 0x88, 0x6c, 0x4b, 0x2b, 0xd8, 0x56, 0x05, 0xbe, 0x37, 0x94, 0x1f, 0xc0, 0x66, 0x5e, 0x25,
-	0xbe, 0xcb, 0x1c, 0x9f, 0xa2, 0xbb, 0x70, 0xc3, 0xa4, 0x13, 0xbf, 0x01, 0x5a, 0xa5, 0x9d, 0x4d,
-	0x55, 0x56, 0x96, 0x58, 0x1b, 0x77, 0x94, 0x8c, 0xa9, 0x16, 0xe3, 0xe5, 0x3f, 0x00, 0x6c, 0x76,
-	0x3d, 0x4a, 0x38, 0xcd, 0xbe, 0x8a, 0x0e, 0xbd, 0x9e, 0xe9, 0x50, 0x3d, 0xed, 0xc1, 0xf6, 0x62,
-	0x0f, 0xaa, 0x73, 0x55, 0xbe, 0xbd, 0x54, 0x65, 0x75, 0xae, 0x0e, 0xa4, 0xc2, 0x8a, 0x67, 0xe8,
-	0x3f, 0x70, 0xbf, 0xb1, 0xd1, 0x2a, 0xed, 0x5c, 0x53, 0x9b, 0xb9, 0xb9, 0x6a, 0x11, 0x44, 0x13,
-	0x48, 0xb4, 0x05, 0x4b, 0x26, 0x9d, 0x34, 0xca, 0xb1, 0xaf, 0xe8, 0xa7, 0x7c, 0x0b, 0xd6, 0x97,
-	0x32, 0x35, 0xe9, 0x24, 0xcd, 0xb4, 0xaa, 0x95, 0x4d, 0x3a, 0xe9, 0x0d, 0xe5, 0x5d, 0xb8, 0x9d,
-	0x5b, 0x9e, 0x68, 0xdb, 0x9d, 0xc4, 0x71, 0x42, 0xff, 0x2a, 0x5d, 0x8b, 0x83, 0x1b, 0xb0, 0xf1,
-	0xd0, 0x1d, 0x12, 0x4e, 0x93, 0xcb, 0x5d, 0x4e, 0x38, 0xbd, 0x38, 0x0f, 0x74, 0x17, 0x96, 0xfd,
-	0x08, 0x16, 0x77, 0xeb, 0x9a, 0xda, 0xca, 0x0d, 0x35, 0xef, 0x2e, 0x81, 0xcb, 0xdf, 0x26, 0xfa,
-	0xed, 0x26, 0xed, 0x5b, 0xd0, 0xef, 0xbf, 0xa1, 0xa7, 0x45, 0xcf, 0x6b, 0xe8, 0x29, 0x63, 0x2a,
-	0xf4, 0xf4, 0xd3, 0x4c, 0x4f, 0xd9, 0x57, 0x91, 0x71, 0x56, 0x1b, 0xa0, 0x58, 0x1b, 0x57, 0xd6,
-	0xd5, 0x46, 0xe9, 0x5c, 0x1b, 0x33, 0xce, 0x17, 0x52, 0x58, 0x9d, 0xf3, 0xac, 0x61, 0xec, 0xf4,
-	0x17, 0x00, 0x5f, 0x9b, 0x9b, 0xbf, 0x19, 0x07, 0x37, 0x60, 0x85, 0xed, 0xed, 0xf9, 0x94, 0x8b,
-	0x09, 0x11, 0x27, 0x74, 0x1d, 0x96, 0x2d, 0xc3, 0x36, 0x78, 0x4c, 0x78, 0x5d, 0x4b, 0x0e, 0xe8,
-	0x36, 0x44, 0xb3, 0xc1, 0x79, 0x3c, 0x60, 0x0e, 0x27, 0x86, 0xe3, 0x8b, 0xdc, 0xb7, 0xd2, 0x09,
-	0xea, 0x8a, 0x7b, 0xf4, 0x1e, 0xac, 0x3b, 0xc4, 0xa6, 0xe7, 0xc0, 0x8d, 0x18, 0x58, 0x8b, 0x2e,
-	0x53, 0x90, 0xec, 0xc0, 0xeb, 0xd9, 0xbc, 0x44, 0x99, 0x1f, 0xc3, 0xab, 0xe9, 0x32, 0x14, 0x2c,
-	0xde, 0xbc, 0x48, 0xdf, 0x5f, 0x7b, 0x0f, 0xe2, 0xf0, 0xda, 0xcc, 0x2a, 0x2a, 0x81, 0x33, 0x4e,
-	0xac, 0xb4, 0x84, 0xf8, 0xa0, 0xfe, 0x59, 0x82, 0x28, 0x33, 0x13, 0x8f, 0xc8, 0xc8, 0xe2, 0x68,
-	0x0c, 0x37, 0xa3, 0x34, 0x84, 0x8e, 0x90, 0xaa, 0x14, 0x7c, 0x37, 0x94, 0xc2, 0x75, 0xdc, 0xec,
-	0xac, 0x65, 0x23, 0xca, 0x9c, 0xc0, 0x5a, 0x42, 0x76, 0xf2, 0x80, 0x8a, 0x9d, 0x14, 0xaf, 0xb9,
-	0xe6, 0x9d, 0xf5, 0x8c, 0x44, 0xe8, 0xfb, 0xb0, 0xf6, 0x19, 0xb5, 0xe8, 0x2c, 0xf4, 0xad, 0x42,
-	0x2f, 0xd9, 0x68, 0x37, 0x96, 0x46, 0xf4, 0xf3, 0xe8, 0xd3, 0x89, 0xbe, 0x87, 0xaf, 0x2e, 0xad,
-	0x15, 0xf4, 0x61, 0xa1, 0xd3, 0xa2, 0x15, 0x54, 0xe4, 0x3f, 0x66, 0x2e, 0xa3, 0xec, 0x7f, 0xc0,
-	0x5c, 0xee, 0x22, 0xba, 0x84, 0xb9, 0x82, 0x15, 0xb3, 0x2e, 0x73, 0x79, 0x0b, 0xe5, 0x52, 0xe6,
-	0xf2, 0x57, 0xc0, 0xff, 0x8d, 0xb9, 0xbf, 0x00, 0x7c, 0xa5, 0x4b, 0x38, 0xb1, 0x98, 0x8e, 0x4c,
-	0x58, 0x9b, 0x9f, 0x77, 0x74, 0x7b, 0x95, 0xa9, 0x99, 0x31, 0xf5, 0xc1, 0x8a, 0x68, 0xd1, 0x28,
-	0x06, 0xb7, 0xa2, 0xfb, 0x2f, 0x98, 0x4d, 0xff, 0x93, 0x80, 0x9f, 0xfe, 0x06, 0x0e, 0xa6, 0x18,
-	0x1c, 0x4e, 0x31, 0x38, 0x9a, 0x62, 0xe9, 0x78, 0x8a, 0xa5, 0x93, 0x29, 0x96, 0x4e, 0xa7, 0x58,
-	0x3a, 0x9b, 0x62, 0xf0, 0x34, 0xc0, 0xe0, 0x59, 0x80, 0xa5, 0xe7, 0x01, 0x06, 0x2f, 0x02, 0x2c,
-	0xbd, 0x0c, 0xb0, 0xb4, 0x1f, 0x60, 0xe9, 0x20, 0xc0, 0xe0, 0x30, 0xc0, 0xe0, 0x28, 0xc0, 0xd2,
-	0x71, 0x80, 0xc1, 0x49, 0x80, 0xa5, 0xd3, 0x00, 0x83, 0xb3, 0x00, 0x4b, 0x4f, 0x43, 0x2c, 0x3d,
-	0x0b, 0x31, 0xf8, 0x39, 0xc4, 0xd2, 0xaf, 0x21, 0x06, 0xbf, 0x87, 0x58, 0x7a, 0x1e, 0x62, 0xe9,
-	0x45, 0x88, 0xc1, 0xcb, 0x10, 0x83, 0xfd, 0x10, 0x83, 0xef, 0x6e, 0xea, 0x2c, 0x9b, 0x23, 0xf3,
-	0xf4, 0xb9, 0xff, 0xc4, 0xf7, 0x0c, 0x62, 0xbb, 0xfd, 0x7e, 0x25, 0xa6, 0xa5, 0xf3, 0x77, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0x7c, 0x48, 0x4a, 0x99, 0x3b, 0x0b, 0x00, 0x00,
-}
-
-func (this *ListNetworkAPIKeysRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ListNetworkAPIKeysRequest)
-	if !ok {
-		that2, ok := that.(ListNetworkAPIKeysRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.NetId.Equal(that1.NetId) {
-		return false
-	}
-	if !this.TenantId.Equal(that1.TenantId) {
-		return false
-	}
-	if !this.ClusterId.Equal(that1.ClusterId) {
-		return false
-	}
-	return true
-}
-func (this *ListNetworkAPIKeysResponse) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ListNetworkAPIKeysResponse)
-	if !ok {
-		that2, ok := that.(ListNetworkAPIKeysResponse)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Keys) != len(that1.Keys) {
-		return false
-	}
-	for i := range this.Keys {
-		if !this.Keys[i].Equal(that1.Keys[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *CreateNetworkAPIKeyRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CreateNetworkAPIKeyRequest)
-	if !ok {
-		that2, ok := that.(CreateNetworkAPIKeyRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.NetId != that1.NetId {
-		return false
-	}
-	if this.TenantId != that1.TenantId {
-		return false
-	}
-	if this.ClusterId != that1.ClusterId {
-		return false
-	}
-	if len(this.Rights) != len(that1.Rights) {
-		return false
-	}
-	for i := range this.Rights {
-		if this.Rights[i] != that1.Rights[i] {
-			return false
-		}
-	}
-	if this.Key != that1.Key {
-		return false
-	}
-	return true
-}
-func (this *APIKeyRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*APIKeyRequest)
-	if !ok {
-		that2, ok := that.(APIKeyRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.KeyId != that1.KeyId {
-		return false
-	}
-	return true
-}
-func (this *CreateNetworkAPIKeyResponse) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CreateNetworkAPIKeyResponse)
-	if !ok {
-		that2, ok := that.(CreateNetworkAPIKeyResponse)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Key.Equal(that1.Key) {
-		return false
-	}
-	return true
-}
-func (this *UpdateAPIKeyStateRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*UpdateAPIKeyStateRequest)
-	if !ok {
-		that2, ok := that.(UpdateAPIKeyStateRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.KeyId != that1.KeyId {
-		return false
-	}
-	if this.State != that1.State {
-		return false
-	}
-	return true
-}
-func (this *ListClusterAPIKeysRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ListClusterAPIKeysRequest)
-	if !ok {
-		that2, ok := that.(ListClusterAPIKeysRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.ClusterId.Equal(that1.ClusterId) {
-		return false
-	}
-	return true
-}
-func (this *ListClusterAPIKeysResponse) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ListClusterAPIKeysResponse)
-	if !ok {
-		that2, ok := that.(ListClusterAPIKeysResponse)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Keys) != len(that1.Keys) {
-		return false
-	}
-	for i := range this.Keys {
-		if !this.Keys[i].Equal(that1.Keys[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *CreateClusterAPIKeyRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CreateClusterAPIKeyRequest)
-	if !ok {
-		that2, ok := that.(CreateClusterAPIKeyRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ClusterId != that1.ClusterId {
-		return false
-	}
-	if len(this.Rights) != len(that1.Rights) {
-		return false
-	}
-	for i := range this.Rights {
-		if this.Rights[i] != that1.Rights[i] {
-			return false
-		}
-	}
-	if this.Key != that1.Key {
-		return false
-	}
-	return true
-}
-func (this *CreateClusterAPIKeyResponse) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CreateClusterAPIKeyResponse)
-	if !ok {
-		that2, ok := that.(CreateClusterAPIKeyResponse)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Key.Equal(that1.Key) {
-		return false
-	}
-	return true
-}
-func (this *ListNetworksRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ListNetworksRequest)
-	if !ok {
-		that2, ok := that.(ListNetworksRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Offset != that1.Offset {
-		return false
-	}
-	if this.Limit != that1.Limit {
-		return false
-	}
-	if this.TenantIdContains != that1.TenantIdContains {
-		return false
-	}
-	if this.NameContains != that1.NameContains {
-		return false
-	}
-	return true
-}
-func (this *ListNetworksResponse) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ListNetworksResponse)
-	if !ok {
-		that2, ok := that.(ListNetworksResponse)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Networks) != len(that1.Networks) {
-		return false
-	}
-	for i := range this.Networks {
-		if !this.Networks[i].Equal(that1.Networks[i]) {
-			return false
-		}
-	}
-	if this.Total != that1.Total {
-		return false
-	}
-	return true
+	// 766 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x56, 0x5b, 0x6e, 0xd3, 0x40,
+	0x14, 0x95, 0x9b, 0x26, 0x34, 0xb7, 0x49, 0x55, 0x86, 0x52, 0x42, 0xca, 0x23, 0x98, 0x52, 0xf5,
+	0xa3, 0x38, 0xc2, 0xa9, 0x2a, 0xa1, 0xfe, 0x00, 0x01, 0x89, 0x08, 0x54, 0x90, 0xfb, 0x10, 0xe2,
+	0x83, 0x6a, 0x92, 0xdc, 0x1a, 0xcb, 0x8f, 0x31, 0xf6, 0x24, 0x55, 0x3e, 0xd9, 0x04, 0x3b, 0x41,
+	0x6c, 0x81, 0x9d, 0xb0, 0x0d, 0x64, 0x7b, 0x9c, 0xda, 0x89, 0xdd, 0x26, 0x08, 0x21, 0xf1, 0x97,
+	0x99, 0x39, 0xf7, 0x79, 0xce, 0xbd, 0x0e, 0x3c, 0x72, 0x69, 0xcf, 0x44, 0xde, 0xf5, 0x98, 0x89,
+	0x5e, 0x93, 0xba, 0x46, 0xd3, 0xa0, 0x76, 0x73, 0xa8, 0x36, 0x7d, 0xf4, 0x86, 0x46, 0x0f, 0x15,
+	0xd7, 0x63, 0x9c, 0x91, 0x5b, 0xcc, 0xd3, 0x95, 0x24, 0x54, 0x31, 0xa8, 0xad, 0x0c, 0xd5, 0xfa,
+	0x86, 0xce, 0x98, 0x6e, 0x61, 0x33, 0x84, 0x75, 0x07, 0x67, 0x4d, 0xb4, 0x5d, 0x3e, 0x8a, 0xac,
+	0xea, 0xf7, 0x26, 0x1f, 0xcf, 0x3d, 0xea, 0xba, 0xe8, 0xf9, 0xe2, 0xfd, 0xfe, 0x54, 0xf0, 0x61,
+	0xab, 0x89, 0xce, 0xc0, 0x8e, 0x01, 0x0f, 0xb2, 0x00, 0x3d, 0x6b, 0xe0, 0x73, 0xf4, 0x04, 0x44,
+	0xce, 0x82, 0x38, 0xc8, 0xcf, 0x99, 0x67, 0x0a, 0x37, 0xf2, 0x4f, 0x09, 0x6e, 0xbf, 0x35, 0x7c,
+	0x7e, 0x10, 0x5d, 0x3f, 0x7f, 0xdf, 0x79, 0x83, 0x23, 0x5f, 0xc3, 0x2f, 0x03, 0xf4, 0x39, 0x69,
+	0x41, 0xc9, 0x41, 0x7e, 0x6a, 0xf4, 0x6b, 0x52, 0x43, 0xda, 0x5e, 0x56, 0xef, 0x28, 0x51, 0xda,
+	0x4a, 0x9c, 0xb6, 0x72, 0xdc, 0x71, 0x78, 0x4b, 0x3d, 0xa1, 0xd6, 0x00, 0xb5, 0xa2, 0x83, 0xbc,
+	0xd3, 0x27, 0x4f, 0xa1, 0xcc, 0xd1, 0xa1, 0x4e, 0x68, 0xb7, 0x90, 0x63, 0x77, 0xc8, 0x3d, 0xc3,
+	0xd1, 0x23, 0xbb, 0xa5, 0x08, 0xde, 0xe9, 0x93, 0x7d, 0x00, 0x51, 0x42, 0x60, 0x5b, 0x98, 0xc1,
+	0xb6, 0x2c, 0xf0, 0x9d, 0xbe, 0x7c, 0x04, 0xf5, 0xac, 0x4a, 0x7c, 0x97, 0x39, 0x3e, 0x92, 0x3d,
+	0x58, 0x34, 0x71, 0xe4, 0xd7, 0xa4, 0x46, 0x61, 0x7b, 0x59, 0x95, 0x95, 0x29, 0xd6, 0x86, 0x2d,
+	0x25, 0x65, 0xaa, 0x85, 0x78, 0xf9, 0xbb, 0x04, 0xf5, 0xb6, 0x87, 0x94, 0x63, 0xfa, 0x55, 0x74,
+	0xe8, 0x66, 0xaa, 0x43, 0xd5, 0xb8, 0x07, 0x1b, 0x93, 0x3d, 0x28, 0x27, 0xaa, 0xbc, 0x3b, 0x55,
+	0x65, 0x39, 0x51, 0x07, 0x51, 0xa1, 0xe4, 0x19, 0xfa, 0x67, 0xee, 0xd7, 0x16, 0x1b, 0x85, 0xed,
+	0x15, 0xb5, 0x9e, 0x99, 0xab, 0x16, 0x40, 0x34, 0x81, 0x24, 0xab, 0x50, 0x30, 0x71, 0x54, 0x2b,
+	0x86, 0xbe, 0x82, 0x9f, 0xf2, 0x16, 0x54, 0xa7, 0x32, 0x35, 0x71, 0x14, 0x67, 0x5a, 0xd6, 0x8a,
+	0x26, 0x8e, 0x3a, 0x7d, 0xf9, 0x10, 0x36, 0x32, 0xcb, 0x13, 0x6d, 0xdb, 0x8d, 0x1c, 0x47, 0xf4,
+	0xcf, 0xd2, 0xb5, 0x30, 0xb8, 0x01, 0xb5, 0x63, 0xb7, 0x4f, 0x39, 0x46, 0x97, 0x87, 0x9c, 0x72,
+	0xbc, 0x3c, 0x0f, 0xb2, 0x07, 0x45, 0x3f, 0x80, 0x85, 0xdd, 0x5a, 0x51, 0x1b, 0x99, 0xa1, 0x92,
+	0xee, 0x22, 0xb8, 0xfc, 0x21, 0xd2, 0x6f, 0x3b, 0x6a, 0xdf, 0x84, 0x7e, 0xff, 0x86, 0x9e, 0x26,
+	0x3d, 0xcf, 0xa1, 0xa7, 0x94, 0xa9, 0xd0, 0xd3, 0xd7, 0xb1, 0x9e, 0xd2, 0xaf, 0x22, 0xe3, 0xb4,
+	0x36, 0xa4, 0x7c, 0x6d, 0x2c, 0xcc, 0xab, 0x8d, 0xc2, 0x85, 0x36, 0xc6, 0x9c, 0x4f, 0xa4, 0x30,
+	0x3b, 0xe7, 0x69, 0xc3, 0xd0, 0xe9, 0x37, 0x09, 0x6e, 0x24, 0xe6, 0x6f, 0xcc, 0xc1, 0x3a, 0x94,
+	0xd8, 0xd9, 0x99, 0x8f, 0x5c, 0x4c, 0x88, 0x38, 0x91, 0x35, 0x28, 0x5a, 0x86, 0x6d, 0xf0, 0x90,
+	0xf0, 0xaa, 0x16, 0x1d, 0xc8, 0x0e, 0x90, 0xf1, 0xe0, 0x9c, 0xf6, 0x98, 0xc3, 0xa9, 0xe1, 0xf8,
+	0x22, 0xf7, 0xd5, 0x78, 0x82, 0xda, 0xe2, 0x9e, 0x3c, 0x84, 0xaa, 0x43, 0x6d, 0xbc, 0x00, 0x2e,
+	0x86, 0xc0, 0x4a, 0x70, 0x19, 0x83, 0x64, 0x07, 0xd6, 0xd2, 0x79, 0x89, 0x32, 0x9f, 0xc1, 0x52,
+	0xbc, 0x0c, 0x05, 0x8b, 0x9b, 0x97, 0xe9, 0xfb, 0x9d, 0x77, 0x14, 0x86, 0xd7, 0xc6, 0x56, 0x41,
+	0x09, 0x9c, 0x71, 0x6a, 0xc5, 0x25, 0x84, 0x07, 0xf5, 0x47, 0x01, 0x48, 0x6a, 0x26, 0x4e, 0xe8,
+	0xc0, 0xe2, 0x64, 0x08, 0xcb, 0x41, 0x1a, 0x42, 0x47, 0x44, 0x55, 0x72, 0xbe, 0x1b, 0x4a, 0xee,
+	0x3a, 0xae, 0xb7, 0xe6, 0xb2, 0x11, 0x65, 0x8e, 0xa0, 0x12, 0x91, 0x1d, 0x3d, 0x90, 0x7c, 0x27,
+	0xf9, 0x6b, 0xae, 0xbe, 0x3b, 0x9f, 0x91, 0x08, 0x7d, 0x00, 0x95, 0x97, 0x68, 0xe1, 0x38, 0xf4,
+	0x56, 0xae, 0x97, 0x74, 0xb4, 0xf5, 0xa9, 0x11, 0x7d, 0x15, 0x7c, 0x3a, 0xc9, 0x27, 0xb8, 0x3e,
+	0xb5, 0x56, 0xc8, 0x93, 0x5c, 0xa7, 0x79, 0x2b, 0x28, 0xcf, 0x7f, 0xc8, 0x5c, 0x4a, 0xd9, 0x7f,
+	0xc0, 0x5c, 0xe6, 0x22, 0xba, 0x82, 0xb9, 0x9c, 0x15, 0x33, 0x2f, 0x73, 0x59, 0x0b, 0xe5, 0x4a,
+	0xe6, 0xb2, 0x57, 0xc0, 0xff, 0xc6, 0xdc, 0x2f, 0x09, 0xae, 0xb5, 0x29, 0xa7, 0x16, 0xd3, 0x89,
+	0x09, 0x95, 0xe4, 0xbc, 0x93, 0x9d, 0x59, 0xa6, 0x66, 0xcc, 0xd4, 0xe3, 0x19, 0xd1, 0xa2, 0x51,
+	0x0c, 0x56, 0x83, 0xfb, 0xd7, 0xcc, 0xc6, 0x7f, 0x12, 0xf0, 0xc5, 0xd6, 0xc7, 0x4d, 0x9d, 0xa5,
+	0xe1, 0xcc, 0xd3, 0x13, 0x7f, 0x4f, 0xf7, 0x0d, 0x6a, 0xbb, 0xdd, 0x6e, 0x29, 0xec, 0x50, 0xeb,
+	0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0xcd, 0x33, 0xd0, 0x66, 0xc6, 0x0a, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1637,2684 +1171,3 @@ var _Catalog_serviceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "packetbroker/api/iam/v2/service.proto",
 }
-
-func (m *ListNetworkAPIKeysRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListNetworkAPIKeysRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListNetworkAPIKeysRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.ClusterId != nil {
-		{
-			size, err := m.ClusterId.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	if m.TenantId != nil {
-		{
-			size, err := m.TenantId.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.NetId != nil {
-		{
-			size, err := m.NetId.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListNetworkAPIKeysResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListNetworkAPIKeysResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListNetworkAPIKeysResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Keys) > 0 {
-		for iNdEx := len(m.Keys) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Keys[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintService(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CreateNetworkAPIKeyRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CreateNetworkAPIKeyRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CreateNetworkAPIKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Key) > 0 {
-		i -= len(m.Key)
-		copy(dAtA[i:], m.Key)
-		i = encodeVarintService(dAtA, i, uint64(len(m.Key)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.Rights) > 0 {
-		dAtA5 := make([]byte, len(m.Rights)*10)
-		var j4 int
-		for _, num := range m.Rights {
-			for num >= 1<<7 {
-				dAtA5[j4] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j4++
-			}
-			dAtA5[j4] = uint8(num)
-			j4++
-		}
-		i -= j4
-		copy(dAtA[i:], dAtA5[:j4])
-		i = encodeVarintService(dAtA, i, uint64(j4))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.ClusterId) > 0 {
-		i -= len(m.ClusterId)
-		copy(dAtA[i:], m.ClusterId)
-		i = encodeVarintService(dAtA, i, uint64(len(m.ClusterId)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.TenantId) > 0 {
-		i -= len(m.TenantId)
-		copy(dAtA[i:], m.TenantId)
-		i = encodeVarintService(dAtA, i, uint64(len(m.TenantId)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.NetId != 0 {
-		i = encodeVarintService(dAtA, i, uint64(m.NetId))
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *APIKeyRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *APIKeyRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *APIKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.KeyId) > 0 {
-		i -= len(m.KeyId)
-		copy(dAtA[i:], m.KeyId)
-		i = encodeVarintService(dAtA, i, uint64(len(m.KeyId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CreateNetworkAPIKeyResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CreateNetworkAPIKeyResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CreateNetworkAPIKeyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.Key != nil {
-		{
-			size, err := m.Key.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdateAPIKeyStateRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateAPIKeyStateRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateAPIKeyStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.State != 0 {
-		i = encodeVarintService(dAtA, i, uint64(m.State))
-		i--
-		dAtA[i] = 0x10
-	}
-	if len(m.KeyId) > 0 {
-		i -= len(m.KeyId)
-		copy(dAtA[i:], m.KeyId)
-		i = encodeVarintService(dAtA, i, uint64(len(m.KeyId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListClusterAPIKeysRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListClusterAPIKeysRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListClusterAPIKeysRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.ClusterId != nil {
-		{
-			size, err := m.ClusterId.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListClusterAPIKeysResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListClusterAPIKeysResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListClusterAPIKeysResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Keys) > 0 {
-		for iNdEx := len(m.Keys) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Keys[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintService(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CreateClusterAPIKeyRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CreateClusterAPIKeyRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CreateClusterAPIKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Key) > 0 {
-		i -= len(m.Key)
-		copy(dAtA[i:], m.Key)
-		i = encodeVarintService(dAtA, i, uint64(len(m.Key)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Rights) > 0 {
-		dAtA9 := make([]byte, len(m.Rights)*10)
-		var j8 int
-		for _, num := range m.Rights {
-			for num >= 1<<7 {
-				dAtA9[j8] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j8++
-			}
-			dAtA9[j8] = uint8(num)
-			j8++
-		}
-		i -= j8
-		copy(dAtA[i:], dAtA9[:j8])
-		i = encodeVarintService(dAtA, i, uint64(j8))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.ClusterId) > 0 {
-		i -= len(m.ClusterId)
-		copy(dAtA[i:], m.ClusterId)
-		i = encodeVarintService(dAtA, i, uint64(len(m.ClusterId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CreateClusterAPIKeyResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CreateClusterAPIKeyResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CreateClusterAPIKeyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.Key != nil {
-		{
-			size, err := m.Key.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintService(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListNetworksRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListNetworksRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListNetworksRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.NameContains) > 0 {
-		i -= len(m.NameContains)
-		copy(dAtA[i:], m.NameContains)
-		i = encodeVarintService(dAtA, i, uint64(len(m.NameContains)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.TenantIdContains) > 0 {
-		i -= len(m.TenantIdContains)
-		copy(dAtA[i:], m.TenantIdContains)
-		i = encodeVarintService(dAtA, i, uint64(len(m.TenantIdContains)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if m.Limit != 0 {
-		i = encodeVarintService(dAtA, i, uint64(m.Limit))
-		i--
-		dAtA[i] = 0x10
-	}
-	if m.Offset != 0 {
-		i = encodeVarintService(dAtA, i, uint64(m.Offset))
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListNetworksResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListNetworksResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListNetworksResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.Total != 0 {
-		i = encodeVarintService(dAtA, i, uint64(m.Total))
-		i--
-		dAtA[i] = 0x10
-	}
-	if len(m.Networks) > 0 {
-		for iNdEx := len(m.Networks) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Networks[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintService(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
-}
-
-func encodeVarintService(dAtA []byte, offset int, v uint64) int {
-	offset -= sovService(v)
-	base := offset
-	for v >= 1<<7 {
-		dAtA[offset] = uint8(v&0x7f | 0x80)
-		v >>= 7
-		offset++
-	}
-	dAtA[offset] = uint8(v)
-	return base
-}
-func NewPopulatedListNetworkAPIKeysRequest(r randyService, easy bool) *ListNetworkAPIKeysRequest {
-	this := &ListNetworkAPIKeysRequest{}
-	if r.Intn(5) != 0 {
-		this.NetId = types.NewPopulatedUInt32Value(r, easy)
-	}
-	if r.Intn(5) != 0 {
-		this.TenantId = types.NewPopulatedStringValue(r, easy)
-	}
-	if r.Intn(5) != 0 {
-		this.ClusterId = types.NewPopulatedStringValue(r, easy)
-	}
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedListNetworkAPIKeysResponse(r randyService, easy bool) *ListNetworkAPIKeysResponse {
-	this := &ListNetworkAPIKeysResponse{}
-	if r.Intn(5) != 0 {
-		v1 := r.Intn(5)
-		this.Keys = make([]*v3.NetworkAPIKey, v1)
-		for i := 0; i < v1; i++ {
-			this.Keys[i] = v3.NewPopulatedNetworkAPIKey(r, easy)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedCreateNetworkAPIKeyRequest(r randyService, easy bool) *CreateNetworkAPIKeyRequest {
-	this := &CreateNetworkAPIKeyRequest{}
-	this.NetId = uint32(r.Uint32())
-	this.TenantId = string(randStringService(r))
-	this.ClusterId = string(randStringService(r))
-	v2 := r.Intn(10)
-	this.Rights = make([]v3.Right, v2)
-	for i := 0; i < v2; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 5, 6, 4, 7, 8, 9, 10, 11}[r.Intn(10)])
-	}
-	this.Key = string(randStringService(r))
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedAPIKeyRequest(r randyService, easy bool) *APIKeyRequest {
-	this := &APIKeyRequest{}
-	this.KeyId = string(randStringService(r))
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedCreateNetworkAPIKeyResponse(r randyService, easy bool) *CreateNetworkAPIKeyResponse {
-	this := &CreateNetworkAPIKeyResponse{}
-	if r.Intn(5) != 0 {
-		this.Key = v3.NewPopulatedNetworkAPIKey(r, easy)
-	}
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedUpdateAPIKeyStateRequest(r randyService, easy bool) *UpdateAPIKeyStateRequest {
-	this := &UpdateAPIKeyStateRequest{}
-	this.KeyId = string(randStringService(r))
-	this.State = v3.APIKeyState([]int32{0, 1, 2}[r.Intn(3)])
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedListClusterAPIKeysRequest(r randyService, easy bool) *ListClusterAPIKeysRequest {
-	this := &ListClusterAPIKeysRequest{}
-	if r.Intn(5) != 0 {
-		this.ClusterId = types.NewPopulatedStringValue(r, easy)
-	}
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedListClusterAPIKeysResponse(r randyService, easy bool) *ListClusterAPIKeysResponse {
-	this := &ListClusterAPIKeysResponse{}
-	if r.Intn(5) != 0 {
-		i3 := r.Intn(5)
-		this.Keys = make([]*v3.ClusterAPIKey, i3)
-		for i := 0; i < i3; i++ {
-			this.Keys[i] = v3.NewPopulatedClusterAPIKey(r, easy)
-		}
-	}
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedCreateClusterAPIKeyRequest(r randyService, easy bool) *CreateClusterAPIKeyRequest {
-	this := &CreateClusterAPIKeyRequest{}
-	this.ClusterId = string(randStringService(r))
-	v4 := r.Intn(10)
-	this.Rights = make([]v3.Right, v4)
-	for i := 0; i < v4; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 5, 6, 4, 7, 8, 9, 10, 11}[r.Intn(10)])
-	}
-	this.Key = string(randStringService(r))
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedCreateClusterAPIKeyResponse(r randyService, easy bool) *CreateClusterAPIKeyResponse {
-	this := &CreateClusterAPIKeyResponse{}
-	if r.Intn(5) != 0 {
-		this.Key = v3.NewPopulatedClusterAPIKey(r, easy)
-	}
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedListNetworksRequest(r randyService, easy bool) *ListNetworksRequest {
-	this := &ListNetworksRequest{}
-	this.Offset = uint32(r.Uint32())
-	this.Limit = uint32(r.Uint32())
-	this.TenantIdContains = string(randStringService(r))
-	this.NameContains = string(randStringService(r))
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-func NewPopulatedListNetworksResponse(r randyService, easy bool) *ListNetworksResponse {
-	this := &ListNetworksResponse{}
-	if r.Intn(5) != 0 {
-		v5 := r.Intn(5)
-		this.Networks = make([]*v3.NetworkOrTenant, v5)
-		for i := 0; i < v5; i++ {
-			this.Networks[i] = v3.NewPopulatedNetworkOrTenant(r, easy)
-		}
-	}
-	this.Total = uint32(r.Uint32())
-	if !easy && r.Intn(10) != 0 {
-	}
-	return this
-}
-
-type randyService interface {
-	Float32() float32
-	Float64() float64
-	Int63() int64
-	Int31() int32
-	Uint32() uint32
-	Intn(n int) int
-}
-
-func randUTF8RuneService(r randyService) rune {
-	ru := r.Intn(62)
-	if ru < 10 {
-		return rune(ru + 48)
-	} else if ru < 36 {
-		return rune(ru + 55)
-	}
-	return rune(ru + 61)
-}
-func randStringService(r randyService) string {
-	v6 := r.Intn(100)
-	tmps := make([]rune, v6)
-	for i := 0; i < v6; i++ {
-		tmps[i] = randUTF8RuneService(r)
-	}
-	return string(tmps)
-}
-func randUnrecognizedService(r randyService, maxFieldNumber int) (dAtA []byte) {
-	l := r.Intn(5)
-	for i := 0; i < l; i++ {
-		wire := r.Intn(4)
-		if wire == 3 {
-			wire = 5
-		}
-		fieldNumber := maxFieldNumber + r.Intn(100)
-		dAtA = randFieldService(dAtA, r, fieldNumber, wire)
-	}
-	return dAtA
-}
-func randFieldService(dAtA []byte, r randyService, fieldNumber int, wire int) []byte {
-	key := uint32(fieldNumber)<<3 | uint32(wire)
-	switch wire {
-	case 0:
-		dAtA = encodeVarintPopulateService(dAtA, uint64(key))
-		v7 := r.Int63()
-		if r.Intn(2) == 0 {
-			v7 *= -1
-		}
-		dAtA = encodeVarintPopulateService(dAtA, uint64(v7))
-	case 1:
-		dAtA = encodeVarintPopulateService(dAtA, uint64(key))
-		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	case 2:
-		dAtA = encodeVarintPopulateService(dAtA, uint64(key))
-		ll := r.Intn(100)
-		dAtA = encodeVarintPopulateService(dAtA, uint64(ll))
-		for j := 0; j < ll; j++ {
-			dAtA = append(dAtA, byte(r.Intn(256)))
-		}
-	default:
-		dAtA = encodeVarintPopulateService(dAtA, uint64(key))
-		dAtA = append(dAtA, byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)), byte(r.Intn(256)))
-	}
-	return dAtA
-}
-func encodeVarintPopulateService(dAtA []byte, v uint64) []byte {
-	for v >= 1<<7 {
-		dAtA = append(dAtA, uint8(uint64(v)&0x7f|0x80))
-		v >>= 7
-	}
-	dAtA = append(dAtA, uint8(v))
-	return dAtA
-}
-func (m *ListNetworkAPIKeysRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.NetId != nil {
-		l = m.NetId.Size()
-		n += 1 + l + sovService(uint64(l))
-	}
-	if m.TenantId != nil {
-		l = m.TenantId.Size()
-		n += 1 + l + sovService(uint64(l))
-	}
-	if m.ClusterId != nil {
-		l = m.ClusterId.Size()
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *ListNetworkAPIKeysResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.Keys) > 0 {
-		for _, e := range m.Keys {
-			l = e.Size()
-			n += 1 + l + sovService(uint64(l))
-		}
-	}
-	return n
-}
-
-func (m *CreateNetworkAPIKeyRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.NetId != 0 {
-		n += 1 + sovService(uint64(m.NetId))
-	}
-	l = len(m.TenantId)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	l = len(m.ClusterId)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	if len(m.Rights) > 0 {
-		l = 0
-		for _, e := range m.Rights {
-			l += sovService(uint64(e))
-		}
-		n += 1 + sovService(uint64(l)) + l
-	}
-	l = len(m.Key)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *APIKeyRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.KeyId)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *CreateNetworkAPIKeyResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Key != nil {
-		l = m.Key.Size()
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *UpdateAPIKeyStateRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.KeyId)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	if m.State != 0 {
-		n += 1 + sovService(uint64(m.State))
-	}
-	return n
-}
-
-func (m *ListClusterAPIKeysRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.ClusterId != nil {
-		l = m.ClusterId.Size()
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *ListClusterAPIKeysResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.Keys) > 0 {
-		for _, e := range m.Keys {
-			l = e.Size()
-			n += 1 + l + sovService(uint64(l))
-		}
-	}
-	return n
-}
-
-func (m *CreateClusterAPIKeyRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.ClusterId)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	if len(m.Rights) > 0 {
-		l = 0
-		for _, e := range m.Rights {
-			l += sovService(uint64(e))
-		}
-		n += 1 + sovService(uint64(l)) + l
-	}
-	l = len(m.Key)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *CreateClusterAPIKeyResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Key != nil {
-		l = m.Key.Size()
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *ListNetworksRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Offset != 0 {
-		n += 1 + sovService(uint64(m.Offset))
-	}
-	if m.Limit != 0 {
-		n += 1 + sovService(uint64(m.Limit))
-	}
-	l = len(m.TenantIdContains)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	l = len(m.NameContains)
-	if l > 0 {
-		n += 1 + l + sovService(uint64(l))
-	}
-	return n
-}
-
-func (m *ListNetworksResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.Networks) > 0 {
-		for _, e := range m.Networks {
-			l = e.Size()
-			n += 1 + l + sovService(uint64(l))
-		}
-	}
-	if m.Total != 0 {
-		n += 1 + sovService(uint64(m.Total))
-	}
-	return n
-}
-
-func sovService(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
-}
-func sozService(x uint64) (n int) {
-	return sovService(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *ListNetworkAPIKeysRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ListNetworkAPIKeysRequest{`,
-		`NetId:` + strings.Replace(fmt.Sprintf("%v", this.NetId), "UInt32Value", "types.UInt32Value", 1) + `,`,
-		`TenantId:` + strings.Replace(fmt.Sprintf("%v", this.TenantId), "StringValue", "types.StringValue", 1) + `,`,
-		`ClusterId:` + strings.Replace(fmt.Sprintf("%v", this.ClusterId), "StringValue", "types.StringValue", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ListNetworkAPIKeysResponse) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForKeys := "[]*NetworkAPIKey{"
-	for _, f := range this.Keys {
-		repeatedStringForKeys += strings.Replace(fmt.Sprintf("%v", f), "NetworkAPIKey", "v3.NetworkAPIKey", 1) + ","
-	}
-	repeatedStringForKeys += "}"
-	s := strings.Join([]string{`&ListNetworkAPIKeysResponse{`,
-		`Keys:` + repeatedStringForKeys + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CreateNetworkAPIKeyRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CreateNetworkAPIKeyRequest{`,
-		`NetId:` + fmt.Sprintf("%v", this.NetId) + `,`,
-		`TenantId:` + fmt.Sprintf("%v", this.TenantId) + `,`,
-		`ClusterId:` + fmt.Sprintf("%v", this.ClusterId) + `,`,
-		`Rights:` + fmt.Sprintf("%v", this.Rights) + `,`,
-		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *APIKeyRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&APIKeyRequest{`,
-		`KeyId:` + fmt.Sprintf("%v", this.KeyId) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CreateNetworkAPIKeyResponse) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CreateNetworkAPIKeyResponse{`,
-		`Key:` + strings.Replace(fmt.Sprintf("%v", this.Key), "NetworkAPIKey", "v3.NetworkAPIKey", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *UpdateAPIKeyStateRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&UpdateAPIKeyStateRequest{`,
-		`KeyId:` + fmt.Sprintf("%v", this.KeyId) + `,`,
-		`State:` + fmt.Sprintf("%v", this.State) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ListClusterAPIKeysRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ListClusterAPIKeysRequest{`,
-		`ClusterId:` + strings.Replace(fmt.Sprintf("%v", this.ClusterId), "StringValue", "types.StringValue", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ListClusterAPIKeysResponse) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForKeys := "[]*ClusterAPIKey{"
-	for _, f := range this.Keys {
-		repeatedStringForKeys += strings.Replace(fmt.Sprintf("%v", f), "ClusterAPIKey", "v3.ClusterAPIKey", 1) + ","
-	}
-	repeatedStringForKeys += "}"
-	s := strings.Join([]string{`&ListClusterAPIKeysResponse{`,
-		`Keys:` + repeatedStringForKeys + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CreateClusterAPIKeyRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CreateClusterAPIKeyRequest{`,
-		`ClusterId:` + fmt.Sprintf("%v", this.ClusterId) + `,`,
-		`Rights:` + fmt.Sprintf("%v", this.Rights) + `,`,
-		`Key:` + fmt.Sprintf("%v", this.Key) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CreateClusterAPIKeyResponse) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CreateClusterAPIKeyResponse{`,
-		`Key:` + strings.Replace(fmt.Sprintf("%v", this.Key), "ClusterAPIKey", "v3.ClusterAPIKey", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ListNetworksRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ListNetworksRequest{`,
-		`Offset:` + fmt.Sprintf("%v", this.Offset) + `,`,
-		`Limit:` + fmt.Sprintf("%v", this.Limit) + `,`,
-		`TenantIdContains:` + fmt.Sprintf("%v", this.TenantIdContains) + `,`,
-		`NameContains:` + fmt.Sprintf("%v", this.NameContains) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ListNetworksResponse) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForNetworks := "[]*NetworkOrTenant{"
-	for _, f := range this.Networks {
-		repeatedStringForNetworks += strings.Replace(fmt.Sprintf("%v", f), "NetworkOrTenant", "v3.NetworkOrTenant", 1) + ","
-	}
-	repeatedStringForNetworks += "}"
-	s := strings.Join([]string{`&ListNetworksResponse{`,
-		`Networks:` + repeatedStringForNetworks + `,`,
-		`Total:` + fmt.Sprintf("%v", this.Total) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringService(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
-}
-func (m *ListNetworkAPIKeysRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListNetworkAPIKeysRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListNetworkAPIKeysRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NetId", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.NetId == nil {
-				m.NetId = &types.UInt32Value{}
-			}
-			if err := m.NetId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.TenantId == nil {
-				m.TenantId = &types.StringValue{}
-			}
-			if err := m.TenantId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.ClusterId == nil {
-				m.ClusterId = &types.StringValue{}
-			}
-			if err := m.ClusterId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListNetworkAPIKeysResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListNetworkAPIKeysResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListNetworkAPIKeysResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Keys", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Keys = append(m.Keys, &v3.NetworkAPIKey{})
-			if err := m.Keys[len(m.Keys)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CreateNetworkAPIKeyRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CreateNetworkAPIKeyRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CreateNetworkAPIKeyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NetId", wireType)
-			}
-			m.NetId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.NetId |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TenantId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TenantId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ClusterId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
-			if wireType == 0 {
-				var v v3.Right
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowService
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= v3.Right(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.Rights = append(m.Rights, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowService
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthService
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return ErrInvalidLengthService
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				if elementCount != 0 && len(m.Rights) == 0 {
-					m.Rights = make([]v3.Right, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v v3.Right
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowService
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= v3.Right(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.Rights = append(m.Rights, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field Rights", wireType)
-			}
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Key = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *APIKeyRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: APIKeyRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: APIKeyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field KeyId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.KeyId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CreateNetworkAPIKeyResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CreateNetworkAPIKeyResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CreateNetworkAPIKeyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Key == nil {
-				m.Key = &v3.NetworkAPIKey{}
-			}
-			if err := m.Key.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdateAPIKeyStateRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateAPIKeyStateRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateAPIKeyStateRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field KeyId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.KeyId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			m.State = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.State |= v3.APIKeyState(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListClusterAPIKeysRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListClusterAPIKeysRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListClusterAPIKeysRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.ClusterId == nil {
-				m.ClusterId = &types.StringValue{}
-			}
-			if err := m.ClusterId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListClusterAPIKeysResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListClusterAPIKeysResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListClusterAPIKeysResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Keys", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Keys = append(m.Keys, &v3.ClusterAPIKey{})
-			if err := m.Keys[len(m.Keys)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CreateClusterAPIKeyRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CreateClusterAPIKeyRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CreateClusterAPIKeyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ClusterId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType == 0 {
-				var v v3.Right
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowService
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= v3.Right(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.Rights = append(m.Rights, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowService
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthService
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex < 0 {
-					return ErrInvalidLengthService
-				}
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				var elementCount int
-				if elementCount != 0 && len(m.Rights) == 0 {
-					m.Rights = make([]v3.Right, 0, elementCount)
-				}
-				for iNdEx < postIndex {
-					var v v3.Right
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowService
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= v3.Right(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.Rights = append(m.Rights, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field Rights", wireType)
-			}
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Key = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CreateClusterAPIKeyResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CreateClusterAPIKeyResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CreateClusterAPIKeyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Key == nil {
-				m.Key = &v3.ClusterAPIKey{}
-			}
-			if err := m.Key.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListNetworksRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListNetworksRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListNetworksRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Offset", wireType)
-			}
-			m.Offset = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Offset |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Limit", wireType)
-			}
-			m.Limit = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Limit |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TenantIdContains", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TenantIdContains = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NameContains", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.NameContains = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListNetworksResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListNetworksResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListNetworksResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Networks", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthService
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthService
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Networks = append(m.Networks, &v3.NetworkOrTenant{})
-			if err := m.Networks[len(m.Networks)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Total", wireType)
-			}
-			m.Total = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Total |= uint32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipService(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthService
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func skipService(dAtA []byte) (n int, err error) {
-	l := len(dAtA)
-	iNdEx := 0
-	depth := 0
-	for iNdEx < l {
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return 0, ErrIntOverflowService
-			}
-			if iNdEx >= l {
-				return 0, io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		wireType := int(wire & 0x7)
-		switch wireType {
-		case 0:
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return 0, ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return 0, io.ErrUnexpectedEOF
-				}
-				iNdEx++
-				if dAtA[iNdEx-1] < 0x80 {
-					break
-				}
-			}
-		case 1:
-			iNdEx += 8
-		case 2:
-			var length int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return 0, ErrIntOverflowService
-				}
-				if iNdEx >= l {
-					return 0, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				length |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if length < 0 {
-				return 0, ErrInvalidLengthService
-			}
-			iNdEx += length
-		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupService
-			}
-			depth--
-		case 5:
-			iNdEx += 4
-		default:
-			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
-		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthService
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
-	}
-	return 0, io.ErrUnexpectedEOF
-}
-
-var (
-	ErrInvalidLengthService        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowService          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupService = fmt.Errorf("proto: unexpected end of group")
-)

@@ -21,14 +21,14 @@ VERSION ?= v3
 ROUTING_VERSION ?= v1
 MAPPING_VERSION ?= v2
 IAM_VERSION ?= v2
-PROTOC_IMAGE = thethingsindustries/protoc:3.1.33-tts
+PROTOC_IMAGE = ghcr.io/thethingsindustries/protoc:gen-gogo-1.3.1
 
 PROTOC = $(DOCKER) run --rm \
 	--mount type=bind,src=$(abspath $(PROTO_PATH))/packetbroker,dst=/src/packetbroker \
 	--mount type=bind,src=$(PWD),dst=/out/go.packetbroker.org/api \
 	$(PROTOC_IMAGE) \
 	-I/src \
-	--gogottn_out=plugins=grpc,Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/empty.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:/out
+	--gogo_out=plugins=grpc,Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/empty.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types:/out
 
 protos = $(wildcard $(PROTO_PATH)/packetbroker/api/$(VERSION)/*.proto) \
 	$(wildcard $(PROTO_PATH)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \

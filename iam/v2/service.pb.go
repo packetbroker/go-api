@@ -2201,7 +2201,7 @@ func NewPopulatedCreateNetworkAPIKeyRequest(r randyService, easy bool) *CreateNe
 	v2 := r.Intn(10)
 	this.Rights = make([]v3.Right, v2)
 	for i := 0; i < v2; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 4, 5, 6}[r.Intn(5)])
+		this.Rights[i] = v3.Right([]int32{0, 1, 5, 6, 4, 7, 8, 9, 10, 11}[r.Intn(10)])
 	}
 	this.Key = string(randStringService(r))
 	if !easy && r.Intn(10) != 0 {
@@ -2266,7 +2266,7 @@ func NewPopulatedCreateClusterAPIKeyRequest(r randyService, easy bool) *CreateCl
 	v4 := r.Intn(10)
 	this.Rights = make([]v3.Right, v4)
 	for i := 0; i < v4; i++ {
-		this.Rights[i] = v3.Right([]int32{0, 1, 4, 5, 6}[r.Intn(5)])
+		this.Rights[i] = v3.Right([]int32{0, 1, 5, 6, 4, 7, 8, 9, 10, 11}[r.Intn(10)])
 	}
 	this.Key = string(randStringService(r))
 	if !easy && r.Intn(10) != 0 {

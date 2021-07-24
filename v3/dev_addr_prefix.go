@@ -44,8 +44,5 @@ func (m *DevAddrPrefix) Match(devAddr uint32) bool {
 		return false
 	}
 	shift := 32 - m.Length
-	if shift < 0 {
-		shift = 0
-	}
 	return m.Value>>shift == devAddr>>shift
 }

@@ -741,7 +741,7 @@ type UplinkMessage struct {
 	GatewayRegion Region    `protobuf:"varint,5,opt,name=gateway_region,json=gatewayRegion,proto3,enum=org.packetbroker.v3.Region" json:"gateway_region,omitempty"`
 	DataRate      *DataRate `protobuf:"bytes,13,opt,name=data_rate,json=dataRate,proto3" json:"data_rate,omitempty"`
 	// Data rate index as defined in the gateway's LoRaWAN region.
-	// DEPRECATED: Specify data rate settings per modulation instead.
+	// DEPRECATED: Set data_rate instead.
 	DataRateIndex uint32 `protobuf:"varint,6,opt,name=data_rate_index,json=dataRateIndex,proto3" json:"data_rate_index,omitempty"`
 	// Frequency (Hz).
 	Frequency uint64 `protobuf:"varint,7,opt,name=frequency,proto3" json:"frequency,omitempty"`
@@ -1814,7 +1814,7 @@ type DownlinkMessage_RXSettings struct {
 	Frequency uint64    `protobuf:"varint,1,opt,name=frequency,proto3" json:"frequency,omitempty"`
 	DataRate  *DataRate `protobuf:"bytes,3,opt,name=data_rate,json=dataRate,proto3" json:"data_rate,omitempty"`
 	// Data rate index as defined in the gateway's LoRaWAN region.
-	// DEPRECATED: Specify data rate settings per modulation instead.
+	// DEPRECATED: Set data_rate instead.
 	DataRateIndex uint32 `protobuf:"varint,2,opt,name=data_rate_index,json=dataRateIndex,proto3" json:"data_rate_index,omitempty"`
 }
 

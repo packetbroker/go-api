@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/golang/protobuf v1.5.2
-	go.packetbroker.org/api/v3 v3.10.4
+	go.packetbroker.org/api/v3 v3.10.5
 	golang.org/x/net v0.0.0-20210716203947-853a461950ff // indirect
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	google.golang.org/genproto v0.0.0-20210722135532-667f2b7c528f // indirect

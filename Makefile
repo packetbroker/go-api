@@ -46,6 +46,7 @@ clean:
 	@rm $(openapitargets)
 
 $(prototargets): $(protos)
+	@set -e
 	@mkdir -p build $(@D)
 	@$(PROTOC) \
 		--go_out="build" \

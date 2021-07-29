@@ -117,6 +117,11 @@ func (c *DownlinkMessageDeliveryStateChange) Validate() error {
 			return err
 		}
 	}
+	if id := c.GetForwarderGatewayId(); id != nil {
+		if err := id.Validate(); err != nil {
+			return err
+		}
+	}
 	if c.State != MessageDeliveryState_PROCESSED {
 		switch c.Result.(type) {
 		case *DownlinkMessageDeliveryStateChange_Success:

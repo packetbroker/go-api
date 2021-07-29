@@ -26,12 +26,13 @@ func NewFSKDataRate(bps uint32) *DataRate {
 }
 
 // NewLRFHSSDataRate returns an LRFHSS data rate.
-func NewLRFHSSDataRate(mt, ocw uint32) *DataRate {
+func NewLRFHSSDataRate(mt, ocw uint32, codr string) *DataRate {
 	return &DataRate{
 		Modulation: &DataRate_Lrfhss{
 			Lrfhss: &LRFHSSDataRate{
 				ModulationType:        mt,
 				OperatingChannelWidth: ocw,
+				CodingRate:            codr,
 			},
 		},
 	}

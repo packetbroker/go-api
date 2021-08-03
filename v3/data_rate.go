@@ -3,12 +3,13 @@
 package packetbroker
 
 // NewLoRaDataRate returns a LoRa data rate.
-func NewLoRaDataRate(sf, bw uint32) *DataRate {
+func NewLoRaDataRate(sf, bw uint32, codr string) *DataRate {
 	return &DataRate{
 		Modulation: &DataRate_Lora{
 			Lora: &LoRaDataRate{
 				SpreadingFactor: sf,
 				Bandwidth:       bw,
+				CodingRate:      codr,
 			},
 		},
 	}
@@ -26,12 +27,13 @@ func NewFSKDataRate(bps uint32) *DataRate {
 }
 
 // NewLRFHSSDataRate returns an LRFHSS data rate.
-func NewLRFHSSDataRate(mt, ocw uint32) *DataRate {
+func NewLRFHSSDataRate(mt, ocw uint32, codr string) *DataRate {
 	return &DataRate{
 		Modulation: &DataRate_Lrfhss{
 			Lrfhss: &LRFHSSDataRate{
 				ModulationType:        mt,
 				OperatingChannelWidth: ocw,
+				CodingRate:            codr,
 			},
 		},
 	}

@@ -3,12 +3,13 @@
 package packetbroker
 
 // NewLoRaDataRate returns a LoRa data rate.
-func NewLoRaDataRate(sf, bw uint32) *DataRate {
+func NewLoRaDataRate(sf, bw uint32, codingRate string) *DataRate {
 	return &DataRate{
 		Modulation: &DataRate_Lora{
 			Lora: &LoRaDataRate{
 				SpreadingFactor: sf,
 				Bandwidth:       bw,
+				CodingRate:      codingRate,
 			},
 		},
 	}

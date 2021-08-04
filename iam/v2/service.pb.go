@@ -606,6 +606,9 @@ type ListNetworksRequest struct {
 	TenantIdContains string `protobuf:"bytes,3,opt,name=tenant_id_contains,json=tenantIdContains,proto3" json:"tenant_id_contains,omitempty"`
 	// Filter networks by name.
 	NameContains string `protobuf:"bytes,4,opt,name=name_contains,json=nameContains,proto3" json:"name_contains,omitempty"`
+	// Include networks with which a policy is defined. The policy reference defines the Forwarder or Home Network with
+	// which a routing policy has been defined.
+	PolicyReference *ListNetworksRequest_PolicyReference `protobuf:"bytes,5,opt,name=policy_reference,json=policyReference,proto3" json:"policy_reference,omitempty"`
 }
 
 func (x *ListNetworksRequest) Reset() {
@@ -668,6 +671,13 @@ func (x *ListNetworksRequest) GetNameContains() string {
 	return ""
 }
 
+func (x *ListNetworksRequest) GetPolicyReference() *ListNetworksRequest_PolicyReference {
+	if x != nil {
+		return x.PolicyReference
+	}
+	return nil
+}
+
 type ListNetworksResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -722,6 +732,63 @@ func (x *ListNetworksResponse) GetTotal() uint32 {
 		return x.Total
 	}
 	return 0
+}
+
+type ListNetworksRequest_PolicyReference struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// LoRa Alliance NetID of the Member.
+	NetId uint32 `protobuf:"varint,1,opt,name=net_id,json=netId,proto3" json:"net_id,omitempty"`
+	// ID assigned by the Member.
+	TenantId string `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+}
+
+func (x *ListNetworksRequest_PolicyReference) Reset() {
+	*x = ListNetworksRequest_PolicyReference{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListNetworksRequest_PolicyReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListNetworksRequest_PolicyReference) ProtoMessage() {}
+
+func (x *ListNetworksRequest_PolicyReference) ProtoReflect() protoreflect.Message {
+	mi := &file_packetbroker_api_iam_v2_service_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListNetworksRequest_PolicyReference.ProtoReflect.Descriptor instead.
+func (*ListNetworksRequest_PolicyReference) Descriptor() ([]byte, []int) {
+	return file_packetbroker_api_iam_v2_service_proto_rawDescGZIP(), []int{10, 0}
+}
+
+func (x *ListNetworksRequest_PolicyReference) GetNetId() uint32 {
+	if x != nil {
+		return x.NetId
+	}
+	return 0
+}
+
+func (x *ListNetworksRequest_PolicyReference) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
 }
 
 var File_packetbroker_api_iam_v2_service_proto protoreflect.FileDescriptor
@@ -810,7 +877,7 @@ var file_packetbroker_api_iam_v2_service_proto_rawDesc = []byte{
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63,
 	0x6b, 0x65, 0x74, 0x62, 0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x76, 0x33, 0x2e, 0x43, 0x6c, 0x75,
 	0x73, 0x74, 0x65, 0x72, 0x41, 0x50, 0x49, 0x4b, 0x65, 0x79, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22,
-	0x96, 0x01, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73,
+	0xc6, 0x02, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65,
 	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12,
 	0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05,
@@ -819,7 +886,18 @@ var file_packetbroker_api_iam_v2_service_proto_rawDesc = []byte{
 	0x09, 0x52, 0x10, 0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x43, 0x6f, 0x6e, 0x74, 0x61,
 	0x69, 0x6e, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x6e, 0x61, 0x6d, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x74,
 	0x61, 0x69, 0x6e, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6e, 0x61, 0x6d, 0x65,
-	0x43, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x73, 0x22, 0x6e, 0x0a, 0x14, 0x4c, 0x69, 0x73, 0x74,
+	0x43, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x67, 0x0a, 0x10, 0x70, 0x6f, 0x6c, 0x69,
+	0x63, 0x79, 0x5f, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x3c, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62,
+	0x72, 0x6f, 0x6b, 0x65, 0x72, 0x2e, 0x69, 0x61, 0x6d, 0x2e, 0x76, 0x32, 0x2e, 0x4c, 0x69, 0x73,
+	0x74, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x2e, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65,
+	0x52, 0x0f, 0x70, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63,
+	0x65, 0x1a, 0x45, 0x0a, 0x0f, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x52, 0x65, 0x66, 0x65, 0x72,
+	0x65, 0x6e, 0x63, 0x65, 0x12, 0x15, 0x0a, 0x06, 0x6e, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x6e, 0x65, 0x74, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x74,
+	0x65, 0x6e, 0x61, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x6e, 0x0a, 0x14, 0x4c, 0x69, 0x73, 0x74,
 	0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
 	0x12, 0x40, 0x0a, 0x08, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x18, 0x01, 0x20, 0x03,
 	0x28, 0x0b, 0x32, 0x24, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x62,
@@ -914,67 +992,69 @@ func file_packetbroker_api_iam_v2_service_proto_rawDescGZIP() []byte {
 	return file_packetbroker_api_iam_v2_service_proto_rawDescData
 }
 
-var file_packetbroker_api_iam_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_packetbroker_api_iam_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_packetbroker_api_iam_v2_service_proto_goTypes = []interface{}{
-	(*ListNetworkAPIKeysRequest)(nil),   // 0: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest
-	(*ListNetworkAPIKeysResponse)(nil),  // 1: org.packetbroker.iam.v2.ListNetworkAPIKeysResponse
-	(*CreateNetworkAPIKeyRequest)(nil),  // 2: org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest
-	(*APIKeyRequest)(nil),               // 3: org.packetbroker.iam.v2.APIKeyRequest
-	(*CreateNetworkAPIKeyResponse)(nil), // 4: org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse
-	(*UpdateAPIKeyStateRequest)(nil),    // 5: org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
-	(*ListClusterAPIKeysRequest)(nil),   // 6: org.packetbroker.iam.v2.ListClusterAPIKeysRequest
-	(*ListClusterAPIKeysResponse)(nil),  // 7: org.packetbroker.iam.v2.ListClusterAPIKeysResponse
-	(*CreateClusterAPIKeyRequest)(nil),  // 8: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
-	(*CreateClusterAPIKeyResponse)(nil), // 9: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
-	(*ListNetworksRequest)(nil),         // 10: org.packetbroker.iam.v2.ListNetworksRequest
-	(*ListNetworksResponse)(nil),        // 11: org.packetbroker.iam.v2.ListNetworksResponse
-	(*wrapperspb.UInt32Value)(nil),      // 12: google.protobuf.UInt32Value
-	(*wrapperspb.StringValue)(nil),      // 13: google.protobuf.StringValue
-	(*v3.NetworkAPIKey)(nil),            // 14: org.packetbroker.v3.NetworkAPIKey
-	(v3.Right)(0),                       // 15: org.packetbroker.v3.Right
-	(v3.APIKeyState)(0),                 // 16: org.packetbroker.v3.APIKeyState
-	(*v3.ClusterAPIKey)(nil),            // 17: org.packetbroker.v3.ClusterAPIKey
-	(*v3.NetworkOrTenant)(nil),          // 18: org.packetbroker.v3.NetworkOrTenant
-	(*emptypb.Empty)(nil),               // 19: google.protobuf.Empty
+	(*ListNetworkAPIKeysRequest)(nil),           // 0: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest
+	(*ListNetworkAPIKeysResponse)(nil),          // 1: org.packetbroker.iam.v2.ListNetworkAPIKeysResponse
+	(*CreateNetworkAPIKeyRequest)(nil),          // 2: org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest
+	(*APIKeyRequest)(nil),                       // 3: org.packetbroker.iam.v2.APIKeyRequest
+	(*CreateNetworkAPIKeyResponse)(nil),         // 4: org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse
+	(*UpdateAPIKeyStateRequest)(nil),            // 5: org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
+	(*ListClusterAPIKeysRequest)(nil),           // 6: org.packetbroker.iam.v2.ListClusterAPIKeysRequest
+	(*ListClusterAPIKeysResponse)(nil),          // 7: org.packetbroker.iam.v2.ListClusterAPIKeysResponse
+	(*CreateClusterAPIKeyRequest)(nil),          // 8: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
+	(*CreateClusterAPIKeyResponse)(nil),         // 9: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
+	(*ListNetworksRequest)(nil),                 // 10: org.packetbroker.iam.v2.ListNetworksRequest
+	(*ListNetworksResponse)(nil),                // 11: org.packetbroker.iam.v2.ListNetworksResponse
+	(*ListNetworksRequest_PolicyReference)(nil), // 12: org.packetbroker.iam.v2.ListNetworksRequest.PolicyReference
+	(*wrapperspb.UInt32Value)(nil),              // 13: google.protobuf.UInt32Value
+	(*wrapperspb.StringValue)(nil),              // 14: google.protobuf.StringValue
+	(*v3.NetworkAPIKey)(nil),                    // 15: org.packetbroker.v3.NetworkAPIKey
+	(v3.Right)(0),                               // 16: org.packetbroker.v3.Right
+	(v3.APIKeyState)(0),                         // 17: org.packetbroker.v3.APIKeyState
+	(*v3.ClusterAPIKey)(nil),                    // 18: org.packetbroker.v3.ClusterAPIKey
+	(*v3.NetworkOrTenant)(nil),                  // 19: org.packetbroker.v3.NetworkOrTenant
+	(*emptypb.Empty)(nil),                       // 20: google.protobuf.Empty
 }
 var file_packetbroker_api_iam_v2_service_proto_depIdxs = []int32{
-	12, // 0: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.net_id:type_name -> google.protobuf.UInt32Value
-	13, // 1: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.tenant_id:type_name -> google.protobuf.StringValue
-	13, // 2: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
-	14, // 3: org.packetbroker.iam.v2.ListNetworkAPIKeysResponse.keys:type_name -> org.packetbroker.v3.NetworkAPIKey
-	15, // 4: org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
-	14, // 5: org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse.key:type_name -> org.packetbroker.v3.NetworkAPIKey
-	16, // 6: org.packetbroker.iam.v2.UpdateAPIKeyStateRequest.state:type_name -> org.packetbroker.v3.APIKeyState
-	13, // 7: org.packetbroker.iam.v2.ListClusterAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
-	17, // 8: org.packetbroker.iam.v2.ListClusterAPIKeysResponse.keys:type_name -> org.packetbroker.v3.ClusterAPIKey
-	15, // 9: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
-	17, // 10: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse.key:type_name -> org.packetbroker.v3.ClusterAPIKey
-	18, // 11: org.packetbroker.iam.v2.ListNetworksResponse.networks:type_name -> org.packetbroker.v3.NetworkOrTenant
-	0,  // 12: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysRequest
-	2,  // 13: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest
-	3,  // 14: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
-	5,  // 15: org.packetbroker.iam.v2.NetworkAPIKeyVault.UpdateAPIKeyState:input_type -> org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
-	6,  // 16: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListClusterAPIKeysRequest
-	8,  // 17: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
-	3,  // 18: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
-	5,  // 19: org.packetbroker.iam.v2.ClusterAPIKeyVault.UpdateAPIKeyState:input_type -> org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
-	10, // 20: org.packetbroker.iam.v2.Catalog.ListNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
-	10, // 21: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
-	1,  // 22: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysResponse
-	4,  // 23: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse
-	19, // 24: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
-	19, // 25: org.packetbroker.iam.v2.NetworkAPIKeyVault.UpdateAPIKeyState:output_type -> google.protobuf.Empty
-	7,  // 26: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListClusterAPIKeysResponse
-	9,  // 27: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
-	19, // 28: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
-	19, // 29: org.packetbroker.iam.v2.ClusterAPIKeyVault.UpdateAPIKeyState:output_type -> google.protobuf.Empty
-	11, // 30: org.packetbroker.iam.v2.Catalog.ListNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
-	11, // 31: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
-	22, // [22:32] is the sub-list for method output_type
-	12, // [12:22] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	13, // 0: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.net_id:type_name -> google.protobuf.UInt32Value
+	14, // 1: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.tenant_id:type_name -> google.protobuf.StringValue
+	14, // 2: org.packetbroker.iam.v2.ListNetworkAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
+	15, // 3: org.packetbroker.iam.v2.ListNetworkAPIKeysResponse.keys:type_name -> org.packetbroker.v3.NetworkAPIKey
+	16, // 4: org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
+	15, // 5: org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse.key:type_name -> org.packetbroker.v3.NetworkAPIKey
+	17, // 6: org.packetbroker.iam.v2.UpdateAPIKeyStateRequest.state:type_name -> org.packetbroker.v3.APIKeyState
+	14, // 7: org.packetbroker.iam.v2.ListClusterAPIKeysRequest.cluster_id:type_name -> google.protobuf.StringValue
+	18, // 8: org.packetbroker.iam.v2.ListClusterAPIKeysResponse.keys:type_name -> org.packetbroker.v3.ClusterAPIKey
+	16, // 9: org.packetbroker.iam.v2.CreateClusterAPIKeyRequest.rights:type_name -> org.packetbroker.v3.Right
+	18, // 10: org.packetbroker.iam.v2.CreateClusterAPIKeyResponse.key:type_name -> org.packetbroker.v3.ClusterAPIKey
+	12, // 11: org.packetbroker.iam.v2.ListNetworksRequest.policy_reference:type_name -> org.packetbroker.iam.v2.ListNetworksRequest.PolicyReference
+	19, // 12: org.packetbroker.iam.v2.ListNetworksResponse.networks:type_name -> org.packetbroker.v3.NetworkOrTenant
+	0,  // 13: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysRequest
+	2,  // 14: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyRequest
+	3,  // 15: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
+	5,  // 16: org.packetbroker.iam.v2.NetworkAPIKeyVault.UpdateAPIKeyState:input_type -> org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
+	6,  // 17: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:input_type -> org.packetbroker.iam.v2.ListClusterAPIKeysRequest
+	8,  // 18: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:input_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyRequest
+	3,  // 19: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:input_type -> org.packetbroker.iam.v2.APIKeyRequest
+	5,  // 20: org.packetbroker.iam.v2.ClusterAPIKeyVault.UpdateAPIKeyState:input_type -> org.packetbroker.iam.v2.UpdateAPIKeyStateRequest
+	10, // 21: org.packetbroker.iam.v2.Catalog.ListNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
+	10, // 22: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:input_type -> org.packetbroker.iam.v2.ListNetworksRequest
+	1,  // 23: org.packetbroker.iam.v2.NetworkAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListNetworkAPIKeysResponse
+	4,  // 24: org.packetbroker.iam.v2.NetworkAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateNetworkAPIKeyResponse
+	20, // 25: org.packetbroker.iam.v2.NetworkAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
+	20, // 26: org.packetbroker.iam.v2.NetworkAPIKeyVault.UpdateAPIKeyState:output_type -> google.protobuf.Empty
+	7,  // 27: org.packetbroker.iam.v2.ClusterAPIKeyVault.ListAPIKeys:output_type -> org.packetbroker.iam.v2.ListClusterAPIKeysResponse
+	9,  // 28: org.packetbroker.iam.v2.ClusterAPIKeyVault.CreateAPIKey:output_type -> org.packetbroker.iam.v2.CreateClusterAPIKeyResponse
+	20, // 29: org.packetbroker.iam.v2.ClusterAPIKeyVault.DeleteAPIKey:output_type -> google.protobuf.Empty
+	20, // 30: org.packetbroker.iam.v2.ClusterAPIKeyVault.UpdateAPIKeyState:output_type -> google.protobuf.Empty
+	11, // 31: org.packetbroker.iam.v2.Catalog.ListNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
+	11, // 32: org.packetbroker.iam.v2.Catalog.ListHomeNetworks:output_type -> org.packetbroker.iam.v2.ListNetworksResponse
+	23, // [23:33] is the sub-list for method output_type
+	13, // [13:23] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_packetbroker_api_iam_v2_service_proto_init() }
@@ -1127,6 +1207,18 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 				return nil
 			}
 		}
+		file_packetbroker_api_iam_v2_service_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListNetworksRequest_PolicyReference); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1134,7 +1226,7 @@ func file_packetbroker_api_iam_v2_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_packetbroker_api_iam_v2_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   3,
 		},

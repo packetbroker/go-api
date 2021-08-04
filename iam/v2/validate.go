@@ -9,6 +9,16 @@ import (
 )
 
 // Validate returns whether the request is valid.
+func (r *ListNetworksRequest) Validate() error {
+	if r.GetPolicyReference().GetTenantId() != "" {
+		if err := packetbroker.RequestTenantID(r.PolicyReference).Validate(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
 func (r *ListNetworkAPIKeysRequest) Validate() error {
 	if id := r.GetClusterId(); id != nil {
 		if !packetbroker.ClusterIDRegex.MatchString(id.GetValue()) {

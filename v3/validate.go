@@ -40,7 +40,7 @@ func (b *DevAddrBlock) Validate() error {
 func (t *Target) Validate() error {
 	switch t.Protocol {
 	// LoRaWAN Backend Interfaces require a valid URL, or empty value for lookup.
-	case TargetProtocol_TS002_V1_0, TargetProtocol_TS002_V1_1_0:
+	case TargetProtocol_TS002_V1_0, TargetProtocol_TS002_V1_1:
 		if t.Address == "" {
 			return nil
 		}

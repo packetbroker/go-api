@@ -423,10 +423,9 @@ var ClusterAPIKeyVault_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CatalogClient interface {
-	// List the networks and tenants. This includes listed networks and networks with which a routing policy is defined,
-	// as Home Network or as Forwarder, or both.
+	// List networks and tenants.
 	ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
-	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
+	// List networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
 	ListHomeNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
 }
 
@@ -460,10 +459,9 @@ func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListNetworksRe
 // All implementations must embed UnimplementedCatalogServer
 // for forward compatibility
 type CatalogServer interface {
-	// List the networks and tenants. This includes listed networks and networks with which a routing policy is defined,
-	// as Home Network or as Forwarder, or both.
+	// List networks and tenants.
 	ListNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
-	// List all the networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
+	// List networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
 	ListHomeNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
 	mustEmbedUnimplementedCatalogServer()
 }

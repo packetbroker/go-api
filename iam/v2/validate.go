@@ -78,3 +78,49 @@ func (r *CreateClusterAPIKeyRequest) Validate() error {
 	}
 	return nil
 }
+
+// Validate returns whether the request is valid.
+func (r *CreateJoinServerRequest) Validate() error {
+	if r.GetJoinServer() == nil {
+		return errors.New("network is required")
+	}
+	if r.JoinServer.Id != 0 {
+		return errors.New("ID cannot be specified")
+	}
+	for _, p := range r.JoinServer.JoinEuiPrefixes {
+		if err := p.Validate(); err != nil {
+			return err
+		}
+	}
+	switch resolver := r.JoinServer.Resolver.(type) {
+	case *packetbroker.JoinServer_Lookup:
+		if err := resolver.Lookup.Validate(); err != nil {
+			return err
+		}
+	case *packetbroker.JoinServer_Fixed:
+		if err := resolver.Fixed.Validate(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
+func (r *UpdateJoinServerRequest) Validate() error {
+	for _, p := range r.GetJoinEuiPrefixes().GetValue() {
+		if err := p.Validate(); err != nil {
+			return err
+		}
+	}
+	switch resolver := r.GetResolver().(type) {
+	case *UpdateJoinServerRequest_Lookup:
+		if err := resolver.Lookup.Validate(); err != nil {
+			return err
+		}
+	case *UpdateJoinServerRequest_Fixed:
+		if err := resolver.Fixed.Validate(); err != nil {
+			return err
+		}
+	}
+	return nil
+}

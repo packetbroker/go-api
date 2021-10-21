@@ -427,6 +427,8 @@ type CatalogClient interface {
 	ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
 	// List networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
 	ListHomeNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (*ListNetworksResponse, error)
+	// List Join Servers.
+	ListJoinServers(ctx context.Context, in *ListJoinServersRequest, opts ...grpc.CallOption) (*ListJoinServersResponse, error)
 }
 
 type catalogClient struct {
@@ -455,6 +457,15 @@ func (c *catalogClient) ListHomeNetworks(ctx context.Context, in *ListNetworksRe
 	return out, nil
 }
 
+func (c *catalogClient) ListJoinServers(ctx context.Context, in *ListJoinServersRequest, opts ...grpc.CallOption) (*ListJoinServersResponse, error) {
+	out := new(ListJoinServersResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.Catalog/ListJoinServers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CatalogServer is the server API for Catalog service.
 // All implementations must embed UnimplementedCatalogServer
 // for forward compatibility
@@ -463,6 +474,8 @@ type CatalogServer interface {
 	ListNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
 	// List networks and tenants that are Home Networks, i.e. those with DevAddr blocks assigned.
 	ListHomeNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error)
+	// List Join Servers.
+	ListJoinServers(context.Context, *ListJoinServersRequest) (*ListJoinServersResponse, error)
 	mustEmbedUnimplementedCatalogServer()
 }
 
@@ -475,6 +488,9 @@ func (UnimplementedCatalogServer) ListNetworks(context.Context, *ListNetworksReq
 }
 func (UnimplementedCatalogServer) ListHomeNetworks(context.Context, *ListNetworksRequest) (*ListNetworksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHomeNetworks not implemented")
+}
+func (UnimplementedCatalogServer) ListJoinServers(context.Context, *ListJoinServersRequest) (*ListJoinServersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListJoinServers not implemented")
 }
 func (UnimplementedCatalogServer) mustEmbedUnimplementedCatalogServer() {}
 
@@ -525,6 +541,24 @@ func _Catalog_ListHomeNetworks_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Catalog_ListJoinServers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListJoinServersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CatalogServer).ListJoinServers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.Catalog/ListJoinServers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CatalogServer).ListJoinServers(ctx, req.(*ListJoinServersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Catalog_ServiceDesc is the grpc.ServiceDesc for Catalog service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -539,6 +573,250 @@ var Catalog_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListHomeNetworks",
 			Handler:    _Catalog_ListHomeNetworks_Handler,
+		},
+		{
+			MethodName: "ListJoinServers",
+			Handler:    _Catalog_ListJoinServers_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "packetbroker/api/iam/v2/service.proto",
+}
+
+// JoinServerRegistryClient is the client API for JoinServerRegistry service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type JoinServerRegistryClient interface {
+	// List networks.
+	ListJoinServers(ctx context.Context, in *ListJoinServersRequest, opts ...grpc.CallOption) (*ListJoinServersResponse, error)
+	// Create a network.
+	CreateJoinServer(ctx context.Context, in *CreateJoinServerRequest, opts ...grpc.CallOption) (*CreateJoinServerResponse, error)
+	// Get a network.
+	GetJoinServer(ctx context.Context, in *JoinServerRequest, opts ...grpc.CallOption) (*GetJoinServerResponse, error)
+	// Update a network.
+	UpdateJoinServer(ctx context.Context, in *UpdateJoinServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Delete a network.
+	DeleteJoinServer(ctx context.Context, in *JoinServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+}
+
+type joinServerRegistryClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewJoinServerRegistryClient(cc grpc.ClientConnInterface) JoinServerRegistryClient {
+	return &joinServerRegistryClient{cc}
+}
+
+func (c *joinServerRegistryClient) ListJoinServers(ctx context.Context, in *ListJoinServersRequest, opts ...grpc.CallOption) (*ListJoinServersResponse, error) {
+	out := new(ListJoinServersResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.JoinServerRegistry/ListJoinServers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *joinServerRegistryClient) CreateJoinServer(ctx context.Context, in *CreateJoinServerRequest, opts ...grpc.CallOption) (*CreateJoinServerResponse, error) {
+	out := new(CreateJoinServerResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.JoinServerRegistry/CreateJoinServer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *joinServerRegistryClient) GetJoinServer(ctx context.Context, in *JoinServerRequest, opts ...grpc.CallOption) (*GetJoinServerResponse, error) {
+	out := new(GetJoinServerResponse)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.JoinServerRegistry/GetJoinServer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *joinServerRegistryClient) UpdateJoinServer(ctx context.Context, in *UpdateJoinServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.JoinServerRegistry/UpdateJoinServer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *joinServerRegistryClient) DeleteJoinServer(ctx context.Context, in *JoinServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/org.packetbroker.iam.v2.JoinServerRegistry/DeleteJoinServer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// JoinServerRegistryServer is the server API for JoinServerRegistry service.
+// All implementations must embed UnimplementedJoinServerRegistryServer
+// for forward compatibility
+type JoinServerRegistryServer interface {
+	// List networks.
+	ListJoinServers(context.Context, *ListJoinServersRequest) (*ListJoinServersResponse, error)
+	// Create a network.
+	CreateJoinServer(context.Context, *CreateJoinServerRequest) (*CreateJoinServerResponse, error)
+	// Get a network.
+	GetJoinServer(context.Context, *JoinServerRequest) (*GetJoinServerResponse, error)
+	// Update a network.
+	UpdateJoinServer(context.Context, *UpdateJoinServerRequest) (*emptypb.Empty, error)
+	// Delete a network.
+	DeleteJoinServer(context.Context, *JoinServerRequest) (*emptypb.Empty, error)
+	mustEmbedUnimplementedJoinServerRegistryServer()
+}
+
+// UnimplementedJoinServerRegistryServer must be embedded to have forward compatible implementations.
+type UnimplementedJoinServerRegistryServer struct {
+}
+
+func (UnimplementedJoinServerRegistryServer) ListJoinServers(context.Context, *ListJoinServersRequest) (*ListJoinServersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListJoinServers not implemented")
+}
+func (UnimplementedJoinServerRegistryServer) CreateJoinServer(context.Context, *CreateJoinServerRequest) (*CreateJoinServerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateJoinServer not implemented")
+}
+func (UnimplementedJoinServerRegistryServer) GetJoinServer(context.Context, *JoinServerRequest) (*GetJoinServerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJoinServer not implemented")
+}
+func (UnimplementedJoinServerRegistryServer) UpdateJoinServer(context.Context, *UpdateJoinServerRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateJoinServer not implemented")
+}
+func (UnimplementedJoinServerRegistryServer) DeleteJoinServer(context.Context, *JoinServerRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteJoinServer not implemented")
+}
+func (UnimplementedJoinServerRegistryServer) mustEmbedUnimplementedJoinServerRegistryServer() {}
+
+// UnsafeJoinServerRegistryServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to JoinServerRegistryServer will
+// result in compilation errors.
+type UnsafeJoinServerRegistryServer interface {
+	mustEmbedUnimplementedJoinServerRegistryServer()
+}
+
+func RegisterJoinServerRegistryServer(s grpc.ServiceRegistrar, srv JoinServerRegistryServer) {
+	s.RegisterService(&JoinServerRegistry_ServiceDesc, srv)
+}
+
+func _JoinServerRegistry_ListJoinServers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListJoinServersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JoinServerRegistryServer).ListJoinServers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.JoinServerRegistry/ListJoinServers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JoinServerRegistryServer).ListJoinServers(ctx, req.(*ListJoinServersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JoinServerRegistry_CreateJoinServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateJoinServerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JoinServerRegistryServer).CreateJoinServer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.JoinServerRegistry/CreateJoinServer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JoinServerRegistryServer).CreateJoinServer(ctx, req.(*CreateJoinServerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JoinServerRegistry_GetJoinServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JoinServerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JoinServerRegistryServer).GetJoinServer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.JoinServerRegistry/GetJoinServer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JoinServerRegistryServer).GetJoinServer(ctx, req.(*JoinServerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JoinServerRegistry_UpdateJoinServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateJoinServerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JoinServerRegistryServer).UpdateJoinServer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.JoinServerRegistry/UpdateJoinServer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JoinServerRegistryServer).UpdateJoinServer(ctx, req.(*UpdateJoinServerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JoinServerRegistry_DeleteJoinServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JoinServerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JoinServerRegistryServer).DeleteJoinServer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/org.packetbroker.iam.v2.JoinServerRegistry/DeleteJoinServer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JoinServerRegistryServer).DeleteJoinServer(ctx, req.(*JoinServerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// JoinServerRegistry_ServiceDesc is the grpc.ServiceDesc for JoinServerRegistry service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var JoinServerRegistry_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "org.packetbroker.iam.v2.JoinServerRegistry",
+	HandlerType: (*JoinServerRegistryServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListJoinServers",
+			Handler:    _JoinServerRegistry_ListJoinServers_Handler,
+		},
+		{
+			MethodName: "CreateJoinServer",
+			Handler:    _JoinServerRegistry_CreateJoinServer_Handler,
+		},
+		{
+			MethodName: "GetJoinServer",
+			Handler:    _JoinServerRegistry_GetJoinServer_Handler,
+		},
+		{
+			MethodName: "UpdateJoinServer",
+			Handler:    _JoinServerRegistry_UpdateJoinServer_Handler,
+		},
+		{
+			MethodName: "DeleteJoinServer",
+			Handler:    _JoinServerRegistry_DeleteJoinServer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -38,4 +38,12 @@ func TestDevAddrPrefix(t *testing.T) {
 	if p.Value != expected.Value || p.Length != expected.Length {
 		t.Fatalf("UnmarshalText() result %v does not equal %v", p, expected)
 	}
+
+	q := &DevAddrPrefix{
+		Value:  0x27000000,
+		Length: 34,
+	}
+	if !q.Match(0x27000000) {
+		t.Fatalf("%v should match %s even though the length is invalid", q, "27000000")
+	}
 }

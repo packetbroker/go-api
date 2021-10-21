@@ -21,7 +21,10 @@ func (m *DevAddrPrefix) MarshalText() ([]byte, error) {
 func (m *DevAddrPrefix) UnmarshalText(text []byte) error {
 	parts := strings.SplitN(string(text), "/", 2)
 	if len(parts) != 2 {
-		return errors.New("packetbroker: require 2 parts of in formatted DevAddrPrefix")
+		return errors.New("packetbroker: require 2 parts in formatted DevAddrPrefix")
+	}
+	if len(parts[0]) != 8 {
+		return errors.New("packetbroker: require hex value of length 8")
 	}
 	value, err := strconv.ParseUint(parts[0], 16, 32)
 	if err != nil {
@@ -38,14 +41,11 @@ func (m *DevAddrPrefix) UnmarshalText(text []byte) error {
 	return nil
 }
 
-// Match returns true if the DevAddrPrefixes matches the given DevAddr.
+// Match returns true if the DevAddrPrefix matches the given DevAddr.
 func (m *DevAddrPrefix) Match(devAddr uint32) bool {
 	if m == nil {
 		return false
 	}
 	shift := 32 - m.Length
-	if shift < 0 {
-		shift = 0
-	}
 	return m.Value>>shift == devAddr>>shift
 }

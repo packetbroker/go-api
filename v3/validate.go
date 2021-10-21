@@ -36,6 +36,14 @@ func (b *DevAddrBlock) Validate() error {
 	return b.Prefix.Validate()
 }
 
+// Validate returns whether the JoinEUIPrefix is valid.
+func (pf *JoinEUIPrefix) Validate() error {
+	if pf.GetLength() > 64 {
+		return errors.New("length too long")
+	}
+	return nil
+}
+
 // Validate returns whether the Target is valid.
 func (t *Target) Validate() error {
 	switch t.Protocol {
@@ -49,6 +57,13 @@ func (t *Target) Validate() error {
 	default:
 		return errors.New("invalid target protocol")
 	}
+}
+
+func (e *JoinServerFixedEndpoint) Validate() error {
+	if !ClusterIDRegex.MatchString(e.GetClusterId()) {
+		return errors.New("invalid cluster ID format")
+	}
+	return nil
 }
 
 // Validate returns whether the GatewayIdentifier is valid.

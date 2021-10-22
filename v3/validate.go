@@ -10,7 +10,7 @@ import (
 
 var (
 	// ClusterIDRegex is the regular expression for validating cluster identifiers.
-	ClusterIDRegex = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$")
+	ClusterIDRegex = regexp.MustCompile(`^(?:(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])\.)*(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])$|^$`)
 	// SubscriptionGroupRegexp is the regular expression for validating subscription groups.
 	SubscriptionGroupRegexp = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$")
 	// APIKeyIDRegex is the regular expression for validating API key identifiers.

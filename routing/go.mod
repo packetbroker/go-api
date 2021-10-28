@@ -3,7 +3,7 @@ module go.packetbroker.org/api/routing
 go 1.17
 
 require (
-	go.packetbroker.org/api/v3 v3.12.1
+	go.packetbroker.org/api/v3 v3.12.2
 	google.golang.org/grpc v1.41.0
 	google.golang.org/protobuf v1.27.1
 )

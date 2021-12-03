@@ -1,4 +1,4 @@
-// Copyright © 2020 The Things Industries B.V.
+// Copyright © 2021 The Things Industries B.V.
 
 package reportingpb
 
@@ -11,23 +11,19 @@ import (
 
 // Validate returns whether the request is valid.
 func (r *GetRoutedMessagesRequest) Validate() error {
-	if r.ForwarderNetId != nil {
+	if r.ForwarderNetId != nil && r.ForwarderTenantId != nil {
 		id := packetbroker.TenantID{
 			NetID: packetbroker.NetID(r.ForwarderNetId.Value),
-		}
-		if r.ForwarderTenantId != nil {
-			id.ID = r.ForwarderTenantId.Value
+			ID:    r.ForwarderTenantId.Value,
 		}
 		if err := id.Validate(); err != nil {
 			return err
 		}
 	}
-	if r.HomeNetworkNetId != nil {
+	if r.HomeNetworkNetId != nil && r.HomeNetworkTenantId != nil {
 		id := packetbroker.TenantID{
 			NetID: packetbroker.NetID(r.HomeNetworkNetId.Value),
-		}
-		if r.HomeNetworkTenantId != nil {
-			id.ID = r.HomeNetworkTenantId.Value
+			ID:    r.HomeNetworkTenantId.Value,
 		}
 		if err := id.Validate(); err != nil {
 			return err
@@ -43,7 +39,7 @@ func (r *GetRoutedMessagesRequest) Validate() error {
 		if period.To == nil {
 			return errors.New("to period is required")
 		}
-		for month := range []uint32{period.From.Month, period.To.Month} {
+		for _, month := range []uint32{period.From.Month, period.To.Month} {
 			if month < 1 || month > 12 {
 				return fmt.Errorf("invalid month %d", month)
 			}

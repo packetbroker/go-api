@@ -31,13 +31,16 @@ func (r *GetHomeNetworkGatewayVisibilityRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *SetGatewayVisibilityRequest) Validate() error {
-	if r.GetVisibility().GetForwarderTenantId() != "" {
-		if err := packetbroker.ForwarderTenantID(r.GetVisibility()).Validate(); err != nil {
+	if r.Visibility == nil {
+		return errors.New("visibility is required")
+	}
+	if r.Visibility.GetForwarderTenantId() != "" {
+		if err := packetbroker.ForwarderTenantID(r.Visibility).Validate(); err != nil {
 			return err
 		}
 	}
-	if r.GetVisibility().GetHomeNetworkTenantId() != "" {
-		return packetbroker.HomeNetworkTenantID(r.GetVisibility()).Validate()
+	if r.Visibility.GetHomeNetworkTenantId() != "" {
+		return packetbroker.HomeNetworkTenantID(r.Visibility).Validate()
 	}
 	return nil
 }

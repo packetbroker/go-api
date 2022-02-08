@@ -10,9 +10,9 @@ import (
 
 var (
 	// ClusterIDRegex is the regular expression for validating cluster identifiers.
-	ClusterIDRegex = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$")
+	ClusterIDRegex = regexp.MustCompile(`^(?:(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])\.)*(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])$|^$`)
 	// SubscriptionGroupRegexp is the regular expression for validating subscription groups.
-	SubscriptionGroupRegexp = regexp.MustCompile("^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$")
+	SubscriptionGroupRegexp = regexp.MustCompile(`^(?:(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])\.)*(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])$|^$`)
 	// APIKeyIDRegex is the regular expression for validating API key identifiers.
 	APIKeyIDRegex = regexp.MustCompile("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ234567]{16}$")
 )
@@ -36,11 +36,19 @@ func (b *DevAddrBlock) Validate() error {
 	return b.Prefix.Validate()
 }
 
+// Validate returns whether the JoinEUIPrefix is valid.
+func (pf *JoinEUIPrefix) Validate() error {
+	if pf.GetLength() > 64 {
+		return errors.New("length too long")
+	}
+	return nil
+}
+
 // Validate returns whether the Target is valid.
 func (t *Target) Validate() error {
 	switch t.Protocol {
 	// LoRaWAN Backend Interfaces require a valid URL, or empty value for lookup.
-	case TargetProtocol_TS002_V1_0, TargetProtocol_TS002_V1_1_0:
+	case Protocol_TS002_V1_0, Protocol_TS002_V1_1:
 		if t.Address == "" {
 			return nil
 		}
@@ -49,6 +57,13 @@ func (t *Target) Validate() error {
 	default:
 		return errors.New("invalid target protocol")
 	}
+}
+
+func (e *JoinServerFixedEndpoint) Validate() error {
+	if !ClusterIDRegex.MatchString(e.GetClusterId()) {
+		return errors.New("invalid cluster ID format")
+	}
+	return nil
 }
 
 // Validate returns whether the GatewayIdentifier is valid.

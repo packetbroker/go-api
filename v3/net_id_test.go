@@ -33,23 +33,23 @@ func TestNetID(t *testing.T) {
 func TestDevAddrPrefixFromNetID(t *testing.T) {
 	for _, tc := range []struct {
 		NetID
-		Prefix DevAddrPrefix
+		Prefix *DevAddrPrefix
 	}{
 		{
 			NetID:  0x000013,
-			Prefix: DevAddrPrefix{Value: 0x26000000, Length: 7},
+			Prefix: &DevAddrPrefix{Value: 0x26000000, Length: 7},
 		},
 		{
 			NetID:  0x600011,
-			Prefix: DevAddrPrefix{Value: 0xE0220000, Length: 15},
+			Prefix: &DevAddrPrefix{Value: 0xE0220000, Length: 15},
 		},
 		{
 			NetID:  0xC0002F,
-			Prefix: DevAddrPrefix{Value: 0xFC00BC00, Length: 22},
+			Prefix: &DevAddrPrefix{Value: 0xFC00BC00, Length: 22},
 		},
 	} {
 		if actual := tc.DevAddrPrefix(); actual.Value != tc.Prefix.Value || actual.Length != tc.Prefix.Length {
-			t.Fatalf("Expected NetID's %q DevAddr prefix to be %v (but it was %v)", tc.NetID, tc.Prefix, actual)
+			t.Fatalf("Expected NetID's %q DevAddr prefix to be %v (but it was %v)", tc.NetID, tc.Prefix, &actual)
 		}
 	}
 }

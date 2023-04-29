@@ -59,6 +59,7 @@ func (t *Target) Validate() error {
 	}
 }
 
+// Validate returns whether the HomeNetwork is valid.
 func (e *JoinServerFixedEndpoint) Validate() error {
 	if !ClusterIDRegex.MatchString(e.GetClusterId()) {
 		return errors.New("invalid cluster ID format")
@@ -77,6 +78,7 @@ func (i *GatewayIdentifier) Validate() error {
 	return nil
 }
 
+// Validate returns whether the GatewayIdentifier is valid.
 func (m *UplinkMessage) Validate() error {
 	if m.GetGatewayId() != nil {
 		if err := m.GatewayId.Validate(); err != nil {
@@ -86,6 +88,7 @@ func (m *UplinkMessage) Validate() error {
 	return nil
 }
 
+// Validate returns whether the GatewayIdentifier is valid.
 func (m *DownlinkMessage) Validate() error {
 	return nil
 }

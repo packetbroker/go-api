@@ -49,3 +49,8 @@ func (m *DevAddrPrefix) Match(devAddr uint32) bool {
 	shift := 32 - m.Length
 	return m.Value>>shift == devAddr>>shift
 }
+
+// Range returns the inclusive lowest and highest value.
+func (m *DevAddrPrefix) Range() (low, high uint32) {
+	return m.Value, m.Value | 0xffffffff>>m.Length
+}

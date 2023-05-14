@@ -14,6 +14,16 @@ func TestNetID(t *testing.T) {
 		t.Fatalf("String() result %q does not equal %q", v, "000013")
 	}
 
+	if p := (&DevAddrPrefix{Value: 0x26000000, Length: 7}); !n.MatchPrefix(p) {
+		t.Fatalf("MatchPrefix() %v should match", p)
+	}
+	if p := (&DevAddrPrefix{Value: 0x26010000, Length: 16}); !n.MatchPrefix(p) {
+		t.Fatalf("MatchPrefix() %v should match", p)
+	}
+	if p := (&DevAddrPrefix{Value: 0x26000000, Length: 6}); n.MatchPrefix(p) {
+		t.Fatalf("MatchPrefix() %v should not match", p)
+	}
+
 	buf, err := n.MarshalText()
 	if err != nil {
 		panic(err)

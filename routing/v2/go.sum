@@ -3,8 +3,8 @@ github.com/golang/protobuf v1.5.3 h1:KhyjKVUg7Usr/dYsdSqoFveMYd5ko72D+zANwlG1mmg
 github.com/golang/protobuf v1.5.3/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
-go.packetbroker.org/api/v3 v3.13.0 h1:YAlRUK38sUOsXpEz2Pk8BANvHjRUh6yeUMvfliGcl/0=
-go.packetbroker.org/api/v3 v3.13.0/go.mod h1:Ocd3Ia7E8c/1zZ4h/8LL9o4I/dDFdpSW8WGqMtTh6Jw=
+go.packetbroker.org/api/v3 v3.14.0 h1:Ghzspv/kO2fU3oSC92GJNQxj+eU9oWPOxVAU20dzshU=
+go.packetbroker.org/api/v3 v3.14.0/go.mod h1:Ocd3Ia7E8c/1zZ4h/8LL9o4I/dDFdpSW8WGqMtTh6Jw=
 golang.org/x/net v0.9.0 h1:aWJ/m6xSmxWBx+V0XRHTlrYrPG56jKsLdTFmsSsCzOM=
 golang.org/x/net v0.9.0/go.mod h1:d48xBJpPfHeWQsugry2m+kC02ZBRGRgulfHnEXEuWns=
 golang.org/x/sys v0.7.0 h1:3jlCCIQZPdOYu1h8BkNvLz8Kgwtae2cagcG/VamtZRU=

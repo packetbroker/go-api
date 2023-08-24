@@ -3,7 +3,7 @@ module go.packetbroker.org/api/mapping/v2
 go 1.20
 
 require (
-	go.packetbroker.org/api/v3 v3.13.0
+	go.packetbroker.org/api/v3 v3.14.0
 	google.golang.org/grpc v1.54.0
 	google.golang.org/protobuf v1.30.0
 )

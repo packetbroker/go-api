@@ -23,14 +23,16 @@ MAPPING_VERSION ?= v2
 IAM_VERSION ?= v2
 REPORTING_VERSION ?= v1
 
-protos = $(wildcard $(PBAPI)/packetbroker/api/$(VERSION)/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/routing/$(ROUTING_VERSION)/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/mapping/$(MAPPING_VERSION)/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/iam/$(IAM_VERSION)/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/reporting/$(REPORTING_VERSION)/*.proto)
+protos = $(wildcard $(PBAPI)/packetbroker/api/v3/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/routing/v1/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/routing/v2/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/mapping/v2/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/iam/v1/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/iam/v2/*.proto) \
+	$(wildcard $(PBAPI)/packetbroker/api/reporting/v1/*.proto)
 prototargets = $(subst v1/,,$(patsubst $(PBAPI)/packetbroker/api/%.proto,%.pb.go,$(protos)))
 
-openapis = $(PBAPI)/packetbroker/api/mapping/$(MAPPING_VERSION)/openapi.tmpl.json
+openapis = $(PBAPI)/packetbroker/api/mapping/v2/openapi.tmpl.json
 openapitargets = $(subst v1/,,$(patsubst $(PBAPI)/packetbroker/api/%/openapi.tmpl.json,%/openapi/openapi.tmpl.json,$(openapis)))
 
 .PHONY: all

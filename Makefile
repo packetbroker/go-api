@@ -17,11 +17,6 @@ GO = go
 PROTOC = protoc
 
 PBAPI ?= ../..
-VERSION ?= v3
-ROUTING_VERSION ?= v2
-MAPPING_VERSION ?= v2
-IAM_VERSION ?= v2
-REPORTING_VERSION ?= v1
 
 protos = $(wildcard $(PBAPI)/packetbroker/api/v3/*.proto) \
 	$(wildcard $(PBAPI)/packetbroker/api/routing/v1/*.proto) \

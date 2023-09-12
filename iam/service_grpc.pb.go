@@ -34,11 +34,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	NetworkRegistry_ListNetworks_FullMethodName  = "/org.packetbroker.iam.v1.NetworkRegistry/ListNetworks"
-	NetworkRegistry_CreateNetwork_FullMethodName = "/org.packetbroker.iam.v1.NetworkRegistry/CreateNetwork"
-	NetworkRegistry_GetNetwork_FullMethodName    = "/org.packetbroker.iam.v1.NetworkRegistry/GetNetwork"
-	NetworkRegistry_UpdateNetwork_FullMethodName = "/org.packetbroker.iam.v1.NetworkRegistry/UpdateNetwork"
-	NetworkRegistry_DeleteNetwork_FullMethodName = "/org.packetbroker.iam.v1.NetworkRegistry/DeleteNetwork"
+	NetworkRegistry_ListNetworks_FullMethodName        = "/org.packetbroker.iam.v1.NetworkRegistry/ListNetworks"
+	NetworkRegistry_CreateNetwork_FullMethodName       = "/org.packetbroker.iam.v1.NetworkRegistry/CreateNetwork"
+	NetworkRegistry_GetNetwork_FullMethodName          = "/org.packetbroker.iam.v1.NetworkRegistry/GetNetwork"
+	NetworkRegistry_UpdateNetwork_FullMethodName       = "/org.packetbroker.iam.v1.NetworkRegistry/UpdateNetwork"
+	NetworkRegistry_UpdateNetworkListed_FullMethodName = "/org.packetbroker.iam.v1.NetworkRegistry/UpdateNetworkListed"
+	NetworkRegistry_DeleteNetwork_FullMethodName       = "/org.packetbroker.iam.v1.NetworkRegistry/DeleteNetwork"
 )
 
 // NetworkRegistryClient is the client API for NetworkRegistry service.
@@ -53,6 +54,8 @@ type NetworkRegistryClient interface {
 	GetNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*GetNetworkResponse, error)
 	// Update a network.
 	UpdateNetwork(ctx context.Context, in *UpdateNetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Update the listed state of a network.
+	UpdateNetworkListed(ctx context.Context, in *UpdateNetworkListedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete a network.
 	DeleteNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -101,6 +104,15 @@ func (c *networkRegistryClient) UpdateNetwork(ctx context.Context, in *UpdateNet
 	return out, nil
 }
 
+func (c *networkRegistryClient) UpdateNetworkListed(ctx context.Context, in *UpdateNetworkListedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, NetworkRegistry_UpdateNetworkListed_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *networkRegistryClient) DeleteNetwork(ctx context.Context, in *NetworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, NetworkRegistry_DeleteNetwork_FullMethodName, in, out, opts...)
@@ -122,6 +134,8 @@ type NetworkRegistryServer interface {
 	GetNetwork(context.Context, *NetworkRequest) (*GetNetworkResponse, error)
 	// Update a network.
 	UpdateNetwork(context.Context, *UpdateNetworkRequest) (*emptypb.Empty, error)
+	// Update the listed state of a network.
+	UpdateNetworkListed(context.Context, *UpdateNetworkListedRequest) (*emptypb.Empty, error)
 	// Delete a network.
 	DeleteNetwork(context.Context, *NetworkRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedNetworkRegistryServer()
@@ -142,6 +156,9 @@ func (UnimplementedNetworkRegistryServer) GetNetwork(context.Context, *NetworkRe
 }
 func (UnimplementedNetworkRegistryServer) UpdateNetwork(context.Context, *UpdateNetworkRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNetwork not implemented")
+}
+func (UnimplementedNetworkRegistryServer) UpdateNetworkListed(context.Context, *UpdateNetworkListedRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateNetworkListed not implemented")
 }
 func (UnimplementedNetworkRegistryServer) DeleteNetwork(context.Context, *NetworkRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNetwork not implemented")
@@ -231,6 +248,24 @@ func _NetworkRegistry_UpdateNetwork_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NetworkRegistry_UpdateNetworkListed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateNetworkListedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NetworkRegistryServer).UpdateNetworkListed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NetworkRegistry_UpdateNetworkListed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NetworkRegistryServer).UpdateNetworkListed(ctx, req.(*UpdateNetworkListedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _NetworkRegistry_DeleteNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NetworkRequest)
 	if err := dec(in); err != nil {
@@ -273,6 +308,10 @@ var NetworkRegistry_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _NetworkRegistry_UpdateNetwork_Handler,
 		},
 		{
+			MethodName: "UpdateNetworkListed",
+			Handler:    _NetworkRegistry_UpdateNetworkListed_Handler,
+		},
+		{
 			MethodName: "DeleteNetwork",
 			Handler:    _NetworkRegistry_DeleteNetwork_Handler,
 		},
@@ -282,11 +321,12 @@ var NetworkRegistry_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	TenantRegistry_ListTenants_FullMethodName  = "/org.packetbroker.iam.v1.TenantRegistry/ListTenants"
-	TenantRegistry_CreateTenant_FullMethodName = "/org.packetbroker.iam.v1.TenantRegistry/CreateTenant"
-	TenantRegistry_GetTenant_FullMethodName    = "/org.packetbroker.iam.v1.TenantRegistry/GetTenant"
-	TenantRegistry_UpdateTenant_FullMethodName = "/org.packetbroker.iam.v1.TenantRegistry/UpdateTenant"
-	TenantRegistry_DeleteTenant_FullMethodName = "/org.packetbroker.iam.v1.TenantRegistry/DeleteTenant"
+	TenantRegistry_ListTenants_FullMethodName        = "/org.packetbroker.iam.v1.TenantRegistry/ListTenants"
+	TenantRegistry_CreateTenant_FullMethodName       = "/org.packetbroker.iam.v1.TenantRegistry/CreateTenant"
+	TenantRegistry_GetTenant_FullMethodName          = "/org.packetbroker.iam.v1.TenantRegistry/GetTenant"
+	TenantRegistry_UpdateTenant_FullMethodName       = "/org.packetbroker.iam.v1.TenantRegistry/UpdateTenant"
+	TenantRegistry_UpdateTenantListed_FullMethodName = "/org.packetbroker.iam.v1.TenantRegistry/UpdateTenantListed"
+	TenantRegistry_DeleteTenant_FullMethodName       = "/org.packetbroker.iam.v1.TenantRegistry/DeleteTenant"
 )
 
 // TenantRegistryClient is the client API for TenantRegistry service.
@@ -301,6 +341,8 @@ type TenantRegistryClient interface {
 	GetTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*GetTenantResponse, error)
 	// Update a tenant.
 	UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Update the listed state of a tenant.
+	UpdateTenantListed(ctx context.Context, in *UpdateTenantListedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete a tenant.
 	DeleteTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -349,6 +391,15 @@ func (c *tenantRegistryClient) UpdateTenant(ctx context.Context, in *UpdateTenan
 	return out, nil
 }
 
+func (c *tenantRegistryClient) UpdateTenantListed(ctx context.Context, in *UpdateTenantListedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TenantRegistry_UpdateTenantListed_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *tenantRegistryClient) DeleteTenant(ctx context.Context, in *TenantRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, TenantRegistry_DeleteTenant_FullMethodName, in, out, opts...)
@@ -370,6 +421,8 @@ type TenantRegistryServer interface {
 	GetTenant(context.Context, *TenantRequest) (*GetTenantResponse, error)
 	// Update a tenant.
 	UpdateTenant(context.Context, *UpdateTenantRequest) (*emptypb.Empty, error)
+	// Update the listed state of a tenant.
+	UpdateTenantListed(context.Context, *UpdateTenantListedRequest) (*emptypb.Empty, error)
 	// Delete a tenant.
 	DeleteTenant(context.Context, *TenantRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedTenantRegistryServer()
@@ -390,6 +443,9 @@ func (UnimplementedTenantRegistryServer) GetTenant(context.Context, *TenantReque
 }
 func (UnimplementedTenantRegistryServer) UpdateTenant(context.Context, *UpdateTenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTenant not implemented")
+}
+func (UnimplementedTenantRegistryServer) UpdateTenantListed(context.Context, *UpdateTenantListedRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTenantListed not implemented")
 }
 func (UnimplementedTenantRegistryServer) DeleteTenant(context.Context, *TenantRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTenant not implemented")
@@ -479,6 +535,24 @@ func _TenantRegistry_UpdateTenant_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TenantRegistry_UpdateTenantListed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTenantListedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TenantRegistryServer).UpdateTenantListed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TenantRegistry_UpdateTenantListed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantRegistryServer).UpdateTenantListed(ctx, req.(*UpdateTenantListedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _TenantRegistry_DeleteTenant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TenantRequest)
 	if err := dec(in); err != nil {
@@ -519,6 +593,10 @@ var TenantRegistry_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateTenant",
 			Handler:    _TenantRegistry_UpdateTenant_Handler,
+		},
+		{
+			MethodName: "UpdateTenantListed",
+			Handler:    _TenantRegistry_UpdateTenantListed_Handler,
 		},
 		{
 			MethodName: "DeleteTenant",

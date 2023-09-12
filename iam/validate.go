@@ -13,6 +13,9 @@ func (r *CreateNetworkRequest) Validate() error {
 	if r.GetNetwork() == nil {
 		return errors.New("network is required")
 	}
+	if r.Network.Authority != "" {
+		return errors.New("custom authority is not allowed")
+	}
 	if r.Network.NetId == 0 {
 		return errors.New("NetID is required")
 	}
@@ -36,6 +39,9 @@ func (r *CreateTenantRequest) Validate() error {
 	}
 	if err := packetbroker.RequestTenantID(r.Tenant).Validate(); err != nil {
 		return err
+	}
+	if r.Tenant.Authority != "" {
+		return errors.New("custom authority is not allowed")
 	}
 	for _, b := range r.Tenant.DevAddrBlocks {
 		if err := b.Validate(); err != nil {

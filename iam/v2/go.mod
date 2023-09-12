@@ -3,7 +3,7 @@ module go.packetbroker.org/api/iam/v2
 go 1.20
 
 require (
-	go.packetbroker.org/api/v3 v3.15.1
+	go.packetbroker.org/api/v3 v3.15.2
 	google.golang.org/grpc v1.58.0
 	google.golang.org/protobuf v1.31.0
 )

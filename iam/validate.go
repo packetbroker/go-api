@@ -19,15 +19,52 @@ func (r *CreateNetworkRequest) Validate() error {
 	if r.Network.NetId == 0 {
 		return errors.New("NetID is required")
 	}
+	if err := packetbroker.NetID(r.Network.NetId).Validate(); err != nil {
+		return err
+	}
+	if r.Network.DelegatedNetId != nil {
+		if err := packetbroker.NetID(r.Network.DelegatedNetId.Value).Validate(); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
 // Validate returns whether the request is valid.
+func (r *NetworkRequest) Validate() error {
+	return packetbroker.NetID(r.NetId).Validate()
+}
+
+// Validate returns whether the request is valid.
 func (r *UpdateNetworkRequest) Validate() error {
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
+	}
+	if delegatedNetID := r.DelegatedNetId.GetValue(); delegatedNetID != nil {
+		if err := packetbroker.NetID(delegatedNetID.Value).Validate(); err != nil {
+			return err
+		}
+	}
 	if target := r.GetTarget().GetValue(); target != nil {
 		if err := target.Validate(); err != nil {
 			return err
 		}
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
+func (r *UpdateNetworkListedRequest) Validate() error {
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
+func (r *ListTenantsRequest) Validate() error {
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
 	}
 	return nil
 }
@@ -75,23 +112,37 @@ func (r *UpdateTenantRequest) Validate() error {
 }
 
 // Validate returns whether the request is valid.
+func (r *UpdateTenantListedRequest) Validate() error {
+	if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
 func (r *ListAPIKeysRequest) Validate() error {
-	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
-		return errors.New("invalid Cluster ID format")
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
 	}
 	if r.GetTenantId() != "" {
 		return packetbroker.RequestTenantID(r).Validate()
+	}
+	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
+		return errors.New("invalid Cluster ID format")
 	}
 	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *CreateAPIKeyRequest) Validate() error {
-	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
-		return errors.New("invalid Cluster ID format")
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
 	}
 	if r.GetTenantId() != "" {
 		return packetbroker.RequestTenantID(r).Validate()
+	}
+	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
+		return errors.New("invalid Cluster ID format")
 	}
 	return nil
 }

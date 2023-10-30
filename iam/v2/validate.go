@@ -9,16 +9,6 @@ import (
 )
 
 // Validate returns whether the request is valid.
-func (r *ListNetworksRequest) Validate() error {
-	if r.GetPolicyReference().GetTenantId() != "" {
-		if err := packetbroker.RequestTenantID(r.PolicyReference).Validate(); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// Validate returns whether the request is valid.
 func (r *ListNetworkAPIKeysRequest) Validate() error {
 	if id := r.GetClusterId(); id != nil {
 		if !packetbroker.ClusterIDRegex.MatchString(id.GetValue()) {
@@ -26,6 +16,9 @@ func (r *ListNetworkAPIKeysRequest) Validate() error {
 		}
 	}
 	if nid := r.GetNetId(); nid != nil {
+		if err := packetbroker.NetID(nid.GetValue()).Validate(); err != nil {
+			return err
+		}
 		if tid := r.GetTenantId(); tid != nil {
 			tenantID := packetbroker.TenantID{
 				NetID: packetbroker.NetID(nid.GetValue()),
@@ -41,11 +34,14 @@ func (r *ListNetworkAPIKeysRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *CreateNetworkAPIKeyRequest) Validate() error {
-	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
-		return errors.New("invalid Cluster ID format")
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
 	}
 	if r.GetTenantId() != "" {
 		return packetbroker.RequestTenantID(r).Validate()
+	}
+	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
+		return errors.New("invalid Cluster ID format")
 	}
 	return nil
 }
@@ -75,6 +71,21 @@ func (r *CreateClusterAPIKeyRequest) Validate() error {
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
 		return errors.New("invalid Cluster ID format")
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
+func (r *ListNetworksRequest) Validate() error {
+	if ref := r.GetPolicyReference(); ref != nil {
+		if err := packetbroker.NetID(ref.NetId).Validate(); err != nil {
+			return err
+		}
+		if ref.TenantId != "" {
+			if err := packetbroker.RequestTenantID(r.PolicyReference).Validate(); err != nil {
+				return err
+			}
+		}
 	}
 	return nil
 }

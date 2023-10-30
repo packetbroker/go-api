@@ -11,22 +11,34 @@ import (
 
 // Validate returns whether the request is valid.
 func (r *GetRoutedMessagesRequest) Validate() error {
-	if r.ForwarderNetId != nil && r.ForwarderTenantId != nil {
-		id := packetbroker.TenantID{
-			NetID: packetbroker.NetID(r.ForwarderNetId.Value),
-			ID:    r.ForwarderTenantId.Value,
-		}
-		if err := id.Validate(); err != nil {
+	if r.ForwarderNetId != nil {
+		netID := packetbroker.NetID(r.ForwarderNetId.Value)
+		if err := netID.Validate(); err != nil {
 			return err
+		}
+		if r.ForwarderTenantId != nil {
+			id := packetbroker.TenantID{
+				NetID: netID,
+				ID:    r.ForwarderTenantId.Value,
+			}
+			if err := id.Validate(); err != nil {
+				return err
+			}
 		}
 	}
-	if r.HomeNetworkNetId != nil && r.HomeNetworkTenantId != nil {
-		id := packetbroker.TenantID{
-			NetID: packetbroker.NetID(r.HomeNetworkNetId.Value),
-			ID:    r.HomeNetworkTenantId.Value,
-		}
-		if err := id.Validate(); err != nil {
+	if r.HomeNetworkNetId != nil {
+		netID := packetbroker.NetID(r.HomeNetworkNetId.Value)
+		if err := netID.Validate(); err != nil {
 			return err
+		}
+		if r.HomeNetworkTenantId != nil {
+			id := packetbroker.TenantID{
+				NetID: netID,
+				ID:    r.HomeNetworkTenantId.Value,
+			}
+			if err := id.Validate(); err != nil {
+				return err
+			}
 		}
 	}
 	if r.Time == nil {

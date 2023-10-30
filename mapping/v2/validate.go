@@ -10,6 +10,9 @@ import (
 
 // Validate returns whether the request is valid.
 func (r *GetDefaultGatewayVisibilityRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if r.GetForwarderTenantId() != "" {
 		return packetbroker.ForwarderTenantID(r).Validate()
 	}
@@ -18,10 +21,16 @@ func (r *GetDefaultGatewayVisibilityRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *GetHomeNetworkGatewayVisibilityRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if r.GetForwarderTenantId() != "" {
 		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
 			return err
 		}
+	}
+	if err := packetbroker.NetID(r.HomeNetworkNetId).Validate(); err != nil {
+		return err
 	}
 	if r.GetHomeNetworkTenantId() != "" {
 		return packetbroker.HomeNetworkTenantID(r).Validate()
@@ -34,10 +43,16 @@ func (r *SetGatewayVisibilityRequest) Validate() error {
 	if r.Visibility == nil {
 		return errors.New("visibility is required")
 	}
+	if err := packetbroker.NetID(r.Visibility.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if r.Visibility.GetForwarderTenantId() != "" {
 		if err := packetbroker.ForwarderTenantID(r.Visibility).Validate(); err != nil {
 			return err
 		}
+	}
+	if err := packetbroker.NetID(r.Visibility.HomeNetworkNetId).Validate(); err != nil {
+		return err
 	}
 	if r.Visibility.GetHomeNetworkTenantId() != "" {
 		return packetbroker.HomeNetworkTenantID(r.Visibility).Validate()
@@ -47,6 +62,9 @@ func (r *SetGatewayVisibilityRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *UpdateGatewayRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if r.GetForwarderTenantId() != "" {
 		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
 			return err

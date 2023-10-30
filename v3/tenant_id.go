@@ -32,10 +32,22 @@ func (t TenantID) IsEmpty() bool {
 
 // Validate returns an error if the tenant ID is invalid.
 func (t TenantID) Validate() error {
+	if err := t.NetID.Validate(); err != nil {
+		return err
+	}
 	if !tenantIDRegexp.MatchString(t.ID) {
 		return fmt.Errorf("invalid tenant ID format")
 	}
 	return nil
+}
+
+// Group returns the TenantID with the grouped NetID.
+// See NetID.Group().
+func (t TenantID) Group() TenantID {
+	return TenantID{
+		NetID: t.NetID.Group(),
+		ID:    t.ID,
+	}
 }
 
 // ParseTenantID parses the TenantID formatted with String().

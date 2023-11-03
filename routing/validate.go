@@ -20,6 +20,9 @@ func (r *ListDefaultPoliciesRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *GetDefaultPolicyRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if r.GetForwarderTenantId() != "" {
 		return packetbroker.ForwarderTenantID(r).Validate()
 	}
@@ -28,6 +31,9 @@ func (r *GetDefaultPolicyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *ListHomeNetworkPoliciesRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if err := r.GetUpdatedSince().CheckValid(); err != nil && r.GetUpdatedSince() != nil {
 		return status.Error(codes.InvalidArgument, "invalid updated_since")
 	}
@@ -39,6 +45,12 @@ func (r *ListHomeNetworkPoliciesRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *GetHomeNetworkPolicyRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
+	if err := packetbroker.NetID(r.HomeNetworkNetId).Validate(); err != nil {
+		return err
+	}
 	if r.GetForwarderTenantId() != "" {
 		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
 			return err
@@ -65,6 +77,9 @@ func (r *SetPolicyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *ListEffectivePoliciesRequest) Validate() error {
+	if err := packetbroker.NetID(r.HomeNetworkNetId).Validate(); err != nil {
+		return err
+	}
 	if r.GetHomeNetworkTenantId() != "" {
 		return packetbroker.HomeNetworkTenantID(r).Validate()
 	}
@@ -73,6 +88,9 @@ func (r *ListEffectivePoliciesRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *ListNetworksWithPolicyRequest) Validate() error {
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
+	}
 	if r.GetTenantId() != "" {
 		return packetbroker.RequestTenantID(r).Validate()
 	}
@@ -81,6 +99,9 @@ func (r *ListNetworksWithPolicyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *PublishUplinkMessageRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
@@ -100,6 +121,9 @@ func (r *PublishUplinkMessageRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *PublishDownlinkMessageRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
@@ -107,6 +131,9 @@ func (r *PublishDownlinkMessageRequest) Validate() error {
 		if err := packetbroker.ForwarderTenantID(r).Validate(); err != nil {
 			return err
 		}
+	}
+	if err := packetbroker.NetID(r.HomeNetworkNetId).Validate(); err != nil {
+		return err
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetHomeNetworkClusterId()) {
 		return errors.New("invalid Home Network Cluster ID format")
@@ -143,6 +170,9 @@ func (r *DownlinkMessageDeliveryStateChangeRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *SubscribeForwarderRequest) Validate() error {
+	if err := packetbroker.NetID(r.ForwarderNetId).Validate(); err != nil {
+		return err
+	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetForwarderClusterId()) {
 		return errors.New("invalid Forwarder Cluster ID format")
 	}
@@ -157,6 +187,9 @@ func (r *SubscribeForwarderRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *SubscribeHomeNetworkRequest) Validate() error {
+	if err := packetbroker.NetID(r.HomeNetworkNetId).Validate(); err != nil {
+		return err
+	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetHomeNetworkClusterId()) {
 		return errors.New("invalid Home Network Cluster ID format")
 	}

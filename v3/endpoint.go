@@ -37,6 +37,15 @@ func (e Endpoint) Validate() error {
 	return nil
 }
 
+// Group returns the Endpoint with the grouped NetID.
+// See NetID.Group().
+func (e Endpoint) Group() Endpoint {
+	return Endpoint{
+		TenantID:  e.TenantID.Group(),
+		ClusterID: e.ClusterID,
+	}
+}
+
 // ForwarderEndpointRequest is a request with a Forwarder Endpoint.
 type ForwarderEndpointRequest interface {
 	GetForwarderNetId() uint32

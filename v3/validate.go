@@ -17,6 +17,15 @@ var (
 	APIKeyIDRegex = regexp.MustCompile("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ234567]{16}$")
 )
 
+// Validate returns whether the NetID is valid.
+// If the NetID is not a group NetID, this returns an error. See NetID.Group().
+func (n NetID) Validate() error {
+	if n.Group() != n {
+		return errors.New("NetID is not a group NetID")
+	}
+	return nil
+}
+
 // Validate returns whether the DevAddrPrefix is valid.
 func (pf *DevAddrPrefix) Validate() error {
 	if pf.GetLength() > 32 {

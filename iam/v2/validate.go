@@ -38,7 +38,9 @@ func (r *CreateNetworkAPIKeyRequest) Validate() error {
 		return err
 	}
 	if r.GetTenantId() != "" {
-		return packetbroker.RequestTenantID(r).Validate()
+		if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
+			return err
+		}
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
 		return errors.New("invalid Cluster ID format")

@@ -92,7 +92,9 @@ func (r *ListNetworksWithPolicyRequest) Validate() error {
 		return err
 	}
 	if r.GetTenantId() != "" {
-		return packetbroker.RequestTenantID(r).Validate()
+		if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
+			return err
+		}
 	}
 	return nil
 }

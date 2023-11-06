@@ -57,27 +57,6 @@ func (r *APIKeyRequest) Validate() error {
 }
 
 // Validate returns whether the request is valid.
-func (r *ListClusterAPIKeysRequest) Validate() error {
-	if id := r.GetClusterId(); id != nil {
-		if !packetbroker.ClusterIDRegex.MatchString(id.GetValue()) {
-			return errors.New("invalid Cluster ID format")
-		}
-	}
-	return nil
-}
-
-// Validate returns whether the request is valid.
-func (r *CreateClusterAPIKeyRequest) Validate() error {
-	if r.GetClusterId() == "" {
-		return errors.New("cluster ID is required")
-	}
-	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
-		return errors.New("invalid Cluster ID format")
-	}
-	return nil
-}
-
-// Validate returns whether the request is valid.
 func (r *ListNetworksRequest) Validate() error {
 	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
 		return err

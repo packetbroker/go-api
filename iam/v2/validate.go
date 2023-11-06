@@ -79,6 +79,14 @@ func (r *CreateClusterAPIKeyRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *ListNetworksRequest) Validate() error {
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
+	}
+	if r.GetTenantId() != "" {
+		if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
+			return err
+		}
+	}
 	if ref := r.GetPolicyReference(); ref != nil {
 		if err := packetbroker.NetID(ref.NetId).Validate(); err != nil {
 			return err
@@ -87,6 +95,19 @@ func (r *ListNetworksRequest) Validate() error {
 			if err := packetbroker.RequestTenantID(r.PolicyReference).Validate(); err != nil {
 				return err
 			}
+		}
+	}
+	return nil
+}
+
+// Validate returns whether the request is valid.
+func (r *ListJoinServersRequest) Validate() error {
+	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
+		return err
+	}
+	if r.GetTenantId() != "" {
+		if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
+			return err
 		}
 	}
 	return nil

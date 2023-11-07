@@ -28,8 +28,13 @@ func (e Endpoint) IsEmpty() bool {
 
 // Validate returns an error if the Endpoint is invalid.
 func (e Endpoint) Validate() error {
-	if err := e.TenantID.Validate(); err != nil {
+	if err := e.NetID.Validate(); err != nil {
 		return err
+	}
+	if e.TenantID.ID != "" {
+		if err := e.TenantID.Validate(); err != nil {
+			return err
+		}
 	}
 	if !ClusterIDRegex.MatchString(e.ClusterID) {
 		return errors.New("invalid cluster ID format")

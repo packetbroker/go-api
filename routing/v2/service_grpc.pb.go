@@ -33,9 +33,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Routes_ListUplinkRoutes_FullMethodName      = "/org.packetbroker.routing.v2.Routes/ListUplinkRoutes"
-	Routes_ListJoinRequestRoutes_FullMethodName = "/org.packetbroker.routing.v2.Routes/ListJoinRequestRoutes"
-	Routes_ListNetworkTargets_FullMethodName    = "/org.packetbroker.routing.v2.Routes/ListNetworkTargets"
+	Routes_ListUplinkRoutes_FullMethodName          = "/org.packetbroker.routing.v2.Routes/ListUplinkRoutes"
+	Routes_ListJoinRequestRoutes_FullMethodName     = "/org.packetbroker.routing.v2.Routes/ListJoinRequestRoutes"
+	Routes_ListNetworkServerClusters_FullMethodName = "/org.packetbroker.routing.v2.Routes/ListNetworkServerClusters"
 )
 
 // RoutesClient is the client API for Routes service.
@@ -46,8 +46,8 @@ type RoutesClient interface {
 	ListUplinkRoutes(ctx context.Context, in *ListUplinkRoutesRequest, opts ...grpc.CallOption) (*ListUplinkRoutesResponse, error)
 	// Returns the routes for join-requests.
 	ListJoinRequestRoutes(ctx context.Context, in *ListJoinRequestRoutesRequest, opts ...grpc.CallOption) (*ListJoinRequestRoutesResponse, error)
-	// Returns the network targets.
-	ListNetworkTargets(ctx context.Context, in *ListNetworkTargetsRequest, opts ...grpc.CallOption) (*ListNetworkTargetsResponse, error)
+	// Returns the Network Server clusters.
+	ListNetworkServerClusters(ctx context.Context, in *ListNetworkServerClustersRequest, opts ...grpc.CallOption) (*ListNetworkServerClustersResponse, error)
 }
 
 type routesClient struct {
@@ -76,9 +76,9 @@ func (c *routesClient) ListJoinRequestRoutes(ctx context.Context, in *ListJoinRe
 	return out, nil
 }
 
-func (c *routesClient) ListNetworkTargets(ctx context.Context, in *ListNetworkTargetsRequest, opts ...grpc.CallOption) (*ListNetworkTargetsResponse, error) {
-	out := new(ListNetworkTargetsResponse)
-	err := c.cc.Invoke(ctx, Routes_ListNetworkTargets_FullMethodName, in, out, opts...)
+func (c *routesClient) ListNetworkServerClusters(ctx context.Context, in *ListNetworkServerClustersRequest, opts ...grpc.CallOption) (*ListNetworkServerClustersResponse, error) {
+	out := new(ListNetworkServerClustersResponse)
+	err := c.cc.Invoke(ctx, Routes_ListNetworkServerClusters_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,8 +93,8 @@ type RoutesServer interface {
 	ListUplinkRoutes(context.Context, *ListUplinkRoutesRequest) (*ListUplinkRoutesResponse, error)
 	// Returns the routes for join-requests.
 	ListJoinRequestRoutes(context.Context, *ListJoinRequestRoutesRequest) (*ListJoinRequestRoutesResponse, error)
-	// Returns the network targets.
-	ListNetworkTargets(context.Context, *ListNetworkTargetsRequest) (*ListNetworkTargetsResponse, error)
+	// Returns the Network Server clusters.
+	ListNetworkServerClusters(context.Context, *ListNetworkServerClustersRequest) (*ListNetworkServerClustersResponse, error)
 	mustEmbedUnimplementedRoutesServer()
 }
 
@@ -108,8 +108,8 @@ func (UnimplementedRoutesServer) ListUplinkRoutes(context.Context, *ListUplinkRo
 func (UnimplementedRoutesServer) ListJoinRequestRoutes(context.Context, *ListJoinRequestRoutesRequest) (*ListJoinRequestRoutesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListJoinRequestRoutes not implemented")
 }
-func (UnimplementedRoutesServer) ListNetworkTargets(context.Context, *ListNetworkTargetsRequest) (*ListNetworkTargetsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListNetworkTargets not implemented")
+func (UnimplementedRoutesServer) ListNetworkServerClusters(context.Context, *ListNetworkServerClustersRequest) (*ListNetworkServerClustersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNetworkServerClusters not implemented")
 }
 func (UnimplementedRoutesServer) mustEmbedUnimplementedRoutesServer() {}
 
@@ -160,20 +160,20 @@ func _Routes_ListJoinRequestRoutes_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Routes_ListNetworkTargets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListNetworkTargetsRequest)
+func _Routes_ListNetworkServerClusters_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNetworkServerClustersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RoutesServer).ListNetworkTargets(ctx, in)
+		return srv.(RoutesServer).ListNetworkServerClusters(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Routes_ListNetworkTargets_FullMethodName,
+		FullMethod: Routes_ListNetworkServerClusters_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoutesServer).ListNetworkTargets(ctx, req.(*ListNetworkTargetsRequest))
+		return srv.(RoutesServer).ListNetworkServerClusters(ctx, req.(*ListNetworkServerClustersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -194,8 +194,8 @@ var Routes_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Routes_ListJoinRequestRoutes_Handler,
 		},
 		{
-			MethodName: "ListNetworkTargets",
-			Handler:    _Routes_ListNetworkTargets_Handler,
+			MethodName: "ListNetworkServerClusters",
+			Handler:    _Routes_ListNetworkServerClusters_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

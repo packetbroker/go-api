@@ -16,11 +16,18 @@ func (r *CreateNetworkRequest) Validate() error {
 	if r.Network.Authority != "" {
 		return errors.New("custom authority is not allowed")
 	}
-	if r.Network.NetId == 0 {
-		return errors.New("NetID is required")
-	}
 	if err := packetbroker.NetID(r.Network.NetId).Validate(); err != nil {
 		return err
+	}
+	for _, b := range r.Network.DevAddrBlocks {
+		if err := b.Validate(); err != nil {
+			return err
+		}
+	}
+	for clusterID := range r.Network.NsIds {
+		if !packetbroker.ClusterIDRegex.MatchString(clusterID) {
+			return errors.New("invalid Cluster ID format")
+		}
 	}
 	if r.Network.DelegatedNetId != nil {
 		if err := packetbroker.NetID(r.Network.DelegatedNetId.Value).Validate(); err != nil {
@@ -40,13 +47,20 @@ func (r *UpdateNetworkRequest) Validate() error {
 	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
 		return err
 	}
-	if delegatedNetID := r.DelegatedNetId.GetValue(); delegatedNetID != nil {
-		if err := packetbroker.NetID(delegatedNetID.Value).Validate(); err != nil {
+	for _, b := range r.GetDevAddrBlocks().GetValue() {
+		if err := b.Validate(); err != nil {
 			return err
 		}
 	}
-	if target := r.GetTarget().GetValue(); target != nil {
-		if err := target.Validate(); err != nil {
+	if nsIDs := r.NsIds; r != nil {
+		for clusterID := range nsIDs.Value {
+			if !packetbroker.ClusterIDRegex.MatchString(clusterID) {
+				return errors.New("invalid Cluster ID format")
+			}
+		}
+	}
+	if delegatedNetID := r.DelegatedNetId.GetValue(); delegatedNetID != nil {
+		if err := packetbroker.NetID(delegatedNetID.Value).Validate(); err != nil {
 			return err
 		}
 	}
@@ -85,6 +99,11 @@ func (r *CreateTenantRequest) Validate() error {
 			return err
 		}
 	}
+	for clusterID := range r.Tenant.NsIds {
+		if !packetbroker.ClusterIDRegex.MatchString(clusterID) {
+			return errors.New("invalid Cluster ID format")
+		}
+	}
 	return nil
 }
 
@@ -103,9 +122,11 @@ func (r *UpdateTenantRequest) Validate() error {
 			return err
 		}
 	}
-	if target := r.GetTarget().GetValue(); target != nil {
-		if err := target.Validate(); err != nil {
-			return err
+	if nsIDs := r.NsIds; r != nil {
+		for clusterID := range nsIDs.Value {
+			if !packetbroker.ClusterIDRegex.MatchString(clusterID) {
+				return errors.New("invalid Cluster ID format")
+			}
 		}
 	}
 	return nil

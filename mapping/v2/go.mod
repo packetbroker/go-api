@@ -5,7 +5,7 @@ go 1.20
 require (
 	go.packetbroker.org/api/v3 v3.17.1
 	google.golang.org/grpc v1.59.0
-	google.golang.org/protobuf v1.31.0
+	google.golang.org/protobuf v1.33.0
 )
 
 require (

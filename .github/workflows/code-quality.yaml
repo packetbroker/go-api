@@ -31,7 +31,7 @@ jobs:
       - name: Test modules
         run: make test
       - name: Test workspace
-        run: go test ./...
+        run: go test go.packetbroker.org/api/...
       - name: Format code
         run: make fmt
       - name: Tidy modules

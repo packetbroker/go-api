@@ -78,10 +78,44 @@ linters:
         - tt
         - tx
         - v
+      ignore-decls:
+        - w http.ResponseWriter
+        - r *http.Request
     wrapcheck:
       extra-ignore-sigs:
         - "func (context.Context).Err() error"
+        # gRPC status errors are the terminal error form of a gRPC handler.
         - "google.golang.org/grpc/status.Error("
+        - "go.packetbroker.org/pkg/host/status.Error("
+    revive:
+      # The default rule set of revive, with dot imports allowed for goconvey.
+      rules:
+        - name: blank-imports
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: dot-imports
+          arguments:
+            - allowed-packages:
+                - github.com/smartystreets/goconvey/convey
+        - name: empty-block
+        - name: error-naming
+        - name: error-return
+        - name: error-strings
+        - name: errorf
+        - name: exported
+        - name: increment-decrement
+        - name: indent-error-flow
+        - name: package-comments
+        - name: range
+        - name: receiver-naming
+        - name: redefines-builtin-id
+        - name: superfluous-else
+        - name: time-naming
+        - name: unexported-return
+        - name: unreachable-code
+        - name: unused-parameter
+        - name: var-declaration
+        - name: var-naming
     govet:
       disable:
         - stdversion

@@ -90,6 +90,7 @@ linters:
         - "go.packetbroker.org/pkg/host/status.WrapError("
         - "go.packetbroker.org/pkg/host/status.WrapErrorf("
         # The auth helpers return gRPC status errors that handlers pass through unchanged.
+        - "go.packetbroker.org/pkg/host/basicauth.Require"
         - "go.packetbroker.org/pkg/host/clusterauth.Require"
         - "go.packetbroker.org/pkg/host/networkauth.Require"
     revive:

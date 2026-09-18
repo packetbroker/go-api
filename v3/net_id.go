@@ -1,4 +1,5 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
 package packetbroker
 
@@ -19,8 +20,10 @@ func (n NetID) MarshalText() ([]byte, error) {
 
 // UnmarshalText implements TextUnmarshaler.
 func (n *NetID) UnmarshalText(buf []byte) error {
-	_, err := fmt.Sscanf(string(buf), "%06X", n)
-	return err
+	if _, err := fmt.Sscanf(string(buf), "%06X", n); err != nil {
+		return fmt.Errorf("packetbroker: invalid NetID: %w", err)
+	}
+	return nil
 }
 
 // Group returns the grouped NetID.
@@ -38,25 +41,52 @@ func (n NetID) Group() NetID {
 func (n NetID) DevAddrPrefix(grouped bool) *DevAddrPrefix {
 	switch n >> 21 {
 	case 0b000: // Type 0
-		return &DevAddrPrefix{Value: 0b0_000000_0000000000000000000000000 + uint32(n)&0b111111<<25, Length: 32 - 25}
+		return &DevAddrPrefix{
+			Value:  0b0_000000_0000000000000000000000000 + uint32(n)&0b111111<<25,
+			Length: 32 - 25,
+		}
 	case 0b001: // Type 1
-		return &DevAddrPrefix{Value: 0b10_000000_000000000000000000000000 + uint32(n)&0b111111<<24, Length: 32 - 24}
+		return &DevAddrPrefix{
+			Value:  0b10_000000_000000000000000000000000 + uint32(n)&0b111111<<24,
+			Length: 32 - 24,
+		}
 	case 0b010: // Type 2
-		return &DevAddrPrefix{Value: 0b110_000000000_00000000000000000000 + uint32(n)&0b111111111<<20, Length: 32 - 20}
+		return &DevAddrPrefix{
+			Value:  0b110_000000000_00000000000000000000 + uint32(n)&0b111111111<<20,
+			Length: 32 - 20,
+		}
 	case 0b011: // Type 3
-		return &DevAddrPrefix{Value: 0b1110_00000000000_00000000000000000 + uint32(n)&0b11111111111<<17, Length: 32 - 17}
+		return &DevAddrPrefix{
+			Value:  0b1110_00000000000_00000000000000000 + uint32(n)&0b11111111111<<17,
+			Length: 32 - 17,
+		}
 	case 0b100: // Type 4
-		return &DevAddrPrefix{Value: 0b11110_000000000000_000000000000000 + uint32(n)&0b111111111111<<15, Length: 32 - 15}
+		return &DevAddrPrefix{
+			Value:  0b11110_000000000000_000000000000000 + uint32(n)&0b111111111111<<15,
+			Length: 32 - 15,
+		}
 	case 0b101: // Type 5
-		return &DevAddrPrefix{Value: 0b111110_0000000000000_0000000000000 + uint32(n)&0b1111111111111<<13, Length: 32 - 13}
+		return &DevAddrPrefix{
+			Value:  0b111110_0000000000000_0000000000000 + uint32(n)&0b1111111111111<<13,
+			Length: 32 - 13,
+		}
 	case 0b110: // Type 6
-		return &DevAddrPrefix{Value: 0b1111110_000000000000000_0000000000 + uint32(n)&0b111111111111111<<10, Length: 32 - 10}
+		return &DevAddrPrefix{
+			Value:  0b1111110_000000000000000_0000000000 + uint32(n)&0b111111111111111<<10,
+			Length: 32 - 10,
+		}
 	case 0b111: // Type 7
 		if grouped {
 			// LoRa Alliance issues groups of 16 continuous Type 7 NetIDs, aligned on 0xFFFFF0.
-			return &DevAddrPrefix{Value: 0b11111110_00000000000000000_0000000 + uint32(n)&0b11111111111110000<<7, Length: 32 - 11}
+			return &DevAddrPrefix{
+				Value:  0b11111110_00000000000000000_0000000 + uint32(n)&0b11111111111110000<<7,
+				Length: 32 - 11,
+			}
 		}
-		return &DevAddrPrefix{Value: 0b11111110_00000000000000000_0000000 + uint32(n)&0b11111111111111111<<7, Length: 32 - 7}
+		return &DevAddrPrefix{
+			Value:  0b11111110_00000000000000000_0000000 + uint32(n)&0b11111111111111111<<7,
+			Length: 32 - 7,
+		}
 	default:
 		panic("unreachable")
 	}
@@ -64,13 +94,13 @@ func (n NetID) DevAddrPrefix(grouped bool) *DevAddrPrefix {
 
 // MatchPrefix returns whether the given prefix falls within the NetID's DevAddr prefix.
 // If grouped is true, the DevAddr prefix of the NetID group is considered. See NetID.Group().
-func (n NetID) MatchPrefix(p *DevAddrPrefix, grouped bool) bool {
+func (n NetID) MatchPrefix(prefix *DevAddrPrefix, grouped bool) bool {
 	netIDPrefix := n.DevAddrPrefix(grouped)
-	if netIDPrefix.Length > p.Length {
+	if netIDPrefix.GetLength() > prefix.GetLength() {
 		return false
 	}
 	outerL, outerH := netIDPrefix.Range()
-	innerL, innerH := p.Range()
+	innerL, innerH := prefix.Range()
 	return outerL <= innerL && outerH >= innerH
 }
 

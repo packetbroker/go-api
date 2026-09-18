@@ -1,11 +1,13 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
 package packetbroker
 
 import "testing"
 
 func TestTenantID(t *testing.T) {
-	for id, ok := range map[string]bool{
+	t.Parallel()
+	for input, ok := range map[string]bool{
 		"valid":        true,
 		"0invalid":     true,
 		"12345":        true,
@@ -15,14 +17,15 @@ func TestTenantID(t *testing.T) {
 		"test--tenant": false,
 		"INVALID":      false,
 	} {
-		t.Run(id, func(t *testing.T) {
+		t.Run(input, func(t *testing.T) {
+			t.Parallel()
 			tenantID := TenantID{
 				NetID: 0x13,
-				ID:    id,
+				ID:    input,
 			}
 			if (tenantID.Validate() == nil) != ok {
 				t.Fatalf("Expected %q to be %s",
-					id,
+					input,
 					map[bool]string{true: "valid", false: "invalid"}[ok],
 				)
 			}

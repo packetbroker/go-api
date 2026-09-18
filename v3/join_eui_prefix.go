@@ -1,4 +1,5 @@
-// Copyright © 2021 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2021 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
 package packetbroker
 
@@ -14,7 +15,7 @@ func (m *JoinEUIPrefix) MarshalText() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
-	return []byte(fmt.Sprintf("%016X/%d", m.Value, m.Length)), nil
+	return []byte(fmt.Sprintf("%016X/%d", m.GetValue(), m.GetLength())), nil
 }
 
 // UnmarshalText parses the formatted string.
@@ -35,7 +36,7 @@ func (m *JoinEUIPrefix) UnmarshalText(text []byte) error {
 		return fmt.Errorf("packetbroker: invalid length value: %w", err)
 	}
 	*m = JoinEUIPrefix{
-		Value:  uint64(value),
+		Value:  value,
 		Length: uint32(length),
 	}
 	return nil
@@ -46,6 +47,6 @@ func (m *JoinEUIPrefix) Match(joinEUI uint64) bool {
 	if m == nil {
 		return false
 	}
-	shift := 64 - m.Length
-	return m.Value>>shift == joinEUI>>shift
+	shift := 64 - m.GetLength()
+	return m.GetValue()>>shift == joinEUI>>shift
 }

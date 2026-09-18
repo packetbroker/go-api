@@ -1,4 +1,5 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
 package packetbroker
 
@@ -14,7 +15,7 @@ func (m *DevAddrPrefix) MarshalText() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
-	return []byte(fmt.Sprintf("%08X/%d", m.Value, m.Length)), nil
+	return []byte(fmt.Sprintf("%08X/%d", m.GetValue(), m.GetLength())), nil
 }
 
 // UnmarshalText parses the formatted string.
@@ -46,11 +47,11 @@ func (m *DevAddrPrefix) Match(devAddr uint32) bool {
 	if m == nil {
 		return false
 	}
-	shift := 32 - m.Length
-	return m.Value>>shift == devAddr>>shift
+	shift := 32 - m.GetLength()
+	return m.GetValue()>>shift == devAddr>>shift
 }
 
 // Range returns the inclusive lowest and highest value.
 func (m *DevAddrPrefix) Range() (low, high uint32) {
-	return m.Value, m.Value | 0xffffffff>>m.Length
+	return m.GetValue(), m.GetValue() | 0xffffffff>>m.GetLength()
 }

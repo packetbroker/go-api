@@ -1,0 +1,87 @@
+version: "2"
+
+run:
+  relative-path-mode: cfg
+
+linters:
+  enable:
+    - asciicheck
+    - errname
+    - errorlint
+    - exhaustive
+    - exptostd
+    - fatcontext
+    - gocritic
+    - godot
+    - goheader
+    - gomodguard_v2
+    - gosec
+    - govet
+    - intrange
+    - lll
+    - loggercheck
+    - nilnil
+    - noctx
+    - nolintlint
+    - paralleltest
+    - prealloc
+    - predeclared
+    - protogetter
+    - revive
+    - rowserrcheck
+    - sloglint
+    - spancheck
+    - sqlclosecheck
+    - staticcheck
+    - tagalign
+    - testifylint
+    - unconvert
+    - unparam
+    - unused
+    - varnamelen
+    - whitespace
+    - wrapcheck
+
+  settings:
+    godot:
+      capital: true
+      period: true
+    lll:
+      line-length: 120
+      tab-width: 2
+    goheader:
+      values:
+        regexp:
+          YEAR: 20\d\d
+      template: |-
+        SPDX-FileCopyrightText: Copyright {YEAR} The Things Industries B.V.
+        SPDX-License-Identifier: Apache-2.0
+    gosec:
+      excludes:
+        - G115 # Potential integer overflow when converting between integer types
+        - G404 # Insecure random number source (rand)
+    exhaustive:
+      default-signifies-exhaustive: true
+    varnamelen:
+      ignore-names:
+        - a
+        - b
+        - db
+        - i
+        - j
+        - k
+        - ok
+        - t
+        - tc
+        - st
+        - to
+        - tt
+        - tx
+        - v
+    wrapcheck:
+      extra-ignore-sigs:
+        - "func (context.Context).Err() error"
+        - "google.golang.org/grpc/status.Error("
+    govet:
+      disable:
+        - stdversion

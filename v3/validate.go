@@ -1,18 +1,25 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
+// Package packetbroker contains the Packet Broker API v3 for Go.
 package packetbroker
 
 import (
 	"errors"
+	"fmt"
 	"net/url"
 	"regexp"
 )
 
+// dnsLabelsPattern matches an empty string or a dot-separated sequence of lowercase DNS labels.
+const dnsLabelsPattern = `^(?:(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])\.)*` +
+	`(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])$|^$`
+
 var (
 	// ClusterIDRegex is the regular expression for validating cluster identifiers.
-	ClusterIDRegex = regexp.MustCompile(`^(?:(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])\.)*(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])$|^$`)
+	ClusterIDRegex = regexp.MustCompile(dnsLabelsPattern)
 	// SubscriptionGroupRegexp is the regular expression for validating subscription groups.
-	SubscriptionGroupRegexp = regexp.MustCompile(`^(?:(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])\.)*(?:[a-z0-9]|(?:[a-z0-9][a-z0-9-]?)*[a-z0-9])$|^$`)
+	SubscriptionGroupRegexp = regexp.MustCompile(dnsLabelsPattern)
 	// APIKeyIDRegex is the regular expression for validating API key identifiers.
 	APIKeyIDRegex = regexp.MustCompile("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ234567]{16}$")
 )
@@ -42,7 +49,7 @@ func (b *DevAddrBlock) Validate() error {
 	if !ClusterIDRegex.MatchString(b.GetHomeNetworkClusterId()) {
 		return errors.New("invalid cluster ID format")
 	}
-	return b.Prefix.Validate()
+	return b.GetPrefix().Validate()
 }
 
 // Validate returns whether the JoinEUIPrefix is valid.
@@ -55,14 +62,16 @@ func (pf *JoinEUIPrefix) Validate() error {
 
 // Validate returns whether the Target is valid.
 func (t *Target) Validate() error {
-	switch t.Protocol {
+	switch t.GetProtocol() {
 	// LoRaWAN Backend Interfaces require a valid URL, or empty value for lookup.
 	case Protocol_TS002_V1_0, Protocol_TS002_V1_1:
-		if t.Address == "" {
+		if t.GetAddress() == "" {
 			return nil
 		}
-		_, err := url.Parse(t.Address)
-		return err
+		if _, err := url.Parse(t.GetAddress()); err != nil {
+			return fmt.Errorf("invalid target address: %w", err)
+		}
+		return nil
 	default:
 		return errors.New("invalid target protocol")
 	}
@@ -78,7 +87,7 @@ func (e *JoinServerFixedEndpoint) Validate() error {
 
 // Validate returns whether the GatewayIdentifier is valid.
 func (i *GatewayIdentifier) Validate() error {
-	if i.Eui == nil && len(i.GetPlain()) == 0 && len(i.GetHash()) == 0 {
+	if i.GetEui() == nil && len(i.GetPlain()) == 0 && len(i.GetHash()) == 0 {
 		return errors.New("no gateway identifier specified")
 	}
 	if hash := i.GetHash(); hash != nil && len(hash) != 32 {
@@ -90,7 +99,7 @@ func (i *GatewayIdentifier) Validate() error {
 // Validate returns whether the GatewayIdentifier is valid.
 func (m *UplinkMessage) Validate() error {
 	if m.GetGatewayId() != nil {
-		if err := m.GatewayId.Validate(); err != nil {
+		if err := m.GetGatewayId().Validate(); err != nil {
 			return err
 		}
 	}
@@ -120,7 +129,7 @@ func (c *UplinkMessageDeliveryStateChange) Validate() error {
 			return err
 		}
 	}
-	if c.State != MessageDeliveryState_PROCESSED && c.Error != nil {
+	if c.GetState() != MessageDeliveryState_PROCESSED && c.GetError() != nil {
 		return errors.New("error information set while delivery state is not PROCESSED")
 	}
 	return nil
@@ -149,8 +158,8 @@ func (c *DownlinkMessageDeliveryStateChange) Validate() error {
 			return err
 		}
 	}
-	if c.State != MessageDeliveryState_PROCESSED {
-		switch c.Result.(type) {
+	if c.GetState() != MessageDeliveryState_PROCESSED {
+		switch c.GetResult().(type) {
 		case *DownlinkMessageDeliveryStateChange_Success:
 			return errors.New("success informtion set while delivery state is not PROCESSED")
 		case *DownlinkMessageDeliveryStateChange_Error:

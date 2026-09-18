@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns:
+          - "*"
+  - package-ecosystem: gomod
+    directories:
+      - /
+      - /v3
+      - /routing
+      - /routing/v2
+      - /iam
+      - /iam/v2
+      - /mapping/v2
+      - /reporting
+    schedule:
+      interval: weekly
+    groups:
+      go:
+        patterns:
+          - "*"
+    ignore:
+      # Modules of this repository depend on each other by commit; bump them by hand.
+      - dependency-name: "go.packetbroker.org/*"

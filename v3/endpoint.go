@@ -1,4 +1,5 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
 package packetbroker
 
@@ -31,7 +32,7 @@ func (e Endpoint) Validate() error {
 	if err := e.NetID.Validate(); err != nil {
 		return err
 	}
-	if e.TenantID.ID != "" {
+	if e.ID != "" {
 		if err := e.TenantID.Validate(); err != nil {
 			return err
 		}

@@ -1,9 +1,12 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
+// Package iampb contains the Packet Broker IAM API v1 for Go.
 package iampb
 
 import (
 	"errors"
+	"fmt"
 
 	packetbroker "go.packetbroker.org/api/v3"
 )
@@ -13,18 +16,18 @@ func (r *CreateNetworkRequest) Validate() error {
 	if r.GetNetwork() == nil {
 		return errors.New("network is required")
 	}
-	if r.Network.Authority != "" {
+	if r.GetNetwork().GetAuthority() != "" {
 		return errors.New("custom authority is not allowed")
 	}
-	if r.Network.NetId == 0 {
+	if r.GetNetwork().GetNetId() == 0 {
 		return errors.New("NetID is required")
 	}
-	if err := packetbroker.NetID(r.Network.NetId).Validate(); err != nil {
-		return err
+	if err := packetbroker.NetID(r.GetNetwork().GetNetId()).Validate(); err != nil {
+		return fmt.Errorf("network NetID: %w", err)
 	}
-	if r.Network.DelegatedNetId != nil {
-		if err := packetbroker.NetID(r.Network.DelegatedNetId.Value).Validate(); err != nil {
-			return err
+	if r.GetNetwork().GetDelegatedNetId() != nil {
+		if err := packetbroker.NetID(r.GetNetwork().GetDelegatedNetId().GetValue()).Validate(); err != nil {
+			return fmt.Errorf("delegated NetID: %w", err)
 		}
 	}
 	return nil
@@ -32,22 +35,25 @@ func (r *CreateNetworkRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *NetworkRequest) Validate() error {
-	return packetbroker.NetID(r.NetId).Validate()
+	if err := packetbroker.NetID(r.GetNetId()).Validate(); err != nil {
+		return fmt.Errorf("NetID: %w", err)
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *UpdateNetworkRequest) Validate() error {
-	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
-		return err
+	if err := packetbroker.NetID(r.GetNetId()).Validate(); err != nil {
+		return fmt.Errorf("NetID: %w", err)
 	}
-	if delegatedNetID := r.DelegatedNetId.GetValue(); delegatedNetID != nil {
-		if err := packetbroker.NetID(delegatedNetID.Value).Validate(); err != nil {
-			return err
+	if delegatedNetID := r.GetDelegatedNetId().GetValue(); delegatedNetID != nil {
+		if err := packetbroker.NetID(delegatedNetID.GetValue()).Validate(); err != nil {
+			return fmt.Errorf("delegated NetID: %w", err)
 		}
 	}
 	if target := r.GetTarget().GetValue(); target != nil {
 		if err := target.Validate(); err != nil {
-			return err
+			return fmt.Errorf("target: %w", err)
 		}
 	}
 	return nil
@@ -55,16 +61,16 @@ func (r *UpdateNetworkRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *UpdateNetworkListedRequest) Validate() error {
-	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
-		return err
+	if err := packetbroker.NetID(r.GetNetId()).Validate(); err != nil {
+		return fmt.Errorf("NetID: %w", err)
 	}
 	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *ListTenantsRequest) Validate() error {
-	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
-		return err
+	if err := packetbroker.NetID(r.GetNetId()).Validate(); err != nil {
+		return fmt.Errorf("NetID: %w", err)
 	}
 	return nil
 }
@@ -74,15 +80,15 @@ func (r *CreateTenantRequest) Validate() error {
 	if r.GetTenant() == nil {
 		return errors.New("tenant is required")
 	}
-	if err := packetbroker.RequestTenantID(r.Tenant).Validate(); err != nil {
-		return err
+	if err := packetbroker.RequestTenantID(r.GetTenant()).Validate(); err != nil {
+		return fmt.Errorf("tenant ID: %w", err)
 	}
-	if r.Tenant.Authority != "" {
+	if r.GetTenant().GetAuthority() != "" {
 		return errors.New("custom authority is not allowed")
 	}
-	for _, b := range r.Tenant.DevAddrBlocks {
+	for _, b := range r.GetTenant().GetDevAddrBlocks() {
 		if err := b.Validate(); err != nil {
-			return err
+			return fmt.Errorf("DevAddr block: %w", err)
 		}
 	}
 	return nil
@@ -90,22 +96,25 @@ func (r *CreateTenantRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *TenantRequest) Validate() error {
-	return packetbroker.RequestTenantID(r).Validate()
+	if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
+		return fmt.Errorf("tenant ID: %w", err)
+	}
+	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *UpdateTenantRequest) Validate() error {
 	if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
-		return err
+		return fmt.Errorf("tenant ID: %w", err)
 	}
 	for _, b := range r.GetDevAddrBlocks().GetValue() {
 		if err := b.Validate(); err != nil {
-			return err
+			return fmt.Errorf("DevAddr block: %w", err)
 		}
 	}
 	if target := r.GetTarget().GetValue(); target != nil {
 		if err := target.Validate(); err != nil {
-			return err
+			return fmt.Errorf("target: %w", err)
 		}
 	}
 	return nil
@@ -114,19 +123,19 @@ func (r *UpdateTenantRequest) Validate() error {
 // Validate returns whether the request is valid.
 func (r *UpdateTenantListedRequest) Validate() error {
 	if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
-		return err
+		return fmt.Errorf("tenant ID: %w", err)
 	}
 	return nil
 }
 
 // Validate returns whether the request is valid.
 func (r *ListAPIKeysRequest) Validate() error {
-	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
-		return err
+	if err := packetbroker.NetID(r.GetNetId()).Validate(); err != nil {
+		return fmt.Errorf("NetID: %w", err)
 	}
 	if r.GetTenantId() != "" {
 		if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
-			return err
+			return fmt.Errorf("tenant ID: %w", err)
 		}
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {
@@ -137,12 +146,12 @@ func (r *ListAPIKeysRequest) Validate() error {
 
 // Validate returns whether the request is valid.
 func (r *CreateAPIKeyRequest) Validate() error {
-	if err := packetbroker.NetID(r.NetId).Validate(); err != nil {
-		return err
+	if err := packetbroker.NetID(r.GetNetId()).Validate(); err != nil {
+		return fmt.Errorf("NetID: %w", err)
 	}
 	if r.GetTenantId() != "" {
 		if err := packetbroker.RequestTenantID(r).Validate(); err != nil {
-			return err
+			return fmt.Errorf("tenant ID: %w", err)
 		}
 	}
 	if !packetbroker.ClusterIDRegex.MatchString(r.GetClusterId()) {

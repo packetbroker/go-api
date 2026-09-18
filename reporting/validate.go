@@ -1,5 +1,7 @@
-// Copyright © 2021 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2021 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
+// Package reportingpb contains the Packet Broker Reporting API v1 for Go.
 package reportingpb
 
 import (
@@ -11,33 +13,33 @@ import (
 
 // Validate returns whether the request is valid.
 func (r *GetRoutedMessagesRequest) Validate() error {
-	if r.ForwarderNetId != nil {
-		netID := packetbroker.NetID(r.ForwarderNetId.Value)
+	if r.GetForwarderNetId() != nil {
+		netID := packetbroker.NetID(r.GetForwarderNetId().GetValue())
 		if err := netID.Validate(); err != nil {
-			return err
+			return fmt.Errorf("forwarder NetID: %w", err)
 		}
-		if r.ForwarderTenantId != nil {
+		if r.GetForwarderTenantId() != nil {
 			id := packetbroker.TenantID{
 				NetID: netID,
-				ID:    r.ForwarderTenantId.Value,
+				ID:    r.GetForwarderTenantId().GetValue(),
 			}
 			if err := id.Validate(); err != nil {
-				return err
+				return fmt.Errorf("forwarder tenant ID: %w", err)
 			}
 		}
 	}
-	if r.HomeNetworkNetId != nil {
-		netID := packetbroker.NetID(r.HomeNetworkNetId.Value)
+	if r.GetHomeNetworkNetId() != nil {
+		netID := packetbroker.NetID(r.GetHomeNetworkNetId().GetValue())
 		if err := netID.Validate(); err != nil {
-			return err
+			return fmt.Errorf("home network NetID: %w", err)
 		}
-		if r.HomeNetworkTenantId != nil {
+		if r.GetHomeNetworkTenantId() != nil {
 			id := packetbroker.TenantID{
 				NetID: netID,
-				ID:    r.HomeNetworkTenantId.Value,
+				ID:    r.GetHomeNetworkTenantId().GetValue(),
 			}
 			if err := id.Validate(); err != nil {
-				return err
+				return fmt.Errorf("home network tenant ID: %w", err)
 			}
 		}
 	}
@@ -45,13 +47,13 @@ func (r *GetRoutedMessagesRequest) Validate() error {
 		return errors.New("time is required")
 	}
 	if period := r.GetPeriod(); period != nil {
-		if period.From == nil {
+		if period.GetFrom() == nil {
 			return errors.New("from period is required")
 		}
-		if period.To == nil {
+		if period.GetTo() == nil {
 			return errors.New("to period is required")
 		}
-		for _, month := range []uint32{period.From.Month, period.To.Month} {
+		for _, month := range []uint32{period.GetFrom().GetMonth(), period.GetTo().GetMonth()} {
 			if month < 1 || month > 12 {
 				return fmt.Errorf("invalid month %d", month)
 			}

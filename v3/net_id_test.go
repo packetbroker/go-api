@@ -1,4 +1,5 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
 package packetbroker
 
@@ -8,23 +9,24 @@ import (
 )
 
 func TestNetID(t *testing.T) {
-	n := NetID(0x13)
+	t.Parallel()
+	netID := NetID(0x13)
 
-	if v := n.String(); v != "000013" {
+	if v := netID.String(); v != "000013" {
 		t.Fatalf("String() result %q does not equal %q", v, "000013")
 	}
 
-	if p := (&DevAddrPrefix{Value: 0x26000000, Length: 7}); !n.MatchPrefix(p, false) {
+	if p := (&DevAddrPrefix{Value: 0x26000000, Length: 7}); !netID.MatchPrefix(p, false) {
 		t.Fatalf("MatchPrefix() %v should match", p)
 	}
-	if p := (&DevAddrPrefix{Value: 0x26010000, Length: 16}); !n.MatchPrefix(p, false) {
+	if p := (&DevAddrPrefix{Value: 0x26010000, Length: 16}); !netID.MatchPrefix(p, false) {
 		t.Fatalf("MatchPrefix() %v should match", p)
 	}
-	if p := (&DevAddrPrefix{Value: 0x26000000, Length: 6}); n.MatchPrefix(p, false) {
+	if p := (&DevAddrPrefix{Value: 0x26000000, Length: 6}); netID.MatchPrefix(p, false) {
 		t.Fatalf("MatchPrefix() %v should not match", p)
 	}
 
-	buf, err := n.MarshalText()
+	buf, err := netID.MarshalText()
 	if err != nil {
 		panic(err)
 	}
@@ -32,15 +34,16 @@ func TestNetID(t *testing.T) {
 		t.Fatalf("MarshalText() result %v does not equal %v", buf, []byte("000013"))
 	}
 
-	if err := n.UnmarshalText([]byte("000042")); err != nil {
+	if err := netID.UnmarshalText([]byte("000042")); err != nil {
 		t.Fatalf("UnmarshalText() %v failed: %v", []byte("000042"), err)
 	}
-	if n != 0x42 {
-		t.Fatalf("UnmarshalText() result %v does not equal %v", uint32(n), 0x42)
+	if netID != 0x42 {
+		t.Fatalf("UnmarshalText() result %v does not equal %v", uint32(netID), 0x42)
 	}
 }
 
 func TestDevAddrPrefixFromNetID(t *testing.T) {
+	t.Parallel()
 	for _, tc := range []struct {
 		NetID
 		Prefix  *DevAddrPrefix
@@ -74,8 +77,9 @@ func TestDevAddrPrefixFromNetID(t *testing.T) {
 			Grouped: false,
 		},
 	} {
-		if actual := tc.DevAddrPrefix(tc.Grouped); actual.Value != tc.Prefix.Value || actual.Length != tc.Prefix.Length {
-			t.Fatalf("Expected NetID's %q DevAddr prefix to be %v (but it was %v)", tc.NetID, tc.Prefix, &actual)
+		actual := tc.DevAddrPrefix(tc.Grouped)
+		if actual.GetValue() != tc.Prefix.GetValue() || actual.GetLength() != tc.Prefix.GetLength() {
+			t.Fatalf("Expected NetID's %q DevAddr prefix to be %v (but it was %v)", tc.NetID, tc.Prefix, actual)
 		}
 	}
 }
@@ -83,6 +87,7 @@ func TestDevAddrPrefixFromNetID(t *testing.T) {
 func netIDPtr(v NetID) *NetID { return &v }
 
 func TestNetIDFromDevAddr(t *testing.T) {
+	t.Parallel()
 	for _, tc := range []struct {
 		DevAddr uint32
 		NetID   *NetID

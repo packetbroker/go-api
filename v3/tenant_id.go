@@ -1,4 +1,5 @@
-// Copyright © 2020 The Things Industries B.V.
+// SPDX-FileCopyrightText: Copyright 2020 The Things Industries B.V.
+// SPDX-License-Identifier: Apache-2.0
 
 package packetbroker
 
@@ -57,7 +58,7 @@ func ParseTenantID(s string) (TenantID, error) {
 		return TenantID{}, errors.New("invalid tenant ID format")
 	}
 	res := TenantID{ID: p[1]}
-	if err := res.NetID.UnmarshalText([]byte(p[0])); err != nil {
+	if err := res.UnmarshalText([]byte(p[0])); err != nil {
 		return TenantID{}, err
 	}
 	return res, res.Validate()

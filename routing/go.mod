@@ -1,18 +1,18 @@
 module go.packetbroker.org/api/routing
 
-go 1.24.4
+go 1.27.0
 
 require (
-	go.packetbroker.org/api/v3 v3.17.1
-	google.golang.org/grpc v1.75.0
-	google.golang.org/protobuf v1.36.7
+	go.packetbroker.org/api/v3 v3.0.0-20260918125712-30f2e397fe07
+	google.golang.org/grpc v1.84.0
+	google.golang.org/protobuf v1.36.12
 )
 
 require (
-	golang.org/x/net v0.43.0 // indirect
-	golang.org/x/sys v0.35.0 // indirect
-	golang.org/x/text v0.28.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250818200422-3122310a409c // indirect
+	golang.org/x/net v0.59.0 // indirect
+	golang.org/x/sys v0.48.0 // indirect
+	golang.org/x/text v0.42.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260917231906-eeb232e0883d // indirect
 )
 
 // Tagged releases are discontinued; depend on a master commit instead: go get go.packetbroker.org/api/routing@master

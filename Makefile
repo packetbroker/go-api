@@ -85,7 +85,7 @@ fmt:
 quality:
 	@for m in $(MODULES); do \
 		echo "lint $$m"; \
-		(cd $$m && $(GO) tool golangci-lint run --timeout 5m0s --allow-parallel-runners $(GO_LINT_FLAGS) ./...) || exit 1; \
+		(cd $$m && $(GO) tool golangci-lint run --timeout 5m0s --allow-parallel-runners --max-issues-per-linter 0 --max-same-issues 0 $(GO_LINT_FLAGS) ./...) || exit 1; \
 	done
 
 BASE_REF ?= master

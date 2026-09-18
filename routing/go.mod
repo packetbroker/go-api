@@ -14,3 +14,6 @@ require (
 	golang.org/x/text v0.28.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250818200422-3122310a409c // indirect
 )
+
+// Tagged releases are discontinued; depend on a master commit instead: go get go.packetbroker.org/api/routing@master
+retract [v1.0.0, v1.9.3]

@@ -23,21 +23,23 @@ Once a module is required by pseudo-version, `go get -u ./...` (with `GOPRIVATE`
 
 The generated code is checked in to this repository. You only need to regenerate the code to incorporate changes coming from the [Packet Broker API repository](https://github.com/packetbroker/api).
 
-The protoc plugins are Go tool dependencies of the root module and need no installation. Install the [Protocol Compiler](https://github.com/protocolbuffers/protobuf#protocol-compiler-installation) at the version declared as `PROTOC_VERSION` in the `Makefile`; the generated code embeds the protoc version, so CI regenerates with exactly that version and fails on differences.
+Code is generated with [buf](https://buf.build/). buf and the protoc plugins (`protoc-gen-go`, `protoc-gen-go-grpc`) are Go tool dependencies of the root module and need no installation. `buf.gen.yaml` configures the plugins; the `Makefile` passes the input.
 
-Clone the Packet Broker API repository such that its `packetbroker/api` folder is at `../../packetbroker/api` relative to this repository, check out the commit declared as `PBAPI_REF` in the `Makefile`, and run:
+By default, buf generates from the commit of the API repository declared as `PBAPI_REF` in the `Makefile`, which buf fetches itself:
 
 ```bash
 $ make clean all
 ```
 
-If the API repository is cloned elsewhere, pass the directory that contains the `packetbroker/api` folder:
+CI does the same and fails when the checked-in code differs, so the code and `PBAPI_REF` always match. To pick up API changes, set `PBAPI_REF` to the new API commit and regenerate.
+
+To generate from a local checkout of the API repository instead, for instance to try unmerged API changes, point `PBAPI_INPUT` at it (the directory that contains `buf.yaml` and `packetbroker/api`):
 
 ```bash
-$ PBAPI=<path> make clean all
+$ PBAPI_INPUT=../api make clean all
 ```
 
-After regenerating, update `PBAPI_REF` in the `Makefile` to the API commit that the code was generated from.
+Once the API changes are merged, set `PBAPI_REF` to the merge commit and run `make clean all` again before committing, so that the checked-in code is what CI regenerates.
 
 ## Development
 

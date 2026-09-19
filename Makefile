@@ -4,57 +4,49 @@
 SHELL = bash
 GO = go
 GIT = git
-PROTOC = protoc
+CURL = curl
 
-# Version of protoc that the checked-in code is generated with. CI installs exactly this version.
-PROTOC_VERSION = 36.1
 # Commit of github.com/packetbroker/api that the checked-in code is generated from.
-PBAPI_REF = 50a372db610df3e503457e9ddbc6334c50519412
-# Directory that contains the packetbroker/api checkout, i.e. protos live in $(PBAPI)/packetbroker/api.
-PBAPI ?= ../..
+PBAPI_REF = 1ece72d9bc7605cd1d942e75d70baf7007056841
+# buf input to generate from. Defaults to the API repository at PBAPI_REF, which buf fetches itself.
+# Override with a local checkout of the API repository, e.g. PBAPI_INPUT=../api
+PBAPI_INPUT ?= https://github.com/packetbroker/api.git\#ref=$(PBAPI_REF)
 
 # Go modules in this repository, excluding the root module that only carries tools.
+# buf writes the generated code per go_package to build/go.packetbroker.org/api/<module>.
 MODULES = v3 routing routing/v2 iam iam/v2 mapping/v2 reporting
 
-# protoc plugins come from the tool dependencies of the root module.
-PROTOC_GEN_GO = $(shell $(GO) tool -n protoc-gen-go)
-PROTOC_GEN_GO_GRPC = $(shell $(GO) tool -n protoc-gen-go-grpc)
-
-protos = $(wildcard $(PBAPI)/packetbroker/api/v3/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/routing/v1/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/routing/v2/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/mapping/v2/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/iam/v1/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/iam/v2/*.proto) \
-	$(wildcard $(PBAPI)/packetbroker/api/reporting/v1/*.proto)
-prototargets = $(subst v1/,,$(patsubst $(PBAPI)/packetbroker/api/%.proto,%.pb.go,$(protos)))
-
-openapis = $(PBAPI)/packetbroker/api/mapping/v2/openapi.tmpl.json
-openapitargets = $(subst v1/,,$(patsubst $(PBAPI)/packetbroker/api/%/openapi.tmpl.json,%/openapi/openapi.tmpl.json,$(openapis)))
+# OpenAPI templates are not protos: <api dir in packetbroker/api>:<target in this repository>.
+openapis = mapping/v2:mapping/v2/openapi/openapi.tmpl.json
 
 .PHONY: all
-all: $(prototargets)
-all: $(openapitargets)
+all: generate openapi
 
 .PHONY: clean
 clean:
-	@rm -f $(prototargets)
-	@rm -f $(openapitargets)
-
-$(prototargets): $(protos)
-	@set -e
-	@mkdir -p build $(@D)
-	@$(PROTOC) \
-		--plugin=protoc-gen-go=$(PROTOC_GEN_GO) \
-		--plugin=protoc-gen-go-grpc=$(PROTOC_GEN_GO_GRPC) \
-		--go_out="build" \
-		--go-grpc_out="build" \
-		--proto_path=$(PBAPI) $^
-	@mv build/go.packetbroker.org/api/$(@D)/*.pb.go $(@D)/
+	@for m in $(MODULES); do rm -f $$m/*.pb.go; done
+	@for o in $(openapis); do rm -f $${o#*:}; done
 	@rm -rf build
 
-$(openapitargets): $(openapis)
-	@cp $^ $@
+# buf and the plugins are tools of the root module; GOWORK=off keeps the workspace module graph out of the tool build.
+.PHONY: generate
+generate:
+	@rm -rf build
+	@GOWORK=off $(GO) tool buf generate $(PBAPI_INPUT)
+	@for m in $(MODULES); do mv build/go.packetbroker.org/api/$$m/*.pb.go $$m/ || exit 1; done
+	@rm -rf build
+
+.PHONY: openapi
+openapi:
+	@for o in $(openapis); do \
+		src=packetbroker/api/$${o%%:*}/openapi.tmpl.json; dst=$${o#*:}; \
+		mkdir -p $$(dirname $$dst); \
+		if [ -d "$(PBAPI_INPUT)" ]; then \
+			cp "$(PBAPI_INPUT)/$$src" $$dst || exit 1; \
+		else \
+			$(CURL) -fsSL "https://raw.githubusercontent.com/packetbroker/api/$(PBAPI_REF)/$$src" -o $$dst || exit 1; \
+		fi; \
+	done
 
 .PHONY: build
 build:

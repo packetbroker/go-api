@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: Copyright 2019 The Things Industries B.V.
+# SPDX-License-Identifier: Apache-2.0
+
+# Code generation for the Packet Broker API. The input (the packetbroker/api
+# repository at PBAPI_REF, or a local checkout) is passed by the Makefile.
+version: v2
+plugins:
+  # Plugins are Go tool dependencies of the root module.
+  - local: [go, tool, protoc-gen-go]
+    out: build
+  - local: [go, tool, protoc-gen-go-grpc]
+    out: build

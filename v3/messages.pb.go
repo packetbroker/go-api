@@ -1985,7 +1985,7 @@ const file_packetbroker_api_v3_messages_proto_rawDesc = "" +
 	"RXSettings\x12\x1c\n" +
 	"\tfrequency\x18\x01 \x01(\x04R\tfrequency\x12:\n" +
 	"\tdata_rate\x18\x03 \x01(\v2\x1d.org.packetbroker.v3.DataRateR\bdataRate\x12&\n" +
-	"\x0fdata_rate_index\x18\x02 \x01(\rR\rdataRateIndexJ\x04\b\v\x10\fB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\x0fdata_rate_index\x18\x02 \x01(\rR\rdataRateIndexJ\x04\b\v\x10\fB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_messages_proto_rawDescOnce sync.Once

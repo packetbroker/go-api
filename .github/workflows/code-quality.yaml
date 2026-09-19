@@ -22,16 +22,13 @@ jobs:
           go-version-file: go.mod
           cache-dependency-path: |
             go.sum
-            */go.sum
-            */*/go.sum
-      - name: Build modules
+            tools/go.sum
+      - name: Build
         run: make build
       - name: Check code quality
         run: make quality
-      - name: Test modules
+      - name: Test
         run: make test
-      - name: Test workspace
-        run: go test go.packetbroker.org/api/...
       - name: Format code
         run: make fmt
       - name: Tidy modules
@@ -51,7 +48,7 @@ jobs:
         uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
-          cache-dependency-path: go.sum
+          cache-dependency-path: tools/go.sum
       # buf fetches github.com/packetbroker/api at PBAPI_REF (see Makefile) itself.
       - name: Regenerate code
         run: make clean all

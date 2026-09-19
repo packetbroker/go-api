@@ -138,7 +138,7 @@ const file_packetbroker_api_v3_cluster_proto_rawDesc = "" +
 	"\x06rights\x18\x03 \x03(\x0e2\x1a.org.packetbroker.v3.RightR\x06rights\x12E\n" +
 	"\x10authenticated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0fauthenticatedAt\x12\x10\n" +
 	"\x03key\x18\x05 \x01(\tR\x03key\x126\n" +
-	"\x05state\x18\x06 \x01(\x0e2 .org.packetbroker.v3.APIKeyStateR\x05stateB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\x05state\x18\x06 \x01(\x0e2 .org.packetbroker.v3.APIKeyStateR\x05stateB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_cluster_proto_rawDescOnce sync.Once

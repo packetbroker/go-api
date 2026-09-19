@@ -21,7 +21,7 @@
 package iampb
 
 import (
-	v3 "go.packetbroker.org/api/v3"
+	v3 "github.com/packetbroker/go-api/v3"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
@@ -1491,7 +1491,7 @@ const file_packetbroker_api_iam_v1_service_proto_rawDesc = "" +
 	"\vAPIKeyVault\x12h\n" +
 	"\vListAPIKeys\x12+.org.packetbroker.iam.v1.ListAPIKeysRequest\x1a,.org.packetbroker.iam.v1.ListAPIKeysResponse\x12k\n" +
 	"\fCreateAPIKey\x12,.org.packetbroker.iam.v1.CreateAPIKeyRequest\x1a-.org.packetbroker.iam.v1.CreateAPIKeyResponse\x12N\n" +
-	"\fDeleteAPIKey\x12&.org.packetbroker.iam.v1.APIKeyRequest\x1a\x16.google.protobuf.EmptyB#Z!go.packetbroker.org/api/iam;iampbb\x06proto3"
+	"\fDeleteAPIKey\x12&.org.packetbroker.iam.v1.APIKeyRequest\x1a\x16.google.protobuf.EmptyB*Z(github.com/packetbroker/go-api/iam;iampbb\x06proto3"
 
 var (
 	file_packetbroker_api_iam_v1_service_proto_rawDescOnce sync.Once

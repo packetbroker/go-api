@@ -22,7 +22,7 @@ package routingpb
 
 import (
 	context "context"
-	v3 "go.packetbroker.org/api/v3"
+	v3 "github.com/packetbroker/go-api/v3"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

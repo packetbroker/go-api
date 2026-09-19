@@ -21,7 +21,7 @@
 package routingpb
 
 import (
-	v3 "go.packetbroker.org/api/v3"
+	v3 "github.com/packetbroker/go-api/v3"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
@@ -1508,7 +1508,7 @@ const file_packetbroker_api_routing_v1_service_proto_rawDesc = "" +
 	"\x0fHomeNetworkData\x12\x82\x01\n" +
 	"\aPublish\x12:.org.packetbroker.routing.v1.PublishDownlinkMessageRequest\x1a;.org.packetbroker.routing.v1.PublishDownlinkMessageResponse\x12q\n" +
 	"\tSubscribe\x128.org.packetbroker.routing.v1.SubscribeHomeNetworkRequest\x1a(.org.packetbroker.v3.RoutedUplinkMessage0\x01\x12\x80\x01\n" +
-	" ReportUplinkMessageDeliveryState\x12D.org.packetbroker.routing.v1.UplinkMessageDeliveryStateChangeRequest\x1a\x16.google.protobuf.EmptyB+Z)go.packetbroker.org/api/routing;routingpbb\x06proto3"
+	" ReportUplinkMessageDeliveryState\x12D.org.packetbroker.routing.v1.UplinkMessageDeliveryStateChangeRequest\x1a\x16.google.protobuf.EmptyB2Z0github.com/packetbroker/go-api/routing;routingpbb\x06proto3"
 
 var (
 	file_packetbroker_api_routing_v1_service_proto_rawDescOnce sync.Once

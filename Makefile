@@ -2,9 +2,14 @@
 # SPDX-License-Identifier: Apache-2.0
 
 SHELL = bash
+# The repository may sit in a Go workspace of the caller; build and run tools against this module only.
+export GOWORK = off
 GO = go
 GIT = git
 CURL = curl
+
+# Tools (buf, protoc plugins, linters) are tool dependencies of the tools module, not of the public module.
+GOTOOL = $(GO) tool -modfile=tools/go.mod
 
 # Commit of github.com/packetbroker/api that the checked-in code is generated from.
 PBAPI_REF = 1ece72d9bc7605cd1d942e75d70baf7007056841
@@ -12,9 +17,8 @@ PBAPI_REF = 1ece72d9bc7605cd1d942e75d70baf7007056841
 # Override with a local checkout of the API repository, e.g. PBAPI_INPUT=../api
 PBAPI_INPUT ?= https://github.com/packetbroker/api.git\#ref=$(PBAPI_REF)
 
-# Go modules in this repository, excluding the root module that only carries tools.
-# buf writes the generated code per go_package to build/go.packetbroker.org/api/<module>.
-MODULES = v3 routing routing/v2 iam iam/v2 mapping/v2 reporting
+# Packages with generated code: <api dir in packetbroker/api>:<package dir in this repository>.
+APIS = v3:v3 routing/v1:routing routing/v2:routing/v2 iam/v1:iam iam/v2:iam/v2 mapping/v2:mapping/v2 reporting/v1:reporting
 
 # OpenAPI templates are not protos: <api dir in packetbroker/api>:<target in this repository>.
 openapis = mapping/v2:mapping/v2/openapi/openapi.tmpl.json
@@ -24,17 +28,13 @@ all: generate openapi
 
 .PHONY: clean
 clean:
-	@for m in $(MODULES); do rm -f $$m/*.pb.go; done
+	@for a in $(APIS); do rm -f $${a#*:}/*.pb.go; done
 	@for o in $(openapis); do rm -f $${o#*:}; done
-	@rm -rf build
 
-# buf and the plugins are tools of the root module; GOWORK=off keeps the workspace module graph out of the tool build.
+# buf.gen.yaml maps the APIs to Go packages (managed mode) and writes them to their directories.
 .PHONY: generate
 generate:
-	@rm -rf build
-	@GOWORK=off $(GO) tool buf generate $(PBAPI_INPUT)
-	@for m in $(MODULES); do mv build/go.packetbroker.org/api/$$m/*.pb.go $$m/ || exit 1; done
-	@rm -rf build
+	@$(GOTOOL) buf generate $(PBAPI_INPUT)
 
 .PHONY: openapi
 openapi:
@@ -50,35 +50,24 @@ openapi:
 
 .PHONY: build
 build:
-	@for m in $(MODULES); do \
-		echo "build $$m"; \
-		(cd $$m && GOWORK=off $(GO) build ./...) || exit 1; \
-	done
+	@$(GO) build ./...
 
 .PHONY: test
 test:
-	@for m in $(MODULES); do \
-		echo "test $$m"; \
-		(cd $$m && GOWORK=off $(GO) test -race -covermode=atomic ./...) || exit 1; \
-	done
+	@$(GO) test -race -covermode=atomic ./...
 
 .PHONY: deps.tidy
 deps.tidy:
-	@for m in . $(MODULES); do \
-		echo "tidy $$m"; \
-		(cd $$m && $(GO) mod tidy) || exit 1; \
-	done
+	@$(GO) mod tidy
+	@cd tools && $(GO) mod tidy
 
 .PHONY: fmt
 fmt:
-	@$(GO) tool gofumpt -w -extra -l .
+	@$(GOTOOL) gofumpt -w -extra -l .
 
 .PHONY: quality
 quality:
-	@for m in $(MODULES); do \
-		echo "lint $$m"; \
-		(cd $$m && $(GO) tool golangci-lint run --timeout 5m0s --allow-parallel-runners --max-issues-per-linter 0 --max-same-issues 0 $(GO_LINT_FLAGS) ./...) || exit 1; \
-	done
+	@$(GOTOOL) golangci-lint run --timeout 5m0s --allow-parallel-runners --max-issues-per-linter 0 --max-same-issues 0 $(GO_LINT_FLAGS) ./...
 
 BASE_REF ?= master
 .PHONY: quality.new

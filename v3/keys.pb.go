@@ -160,7 +160,7 @@ const file_packetbroker_api_v3_keys_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\fR\x05value\x1a@\n" +
 	"\x12DeksEncryptedEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\fR\x05value:\x028\x01B)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\x05value\x18\x02 \x01(\fR\x05value:\x028\x01B0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_keys_proto_rawDescOnce sync.Once

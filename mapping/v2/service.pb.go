@@ -21,7 +21,7 @@
 package mappingpb
 
 import (
-	v3 "go.packetbroker.org/api/v3"
+	v3 "github.com/packetbroker/go-api/v3"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
@@ -449,7 +449,7 @@ const file_packetbroker_api_mapping_v2_service_proto_rawDesc = "" +
 	"\x18GetHomeNetworkVisibility\x12C.org.packetbroker.mapping.v2.GetHomeNetworkGatewayVisibilityRequest\x1a9.org.packetbroker.mapping.v2.GetGatewayVisibilityResponse\x12l\n" +
 	"\x18SetHomeNetworkVisibility\x128.org.packetbroker.mapping.v2.SetGatewayVisibilityRequest\x1a\x16.google.protobuf.Empty2d\n" +
 	"\x06Mapper\x12Z\n" +
-	"\rUpdateGateway\x121.org.packetbroker.mapping.v2.UpdateGatewayRequest\x1a\x16.google.protobuf.EmptyB.Z,go.packetbroker.org/api/mapping/v2;mappingpbb\x06proto3"
+	"\rUpdateGateway\x121.org.packetbroker.mapping.v2.UpdateGatewayRequest\x1a\x16.google.protobuf.EmptyB5Z3github.com/packetbroker/go-api/mapping/v2;mappingpbb\x06proto3"
 
 var (
 	file_packetbroker_api_mapping_v2_service_proto_rawDescOnce sync.Once

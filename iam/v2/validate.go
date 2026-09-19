@@ -8,7 +8,7 @@ import (
 	"errors"
 	"fmt"
 
-	packetbroker "go.packetbroker.org/api/v3"
+	packetbroker "github.com/packetbroker/go-api/v3"
 )
 
 // Validate returns whether the request is valid.

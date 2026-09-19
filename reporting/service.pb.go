@@ -21,7 +21,7 @@
 package reportingpb
 
 import (
-	v3 "go.packetbroker.org/api/v3"
+	v3 "github.com/packetbroker/go-api/v3"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -843,7 +843,7 @@ const file_packetbroker_api_reporting_v1_service_proto_rawDesc = "" +
 	"\x19GetRoutedMessagesResponse\x12M\n" +
 	"\arecords\x18\x01 \x03(\v23.org.packetbroker.reporting.v1.RoutedMessagesRecordR\arecords2\x93\x01\n" +
 	"\bReporter\x12\x86\x01\n" +
-	"\x11GetRoutedMessages\x127.org.packetbroker.reporting.v1.GetRoutedMessagesRequest\x1a8.org.packetbroker.reporting.v1.GetRoutedMessagesResponseB/Z-go.packetbroker.org/api/reporting;reportingpbb\x06proto3"
+	"\x11GetRoutedMessages\x127.org.packetbroker.reporting.v1.GetRoutedMessagesRequest\x1a8.org.packetbroker.reporting.v1.GetRoutedMessagesResponseB6Z4github.com/packetbroker/go-api/reporting;reportingpbb\x06proto3"
 
 var (
 	file_packetbroker_api_reporting_v1_service_proto_rawDescOnce sync.Once

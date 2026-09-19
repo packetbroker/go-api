@@ -313,7 +313,7 @@ const file_packetbroker_api_v3_joinserver_proto_rawDesc = "" +
 	"\x06net_id\x18\x01 \x01(\rR\x05netId\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x1d\n" +
 	"\n" +
-	"cluster_id\x18\x03 \x01(\tR\tclusterIdB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"cluster_id\x18\x03 \x01(\tR\tclusterIdB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_joinserver_proto_rawDescOnce sync.Once

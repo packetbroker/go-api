@@ -28,10 +28,10 @@ clean:
 	@for o in $(openapis); do rm -f $${o#*:}; done
 	@rm -rf build
 
+# buf and the plugins are tools of the root module; GOWORK=off keeps the workspace module graph out of the tool build.
 .PHONY: generate
 generate:
 	@rm -rf build
-	# buf and the plugins are tools of the root module; GOWORK=off keeps the workspace module graph out of the tool build.
 	@GOWORK=off $(GO) tool buf generate $(PBAPI_INPUT)
 	@for m in $(MODULES); do mv build/go.packetbroker.org/api/$$m/*.pb.go $$m/ || exit 1; done
 	@rm -rf build

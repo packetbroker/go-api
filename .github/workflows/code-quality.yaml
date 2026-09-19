@@ -46,32 +46,14 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
         with:
-          path: go-api
-          persist-credentials: false
-      - name: Read generator pins
-        id: pins
-        working-directory: go-api
-        run: |
-          echo "pbapi_ref=$(sed -n 's/^PBAPI_REF = //p' Makefile)" >> "$GITHUB_OUTPUT"
-          echo "protoc_version=$(sed -n 's/^PROTOC_VERSION = //p' Makefile)" >> "$GITHUB_OUTPUT"
-      - name: Check out Packet Broker API
-        uses: actions/checkout@v7
-        with:
-          repository: packetbroker/api
-          ref: ${{ steps.pins.outputs.pbapi_ref }}
-          path: packetbroker/api
           persist-credentials: false
       - name: Install Go
         uses: actions/setup-go@v7
         with:
-          go-version-file: go-api/go.mod
-          cache-dependency-path: go-api/go.sum
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3
-        with:
-          version: ${{ steps.pins.outputs.protoc_version }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+      # buf fetches github.com/packetbroker/api at PBAPI_REF (see Makefile) itself.
       - name: Regenerate code
-        run: make -C go-api PBAPI=$GITHUB_WORKSPACE clean all
+        run: make clean all
       - name: Check no diff
-        run: git -C go-api diff --exit-code
+        run: git diff --exit-code

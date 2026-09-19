@@ -7,7 +7,7 @@ GIT = git
 CURL = curl
 
 # Commit of github.com/packetbroker/api that the checked-in code is generated from.
-PBAPI_REF = b73ce7d078f6936c6f551d43d3df8c08884c4c74
+PBAPI_REF = 1ece72d9bc7605cd1d942e75d70baf7007056841
 # buf input to generate from. Defaults to the API repository at PBAPI_REF, which buf fetches itself.
 # Override with a local checkout of the API repository, e.g. PBAPI_INPUT=../api
 PBAPI_INPUT ?= https://github.com/packetbroker/api.git\#ref=$(PBAPI_REF)

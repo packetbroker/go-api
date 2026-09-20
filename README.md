@@ -2,6 +2,8 @@
 
 `go-api` is the Packet Broker API for Go.
 
+> **Frozen.** The `go.packetbroker.org/api/...` modules on this `legacy` branch receive no updates. Their final versions are `v3.18.0`, `routing/v1.10.0`, `routing/v2.2.0`, `iam/v1.9.0`, `iam/v2.10.0`, `mapping/v2.4.0` and `reporting/v1.2.0`. Development continues as one module, `github.com/packetbroker/go-api`, on the `master` branch: replace the import path prefix `go.packetbroker.org/api/` with `github.com/packetbroker/go-api/` and require that module.
+
 ## Installing
 
 The Go API is split into Go modules, one per API. Tagged releases are discontinued: depend on a commit of the `master` branch instead (a pseudo-version). Go resolves the tip of `master` when it bypasses the module proxy for `go.packetbroker.org`:

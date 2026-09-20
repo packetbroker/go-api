@@ -15,5 +15,5 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260917231906-eeb232e0883d // indirect
 )
 
-// Tagged releases are discontinued; depend on a master commit instead: go get go.packetbroker.org/api/mapping/v2@master
+// The go.packetbroker.org/api modules are frozen; development continues at github.com/packetbroker/go-api.
 retract [v2.0.0, v2.3.3]

@@ -16,10 +16,10 @@ The API is one Go module, `github.com/packetbroker/go-api`, with a package per A
 | `github.com/packetbroker/go-api/mapping/v2` | Mapping v2 |
 | `github.com/packetbroker/go-api/reporting` | Reporting v1 |
 
-There are no tagged releases: depend on a commit of the `master` branch (a pseudo-version), and `go get -u` follows `master` from there:
+There are no tagged releases: depend on a commit of the `master` branch (a pseudo-version). `@latest` resolves to the tip of `master`, and `go get -u` follows it:
 
 ```bash
-$ go get github.com/packetbroker/go-api@master
+$ go get github.com/packetbroker/go-api@latest
 ```
 
 ### Previous import path

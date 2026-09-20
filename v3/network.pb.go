@@ -692,7 +692,7 @@ const file_packetbroker_api_v3_network_proto_rawDesc = "" +
 	"\rNetworkTarget\x12\x15\n" +
 	"\x06net_id\x18\x01 \x01(\rR\x05netId\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x123\n" +
-	"\x06target\x18\x03 \x01(\v2\x1b.org.packetbroker.v3.TargetR\x06targetB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\x06target\x18\x03 \x01(\v2\x1b.org.packetbroker.v3.TargetR\x06targetB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_network_proto_rawDescOnce sync.Once

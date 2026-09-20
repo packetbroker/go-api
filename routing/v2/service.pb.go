@@ -21,7 +21,7 @@
 package routingpb
 
 import (
-	v3 "go.packetbroker.org/api/v3"
+	v3 "github.com/packetbroker/go-api/v3"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -654,7 +654,7 @@ const file_packetbroker_api_routing_v2_service_proto_rawDesc = "" +
 	"\x15ListJoinRequestRoutes\x129.org.packetbroker.routing.v2.ListJoinRequestRoutesRequest\x1a:.org.packetbroker.routing.v2.ListJoinRequestRoutesResponse\x12\x85\x01\n" +
 	"\x12ListNetworkTargets\x126.org.packetbroker.routing.v2.ListNetworkTargetsRequest\x1a7.org.packetbroker.routing.v2.ListNetworkTargetsResponse2~\n" +
 	"\tPublisher\x12q\n" +
-	"\tSubscribe\x125.org.packetbroker.routing.v2.TopicSubscriptionsChange\x1a).org.packetbroker.routing.v2.TopicMessage(\x010\x01B.Z,go.packetbroker.org/api/routing/v2;routingpbb\x06proto3"
+	"\tSubscribe\x125.org.packetbroker.routing.v2.TopicSubscriptionsChange\x1a).org.packetbroker.routing.v2.TopicMessage(\x010\x01B5Z3github.com/packetbroker/go-api/routing/v2;routingpbb\x06proto3"
 
 var (
 	file_packetbroker_api_routing_v2_service_proto_rawDescOnce sync.Once

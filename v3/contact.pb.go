@@ -152,7 +152,7 @@ const file_packetbroker_api_v3_contact_proto_rawDesc = "" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x10\n" +
 	"\x03url\x18\x03 \x01(\tR\x03url\"J\n" +
 	"\x10ContactInfoValue\x126\n" +
-	"\x05value\x18\x01 \x01(\v2 .org.packetbroker.v3.ContactInfoR\x05valueB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\x05value\x18\x01 \x01(\v2 .org.packetbroker.v3.ContactInfoR\x05valueB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_contact_proto_rawDescOnce sync.Once

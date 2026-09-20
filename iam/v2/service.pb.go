@@ -21,7 +21,7 @@
 package iampb
 
 import (
-	v3 "go.packetbroker.org/api/v3"
+	v3 "github.com/packetbroker/go-api/v3"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
@@ -1421,7 +1421,7 @@ const file_packetbroker_api_iam_v2_service_proto_rawDesc = "" +
 	"\x10CreateJoinServer\x120.org.packetbroker.iam.v2.CreateJoinServerRequest\x1a1.org.packetbroker.iam.v2.CreateJoinServerResponse\x12k\n" +
 	"\rGetJoinServer\x12*.org.packetbroker.iam.v2.JoinServerRequest\x1a..org.packetbroker.iam.v2.GetJoinServerResponse\x12\\\n" +
 	"\x10UpdateJoinServer\x120.org.packetbroker.iam.v2.UpdateJoinServerRequest\x1a\x16.google.protobuf.Empty\x12V\n" +
-	"\x10DeleteJoinServer\x12*.org.packetbroker.iam.v2.JoinServerRequest\x1a\x16.google.protobuf.EmptyB&Z$go.packetbroker.org/api/iam/v2;iampbb\x06proto3"
+	"\x10DeleteJoinServer\x12*.org.packetbroker.iam.v2.JoinServerRequest\x1a\x16.google.protobuf.EmptyB-Z+github.com/packetbroker/go-api/iam/v2;iampbb\x06proto3"
 
 var (
 	file_packetbroker_api_iam_v2_service_proto_rawDescOnce sync.Once

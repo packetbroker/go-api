@@ -172,7 +172,7 @@ const file_packetbroker_api_v3_location_proto_rawDesc = "" +
 	"\baccuracy\x18\x04 \x01(\x02R\baccuracyJ\x04\b\x03\x10\x04J\x04\b\x06\x10\a\"z\n" +
 	"\rTimedLocation\x12.\n" +
 	"\x04time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\x04time\x129\n" +
-	"\blocation\x18\x02 \x01(\v2\x1d.org.packetbroker.v3.LocationR\blocationB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\blocation\x18\x02 \x01(\v2\x1d.org.packetbroker.v3.LocationR\blocationB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_location_proto_rawDescOnce sync.Once

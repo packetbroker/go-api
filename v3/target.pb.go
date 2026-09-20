@@ -564,7 +564,7 @@ const file_packetbroker_api_v3_target_proto_rawDesc = "" +
 	"\x1eOriginNetIdAuthenticationEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\rR\x03key\x12@\n" +
 	"\x05value\x18\x02 \x01(\v2*.org.packetbroker.v3.Target.AuthenticationR\x05value:\x028\x01B\x18\n" +
-	"\x16default_authenticationB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\x16default_authenticationB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_target_proto_rawDescOnce sync.Once

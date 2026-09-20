@@ -8,7 +8,7 @@ import (
 	"errors"
 	"fmt"
 
-	packetbroker "go.packetbroker.org/api/v3"
+	packetbroker "github.com/packetbroker/go-api/v3"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 )

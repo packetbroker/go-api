@@ -4,9 +4,49 @@
 # Code generation for the Packet Broker API. The input (the packetbroker/api
 # repository at PBAPI_REF, or a local checkout) is passed by the Makefile.
 version: v2
+managed:
+  enabled: true
+  # Only the Go package is managed; keep the other language options out of the descriptors.
+  disable:
+    - file_option: csharp_namespace
+    - file_option: java_multiple_files
+    - file_option: java_outer_classname
+    - file_option: java_package
+    - file_option: java_string_check_utf8
+    - file_option: objc_class_prefix
+    - file_option: php_metadata_namespace
+    - file_option: php_namespace
+    - file_option: ruby_package
+    - file_option: cc_enable_arenas
+    - file_option: optimize_for
+  # The API definitions do not know about this module: map each API to its Go package here.
+  override:
+    - file_option: go_package
+      path: packetbroker/api/v3
+      value: github.com/packetbroker/go-api/v3;packetbroker
+    - file_option: go_package
+      path: packetbroker/api/routing/v1
+      value: github.com/packetbroker/go-api/routing;routingpb
+    - file_option: go_package
+      path: packetbroker/api/routing/v2
+      value: github.com/packetbroker/go-api/routing/v2;routingpb
+    - file_option: go_package
+      path: packetbroker/api/iam/v1
+      value: github.com/packetbroker/go-api/iam;iampb
+    - file_option: go_package
+      path: packetbroker/api/iam/v2
+      value: github.com/packetbroker/go-api/iam/v2;iampb
+    - file_option: go_package
+      path: packetbroker/api/mapping/v2
+      value: github.com/packetbroker/go-api/mapping/v2;mappingpb
+    - file_option: go_package
+      path: packetbroker/api/reporting/v1
+      value: github.com/packetbroker/go-api/reporting;reportingpb
 plugins:
-  # Plugins are Go tool dependencies of the root module.
-  - local: [go, tool, protoc-gen-go]
-    out: build
-  - local: [go, tool, protoc-gen-go-grpc]
-    out: build
+  # Plugins are Go tool dependencies of the tools module.
+  - local: [go, tool, -modfile=tools/go.mod, protoc-gen-go]
+    out: .
+    opt: module=github.com/packetbroker/go-api
+  - local: [go, tool, -modfile=tools/go.mod, protoc-gen-go-grpc]
+    out: .
+    opt: module=github.com/packetbroker/go-api

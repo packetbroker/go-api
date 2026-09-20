@@ -1706,7 +1706,7 @@ const file_packetbroker_api_v3_routing_proto_rawDesc = "" +
 	"\x06lookup\x18\x04 \x01(\v2\x1b.org.packetbroker.v3.TargetH\x00R\x06lookup\x12D\n" +
 	"\x05fixed\x18\x05 \x01(\v2,.org.packetbroker.v3.JoinServerFixedEndpointH\x00R\x05fixedB\n" +
 	"\n" +
-	"\bresolverB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\bresolverB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_routing_proto_rawDescOnce sync.Once

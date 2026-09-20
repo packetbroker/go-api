@@ -38,7 +38,7 @@ var File_packetbroker_api_v3_packetbroker_proto protoreflect.FileDescriptor
 
 const file_packetbroker_api_v3_packetbroker_proto_rawDesc = "" +
 	"\n" +
-	"&packetbroker/api/v3/packetbroker.proto\x12\x13org.packetbroker.v3B)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"&packetbroker/api/v3/packetbroker.proto\x12\x13org.packetbroker.v3B0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var file_packetbroker_api_v3_packetbroker_proto_goTypes = []any{}
 var file_packetbroker_api_v3_packetbroker_proto_depIdxs = []int32{

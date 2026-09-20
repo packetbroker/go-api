@@ -11,19 +11,10 @@ updates:
   - package-ecosystem: gomod
     directories:
       - /
-      - /v3
-      - /routing
-      - /routing/v2
-      - /iam
-      - /iam/v2
-      - /mapping/v2
-      - /reporting
+      - /tools
     schedule:
       interval: weekly
     groups:
       go:
         patterns:
           - "*"
-    ignore:
-      # Modules of this repository depend on each other by commit; bump them by hand.
-      - dependency-name: "go.packetbroker.org/*"

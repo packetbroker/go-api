@@ -1015,7 +1015,7 @@ const file_packetbroker_api_v3_enums_proto_rawDesc = "" +
 	"\fRP002_V1_0_2\x10\t\x12\x10\n" +
 	"\fRP002_V1_0_3\x10\n" +
 	"\x12\x10\n" +
-	"\fRP002_V1_0_4\x10\vB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"\fRP002_V1_0_4\x10\vB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_enums_proto_rawDescOnce sync.Once

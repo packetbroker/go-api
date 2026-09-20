@@ -1002,7 +1002,7 @@ const file_packetbroker_api_v3_gateway_proto_rawDesc = "" +
 	"\x0efrequency_plan\x18\r \x01(\v2).org.packetbroker.v3.GatewayFrequencyPlanR\rfrequencyPlan\x124\n" +
 	"\arx_rate\x18\x12 \x01(\v2\x1b.google.protobuf.FloatValueR\x06rxRate\x124\n" +
 	"\atx_rate\x18\x13 \x01(\v2\x1b.google.protobuf.FloatValueR\x06txRateJ\x04\b\x03\x10\x04J\x04\b\x05\x10\x06J\x04\b\x06\x10\aJ\x04\b\a\x10\bJ\x04\b\b\x10\tJ\x04\b\t\x10\n" +
-	"J\x04\b\v\x10\fJ\x04\b\f\x10\rB)Z'go.packetbroker.org/api/v3;packetbrokerb\x06proto3"
+	"J\x04\b\v\x10\fJ\x04\b\f\x10\rB0Z.github.com/packetbroker/go-api/v3;packetbrokerb\x06proto3"
 
 var (
 	file_packetbroker_api_v3_gateway_proto_rawDescOnce sync.Once

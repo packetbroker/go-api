@@ -24,7 +24,7 @@ $ go get github.com/packetbroker/go-api@master
 
 ### Previous import path
 
-The API was previously published as seven modules under `go.packetbroker.org/api/...`, one per package above. That import path is frozen: existing requirements keep resolving to the old commits and tags, but they receive no updates. To upgrade, replace the import path prefix `go.packetbroker.org/api/` with `github.com/packetbroker/go-api/`, require `github.com/packetbroker/go-api` and drop the seven old requirements.
+The API was previously published as seven modules under `go.packetbroker.org/api/...`, one per package above. Those modules are frozen on the `legacy` branch, with final versions `v3.18.0`, `routing/v1.10.0`, `routing/v2.2.0`, `iam/v1.9.0`, `iam/v2.10.0`, `mapping/v2.4.0` and `reporting/v1.2.0`: `go get -u` moves existing importers to these versions and then stays there, and they receive no further updates. To upgrade, replace the import path prefix `go.packetbroker.org/api/` with `github.com/packetbroker/go-api/`, require `github.com/packetbroker/go-api` and drop the seven old requirements.
 
 ## Regenerating
 
